@@ -63,6 +63,42 @@ export default function App() {
             },
         ],
       },
+      {
+        kind: "category",
+        name: "Other",
+        colour: "#A65C81",
+        contents: [
+          {
+              kind: "block",
+              type: "print_text",
+          },
+          {
+            "kind": "block",
+            "type": "math_arithmetic",
+            "fields": {
+              "OP": "ADD"
+            },
+            "inputs": {
+              "A": {
+                "shadow": {
+                  "type": "math_number",
+                  "fields": {
+                    "NUM": 1
+                  }
+                }
+              },
+              "B": {
+                "shadow": {
+                  "type": "math_number",
+                  "fields": {
+                    "NUM": 1
+                  }
+                }
+              }
+            }
+          },
+        ],
+      },
     ],
   };
   
