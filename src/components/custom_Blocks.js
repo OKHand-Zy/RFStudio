@@ -71,21 +71,3 @@ pythonGenerator.forBlock['return'] = function (block) {
     return `return ${value}\n`;
 };
 
-// Print Text Block
-Blockly.Blocks['print_text'] = {
-    init: function() {
-        this.appendDummyInput()
-            .appendField('"')
-            .appendField(new Blockly.FieldTextInput("Text"), "TEXT")
-            .appendField('"');
-        this.setOutput(true, 'String');  // 設定為字串輸出
-        this.setColour("#4CAF50");       // 設定為綠色
-        this.setTooltip("Print text with quotes");
-        this.setHelpUrl("");
-    }
-};
-
-pythonGenerator.forBlock['print_text'] = function(block) {
-    var text = block.getFieldValue('TEXT') || "";
-    return [`"${text}"`, pythonGenerator.ORDER_ATOMIC];
-};

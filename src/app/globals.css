@@ -12,16 +12,17 @@
 .workspace-left {
   width: 60%;
   height: 100%;
+  padding: 4px;
   border-right: 1px solid #ccc;
 }
 
 .workspace-right {
   width: 40%;
   height: 100%;
-  padding: 20px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
   overflow-y: auto;
 }
 

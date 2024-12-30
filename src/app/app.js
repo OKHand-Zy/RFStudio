@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { BlocklyWorkspace } from "react-blockly";
 import {pythonGenerator} from 'blockly/python';
 import "@/components/custom_Blocks";
+import "@/components/rb_Common";
+import "@/components/rb_BuiltIn";
 
 export default function App() {
   const [xml, setXml] = useState("");
-  const [javascriptCode, setJavascriptCode] = useState("");
+  const [CodeSpaceCode, setCodeSpaceCode] = useState("");
 
   const initialXml =
     '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>';
@@ -65,37 +67,35 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "Other",
+        name: "RB_Common",
         colour: "#A65C81",
         contents: [
           {
               kind: "block",
-              type: "print_text",
+              type: "Robot_Init",
           },
           {
-            "kind": "block",
-            "type": "math_arithmetic",
-            "fields": {
-              "OP": "ADD"
-            },
-            "inputs": {
-              "A": {
-                "shadow": {
-                  "type": "math_number",
-                  "fields": {
-                    "NUM": 1
-                  }
-                }
-              },
-              "B": {
-                "shadow": {
-                  "type": "math_number",
-                  "fields": {
-                    "NUM": 1
-                  }
-                }
-              }
-            }
+              kind: "block",
+              type: "variable_block",
+          },
+          {
+              kind: "block",
+              type: "Keyword_function",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_BuiltIn",
+        colour: "#A65C81",
+        contents: [
+          {
+              kind: "block",
+              type: "sleep",
+          },
+          {
+              kind: "block",
+              type: "Get_Time",
           },
         ],
       },
@@ -105,7 +105,7 @@ export default function App() {
   // Generate code from workspace
   function workspaceDidChange(workspace) {
     const code = pythonGenerator.workspaceToCode(workspace);
-    setJavascriptCode(code);
+    setCodeSpaceCode(code);
   }
 
   return (
@@ -132,7 +132,7 @@ export default function App() {
         <textarea
           id="code"
           style={{ height: "200px", width: "400px" }}
-          value={javascriptCode}
+          value={CodeSpaceCode}
           readOnly
         ></textarea>
       </div>
