@@ -5,6 +5,8 @@ import {pythonGenerator} from 'blockly/python';
 import "@/components/custom_Blocks";
 import "@/components/rb_Common";
 import "@/components/rb_BuiltIn";
+import Navbar from "@/components/UI/Navbar";
+import Footer from "@/components/UI/Footer";
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -108,34 +110,61 @@ export default function App() {
     setCodeSpaceCode(code);
   }
 
+  // 新增下載文件函數
+  const handleDownload = () => {
+    const element = document.createElement("a");
+    const file = new Blob([CodeSpaceCode], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "robot_script.robot";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   return (
-    <div className="workspace-container">
-      <div className="workspace-left">
-        <BlocklyWorkspace
-          toolboxConfiguration={toolboxCategories}
-          initialXml={initialXml}
-          className="fill-height"
-          workspaceConfiguration={{
-            grid: {
-              spacing: 20,
-              length: 3,
-              colour: "#ccc",
-              snap: true,
-            },
-          }}
-          onWorkspaceChange={workspaceDidChange}
-          onXmlChange={setXml}
-        />
+    <div className="app-container">
+      <Navbar />
+      <div className="workspace-container">
+        <div className="workspace-left">
+          <BlocklyWorkspace
+            toolboxConfiguration={toolboxCategories}
+            initialXml={initialXml}
+            className="fill-height"
+            workspaceConfiguration={{
+              grid: {
+                spacing: 20,
+                length: 3,
+                colour: "#ccc",
+                snap: true,
+              },
+            }}
+            onWorkspaceChange={workspaceDidChange}
+            onXmlChange={setXml}
+          />
+        </div>
+        <div className="workspace-right">
+          <textarea
+            id="code"
+            value={CodeSpaceCode}
+            readOnly
+          ></textarea>
+          <button 
+            onClick={handleDownload}
+            style={{
+              padding: '10px 20px',
+              margin: '10px 0',
+              backgroundColor: '#4CAF50',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            下載Robot檔案
+          </button>
+        </div>
       </div>
-      <div className="workspace-right">
-        <pre id="generated-xml">{xml}</pre>
-        <textarea
-          id="code"
-          style={{ height: "200px", width: "400px" }}
-          value={CodeSpaceCode}
-          readOnly
-        ></textarea>
-      </div>
+      <Footer />
     </div>
   );
 }
