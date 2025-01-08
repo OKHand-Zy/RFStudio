@@ -74,7 +74,7 @@ export default function App() {
         contents: [
           {
               kind: "block",
-              type: "Robot_Init",
+              type: "Robot_framework",
           },
           {
               kind: "block",
@@ -82,7 +82,7 @@ export default function App() {
           },
           {
               kind: "block",
-              type: "Keyword_function",
+              type: "Function_block",
           },
         ],
       },
