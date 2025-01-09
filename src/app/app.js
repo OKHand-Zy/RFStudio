@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import { BlocklyWorkspace } from "react-blockly";
 import {pythonGenerator} from 'blockly/python';
-import "@/components/custom_Blocks";
-import "@/components/rb_Common";
-import "@/components/rb_BuiltIn";
+import "@/components/Blocks/custom_Blocks";
+import "@/components/Blocks/rb_Common";
+import "@/components/Blocks/rb_BuiltIn";
 import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
+import DownloadButton from "@/components/btn_download";
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -110,17 +111,6 @@ export default function App() {
     setCodeSpaceCode(code);
   }
 
-  // 新增下載文件函數
-  const handleDownload = () => {
-    const element = document.createElement("a");
-    const file = new Blob([CodeSpaceCode], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
-    element.download = "robot_script.robot";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
-
   return (
     <div className="app-container">
       <Navbar />
@@ -148,20 +138,7 @@ export default function App() {
             value={CodeSpaceCode}
             readOnly
           ></textarea>
-          <button 
-            onClick={handleDownload}
-            style={{
-              padding: '10px 20px',
-              margin: '10px 0',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            下載Robot檔案
-          </button>
+          <DownloadButton CodeSpaceCode={CodeSpaceCode} />
         </div>
       </div>
       <Footer />
