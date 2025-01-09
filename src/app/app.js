@@ -2,28 +2,46 @@
 import React, { useState } from "react";
 import { BlocklyWorkspace } from "react-blockly";
 import {pythonGenerator} from 'blockly/python';
-import "@/components/Blocks/custom_Blocks";
-import "@/components/Blocks/rb_Common";
-import "@/components/Blocks/rb_BuiltIn";
+
 import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
 import DownloadButton from "@/components/btn_download";
+
+import "@/components/Blocks/command_Blocks";
+import "@/components/Blocks/rb_Common";
+import "@/components/Blocks/rb_BuiltIn";
+
 
 export default function App() {
   const [xml, setXml] = useState("");
   const [CodeSpaceCode, setCodeSpaceCode] = useState("");
 
   const initialXml =
-    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>';
+    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="Robot_framework" x="70" y="30"></field></block></xml>';
   
     const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
       {
         kind: "category",
+        name: "Commands",
+        colour: "#FF0000",
+        contents: [
+          {
+            kind : "block",
+            type: "Content",
+          },
+        ],
+      },
+      {
+        kind: "category",
         name: "Logic",
         colour: "#5C81A6",
         contents: [
+          {
+            kind : "block",
+            type: "logic_boolean"
+          },      
           {
             kind: "block",
             type: "controls_if",
@@ -48,42 +66,74 @@ export default function App() {
             type: "math_number",
           },
         ],
-      },
+      }, 
+      {
+        kind: "sep"
+      }, 
       {
         kind: "category",
-        name: "Custom",
-        colour: "#5CA699",
+        name: "RB_Framework",
+        colour: "#A65C81",
         contents: [
-            {
+          {
+            kind: "block",
+            type: "Robot_framework",
+          },
+          {
+            kind: "category",
+            name: "Settings",
+            colour: "#A65C81",
+            contents: [
+              {
                 kind: "block",
-                type: "print_message",
-            },
-            {
+                type: "setting_import",
+              },
+              {
                 kind: "block",
-                type: "new_boundary_function",
-            },
-            {
+                type: "Content"
+              }
+            ]
+          },
+          {
+            kind: "category",
+            name: "Variables",
+            colour: "#A65C81",
+            contents: [
+              {
                 kind: "block",
-                type: "return",
-            },
-        ],
-      },
+                type: "variable_set",
+              },
+              {
+                kind: "block",
+                type: "Content"
+              }
+            ]
+          },
+          {
+            kind: "category",
+            name: "TestCases",
+            colour: "#A65C81",
+            contents: [
+              {
+                kind: "block",
+                type: "Content"
+              }
+            ]
+          }
+        ]
+      },    
       {
         kind: "category",
         name: "RB_Common",
         colour: "#A65C81",
         contents: [
           {
-              kind: "block",
-              type: "Robot_framework",
+            kind: "block",
+            type: "Robot_framework",
           },
           {
-              kind: "block",
-              type: "variable_block",
-          },
-          {
-              kind: "block",
-              type: "Function_block",
+            kind: "block",
+            type: "Function_block",
           },
         ],
       },
@@ -93,12 +143,111 @@ export default function App() {
         colour: "#A65C81",
         contents: [
           {
-              kind: "block",
-              type: "sleep",
+            kind: "block",
+            type: "sleep",
           },
           {
-              kind: "block",
-              type: "Get_Time",
+            kind: "block",
+            type: "Get_Time",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_Collections",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_DateTime",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_Dialogs",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_OperatingSystem",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_Process",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_Screenshot",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_String",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_Telnet",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RB_XML",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
           },
         ],
       },

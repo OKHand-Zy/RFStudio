@@ -13,16 +13,16 @@ const rb_space = '    ';
 
 // Sleep Block
 Blockly.Blocks['sleep'] = {
-    init: function() {
-        this.appendValueInput("TIME")
-            .setCheck("Number")
-            .appendField("Sleep");
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(290);
-        this.setTooltip("Sleep for specified seconds");
-        this.setHelpUrl("");
-    }
+  init: function() {
+    this.appendValueInput("TIME")
+      .setCheck("Number")
+      .appendField("Sleep");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(290);
+    this.setTooltip("Sleep for specified seconds");
+    this.setHelpUrl("");
+  }
 };
 
 pythonGenerator.forBlock['sleep'] = function(block) {
@@ -46,18 +46,15 @@ Blockly.Blocks['Get_Time'] = {
     }
 };
 
-pythonGenerator.forBlock['Get_Time'] = function(block) {
-    pythonGenerator.provideFunction_('import_builtin', ['import BuiltIn']);
-    
+pythonGenerator.forBlock['Get_Time'] = function(block) {    
     let code;
     // 檢查是否有 DURATION 輸入值
     const duration = pythonGenerator.valueToCode(block, 'DURATION', pythonGenerator.ORDER_ATOMIC);
     
     if (duration) {
-        code = `${rb_space}BuiltIn.get_time${rb_space}${duration}`;
+      code = `${rb_space}BuiltIn.get_time${rb_space}${duration}`;
     } else {
-        code = `${rb_space}BuiltIn.get_time\n`;
+      code = `${rb_space}BuiltIn.get_time\n`;
     }
-    
     return code;
 };

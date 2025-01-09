@@ -17,7 +17,7 @@ Blockly.Blocks['Robot_framework'] = {
         this.appendDummyInput()
             .appendField("*** Settings ***");
         this.appendStatementInput("Settings")
-            .setCheck(null);
+            .setCheck(null)
             
         this.appendDummyInput()
             .appendField("*** Variables ***");
@@ -35,28 +35,28 @@ Blockly.Blocks['Robot_framework'] = {
             .setCheck(null);
 
         this.setInputsInline(true);
-        this.setColour(315);
+        this.setColour(200);
         this.setTooltip("Create robotframework function");
         this.setHelpUrl("");
     }
 };
 
 pythonGenerator.forBlock['Robot_framework'] = function(block) {
-    // 檢查工作區是否包含 sleep, Get_Time 區塊
-    const workspace = block.workspace;
-    const hasBuiltInBlocks = workspace.getAllBlocks().some(block => 
-        ['sleep', 'Get_Time'].includes(block.type)
-    );
+  let import_Library = '';
+  const workspace = block.workspace;
+  // 檢查工作區是否包含 BuiltIn 的 Blocks
+  const hasBuiltInBlocks = workspace.getAllBlocks().some(block => 
+    ['sleep', 'Get_Time'].includes(block.type)
+  );
+
+  import_Library += hasBuiltInBlocks ? `Library${rb_indent}BuiltIn\n` : '';
+  
+  var settings_content = import_Library + (pythonGenerator.statementToCode(block, 'Settings') || '');
+  var variables_content = pythonGenerator.statementToCode(block, 'Variables') || '';
+  var testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
+  var keywords_content = pythonGenerator.statementToCode(block, 'Keywords') || '';
     
-    // 只有在有 BuiltIn 相關區塊時才添加 Library 導入
-    const defaultSettings = hasBuiltInBlocks ? `Library${rb_indent}BuiltIn\n` : '';
-    
-    var settings_content = defaultSettings + (pythonGenerator.statementToCode(block, 'Settings') || '');
-    var variables_content = pythonGenerator.statementToCode(block, 'Variables') || '';
-    var testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
-    var keywords_content = pythonGenerator.statementToCode(block, 'Keywords') || '';
-    
-    var code = `*** Settings ***
+  var code = `*** Settings ***
 ${settings_content}
 *** Variables ***
 ${variables_content}
@@ -67,31 +67,57 @@ ${keywords_content}`;
     return code;
 };
 
-// RB: Variable Block
-Blockly.Blocks['variable_block'] = {
-    init: function () {
-        this.appendDummyInput()
-            .appendField(new Blockly.FieldTextInput("Variable Name"), "Name");
-        this.appendDummyInput()
-            .appendField(new Blockly.FieldTextInput("Valume"), "Value");
-        
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setInputsInline(true);
-        this.setColour(315);
-        this.setTooltip("Create a Variable with arguments");
-        this.setHelpUrl("");
-    }
+// RB: Setting imprt Block
+Blockly.Blocks['setting_import'] = {
+  init: function() {
+    this.appendValueInput("import_file")
+      .appendField(new Blockly.FieldDropdown([
+        ["Library", "Library"],
+        ["Documentation", "Documentation"],
+        ["Resource", "Resource"],
+      ]), "import_type");
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(100);
+    this.setTooltip("Setting Import Something");
+    this.setHelpUrl("");
+  }
 };
 
-pythonGenerator.forBlock['variable_block'] = function (block) {
-    var text_name = block.getFieldValue('Name');
-    var text_value = block.getFieldValue('Value');
-    
-    // 產生 Robot Framework 變數格式 (例如: ${BROWSER}  chrome)
-    var code = text_value ? 
-        `\${${text_name}}${rb_indent}${text_value}\n` : `\${${text_name}}\n`;
-        
+pythonGenerator.forBlock['setting_import'] = function(block) {
+    var import_type = block.getFieldValue('import_type');
+    var import_file = pythonGenerator.valueToCode(block, 'import_file', pythonGenerator.ORDER_ATOMIC);
+    var code = `${import_type}${rb_indent}${import_file ? `${import_file}` : ''}\n`;
+    return code;
+};
+
+// RB: Variable Block
+Blockly.Blocks['variable_set'] = {
+  init: function() {
+    this.appendValueInput("add_variable")
+      .appendField(
+        new Blockly.FieldDropdown([
+          ["Variable", "$"],
+          ["List", "@"],
+          ["Dict", "&"],
+        ]), "variable_type");
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(200);
+    this.setTooltip("Setting Variables");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['variable_set'] = function(block) {
+    var variable_type = block.getFieldValue('variable_type');
+    var variables = pythonGenerator.valueToCode(block, 'add_variable', pythonGenerator.ORDER_ATOMIC);
+    // 將變數名稱包在 {} 中，並保持其餘部分不變
+    var variableName = variables.split(rb_indent)[0];
+    var variableValue = variables.split(rb_indent).slice(1).join(rb_indent) || '';
+    var code = `${variable_type}{${variableName}}${variableValue ? `    ${variableValue}` : ''}\n`;
     return code;
 };
 
