@@ -7,17 +7,22 @@ import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
 import DownloadButton from "@/components/btn_download";
 
+import "@/components/Blocks/Framework/rb_setting";
+import "@/components/Blocks/Framework/rb_variable";
+import "@/components/Blocks/Framework/rb_testcase";
+import "@/components/Blocks/Framework/rb_keyword";
+
 import "@/components/Blocks/command_Blocks";
 import "@/components/Blocks/rb_Common";
 import "@/components/Blocks/rb_BuiltIn";
-
+import "@/components/Blocks/example_Blocks";
 
 export default function App() {
   const [xml, setXml] = useState("");
   const [CodeSpaceCode, setCodeSpaceCode] = useState("");
 
   const initialXml =
-    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="Robot_framework" x="70" y="30"></field></block></xml>';
+    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"></field></block></xml>';
   
     const toolboxCategories = {
     kind: "categoryToolbox",
@@ -76,21 +81,21 @@ export default function App() {
         colour: "#A65C81",
         contents: [
           {
-            kind: "block",
-            type: "Robot_framework",
-          },
-          {
             kind: "category",
             name: "Settings",
             colour: "#A65C81",
             contents: [
               {
                 kind: "block",
-                type: "setting_import",
+                type: "rb_fw_Settings",
               },
               {
                 kind: "block",
-                type: "Content"
+                type: "rb_setting_import",
+              },
+              {
+                kind: "block",
+                type: "rb_setting_content"
               }
             ]
           },
@@ -101,11 +106,15 @@ export default function App() {
             contents: [
               {
                 kind: "block",
-                type: "variable_set",
+                type: "rb_fw_Variables",
               },
               {
                 kind: "block",
-                type: "Content"
+                type: "rb_variable_setVariable",
+              },
+              {
+                kind: "block",
+                type: "rb_variable_content"
               }
             ]
           },
@@ -116,8 +125,27 @@ export default function App() {
             contents: [
               {
                 kind: "block",
-                type: "Content"
+                type: "rb_fw_TestCases"
+              },
+              {
+                kind: "block",
+                type: "rb_testcase_function"
               }
+            ]
+          },
+          {
+            kind: "category",
+            name: "KeyWords",
+            colour: "#A65C81",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_fw_Keywords"
+              },
+              {
+                kind: "block",
+                type: "rb_keyword_function"
+              },
             ]
           }
         ]
@@ -130,10 +158,6 @@ export default function App() {
           {
             kind: "block",
             type: "Robot_framework",
-          },
-          {
-            kind: "block",
-            type: "Function_block",
           },
         ],
       },

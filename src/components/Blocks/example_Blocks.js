@@ -79,3 +79,73 @@ pythonGenerator.forBlock['return'] = function (block) {
 
 
 
+// 垂直串接限制示範
+Blockly.Blocks['green_block'] = {
+  init: function() {
+    this.setColour(120);
+    this.appendDummyInput()
+      .appendField("Green Block");
+    this.setPreviousStatement(true, ["blue_green"]);
+    this.setNextStatement(true, ["green_blue", "green_purple"]);
+  }
+};
+pythonGenerator.forBlock['green_block'] = function (block) {
+  return ``; 
+};
+
+Blockly.Blocks['blue_block'] = {
+  init: function() {
+    this.setColour(210);
+    this.appendDummyInput()
+      .appendField("Blue Block");
+    this.setPreviousStatement(true, ["green_blue"]);
+    this.setNextStatement(true, ["blue_green"]);
+  }
+};
+pythonGenerator.forBlock['blue_block'] = function (block) {
+  return ``; 
+};
+
+Blockly.Blocks['purple_block'] = {
+  init: function() {
+    this.setColour(260);
+    this.appendDummyInput()
+      .appendField("Purple Block");
+    this.setPreviousStatement(true, ["green_purple"]);
+  }
+};
+pythonGenerator.forBlock['purple_block'] = function (block) {
+  return ``;
+};
+
+// 影子示範
+Blockly.Blocks['example_block'] = {
+  init: function() {
+    this.appendValueInput('TEXT')
+        .setCheck('String')
+        .appendField("顯示文字");
+    
+    // 正確的影子區塊設置方式
+    const input = this.getInput('TEXT');
+    const shadow = this.workspace.newBlock('text', 'shadow');
+    shadow.setFieldValue('預設文字', 'TEXT');
+    shadow.setShadow(true);
+    shadow.initSvg();
+    shadow.render();
+    input.connection.connect(shadow.outputConnection);
+    
+    this.setColour(160);
+    this.setTooltip("這是一個範例區塊");
+    this.setHelpUrl("");
+    this.setOutput(true, 'String');  // 如果需要輸出的話
+  }
+};
+
+pythonGenerator.forBlock['example_block'] = function(block) {
+  // 獲取輸入值
+  const textValue = pythonGenerator.valueToCode(block, 'TEXT', 
+    pythonGenerator.ORDER_ATOMIC) || '""';
+  
+  // 返回正確格式的 Python 代碼
+  return [`print(${textValue})`, pythonGenerator.ORDER_NONE];
+};
