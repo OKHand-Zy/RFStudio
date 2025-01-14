@@ -51,14 +51,45 @@ Blockly.Blocks['rb_testcase_function'] = {
 
 pythonGenerator.forBlock['rb_testcase_function'] = function (block) {
   var testcase_name = block.getFieldValue('testcase_name');
-  
-  // 設定縮排為4個空格
   pythonGenerator.INDENT = rb_indent;
-  // 生成內容（現在會自動加入縮排）
   var statements_content = pythonGenerator.statementToCode(block, 'testcase_content') || '';
-  // 還原原本的縮排設定
   pythonGenerator.INDENT = default_indent;
-  
   var code = `${testcase_name}\n${statements_content}\n`;
+  return code;
+};
+
+// RB: TestCase section Block
+Blockly.Blocks['rb_testcase_section_container'] = {
+  init: function() {
+    this.appendDummyInput("section")
+      .appendField(new Blockly.FieldDropdown([
+        ["Documentation", "Documentation"],
+        ["Tags", "Tags"],
+        ["Setup", "Setup"],
+        ["Teardown", "Teardown"],
+        ["Template", "Template"],
+        ["Timeout", "Timeout"],
+      ]), "section_type")
+      .appendField(new Blockly.FieldTextInput("Content"), "content")
+      
+    this.appendValueInput("args")
+        .appendField("  ")
+        .setCheck("section_args") 
+    
+    this.setOutput(false, "section_args");
+    this.setPreviousStatement(true, ['rb_fw_TestCases', 'rb_testcase_function', 'rb_testcase_section_container']);
+    this.setNextStatement(true, ['rb_testcase_function', 'rb_testcase_section_container']);
+    this.setInputsInline(true);
+    this.setColour(rb_testcase_color);
+    this.setTooltip("Setting section");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['rb_testcase_section_container'] = function(block) {
+  var section_type = block.getFieldValue('section_type');
+  var content = block.getFieldValue('content');
+  var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  var code = `${section_type}${rb_indent}${content}${resource_args ? `${rb_indent}${resource_args}` : ''}\n`;
   return code;
 };

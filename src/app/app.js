@@ -12,8 +12,6 @@ import "@/components/Blocks/Framework/rb_variable";
 import "@/components/Blocks/Framework/rb_testcase";
 import "@/components/Blocks/Framework/rb_keyword";
 
-import "@/components/Blocks/command_Blocks";
-import "@/components/Blocks/rb_Common";
 import "@/components/Blocks/rb_BuiltIn";
 import "@/components/Blocks/example_Blocks";
 
@@ -32,10 +30,7 @@ export default function App() {
         name: "Commands",
         colour: "#FF0000",
         contents: [
-          {
-            kind : "block",
-            type: "Content",
-          },
+          
         ],
       },
       {
@@ -73,6 +68,29 @@ export default function App() {
         ],
       }, 
       {
+        kind: "category",
+        name: "Test",
+        colour: "#5CA65C",
+        contents: [
+          {
+            kind: "block",
+            type: "New_dynamic_list_creator"
+          },
+          {
+            kind: "block",
+            type: "dynamic_HZ_list_creator",
+          },
+          {
+            kind: "block",
+            type: "dynamic_style_block"
+          },
+          {
+            kind: "block",
+            type: "data_reference_block"
+          },
+        ],
+      },
+      {
         kind: "sep"
       }, 
       {
@@ -91,7 +109,7 @@ export default function App() {
               },
               {
                 kind: "block",
-                type: "rb_setting_import",
+                type: "rb_setting_section_container",
               },
               {
                 kind: "block",
@@ -114,6 +132,10 @@ export default function App() {
               },
               {
                 kind: "block",
+                type: "rb_type_variable_arg",
+              },
+              {
+                kind: "block",
                 type: "rb_variable_content"
               }
             ]
@@ -130,7 +152,11 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_testcase_function"
-              }
+              },
+              {
+                kind: "block",
+                type: "rb_testcase_section_container"
+              },
             ]
           },
           {
@@ -146,6 +172,10 @@ export default function App() {
                 kind: "block",
                 type: "rb_keyword_function"
               },
+              {
+                kind: "block",
+                type: "rb_keyword_function_arg_container"
+              },
             ]
           }
         ]
@@ -155,10 +185,7 @@ export default function App() {
         name: "RB_Common",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "Robot_framework",
-          },
+          
         ],
       },
       {
@@ -294,6 +321,23 @@ export default function App() {
             initialXml={initialXml}
             className="fill-height"
             workspaceConfiguration={{
+              zoom:{ 
+                controls: true,  // 控制按鈕
+                wheel: false,  // 滾輪縮放
+                startScale: 1.0,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2
+              },
+              trashcan: true, // 垃圾桶
+              move:{
+                scrollbars: {
+                  horizontal: true,
+                  vertical: true,
+                },
+                drag: true,
+                wheel: false,
+              },
               grid: {
                 spacing: 20,
                 length: 3,

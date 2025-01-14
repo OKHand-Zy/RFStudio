@@ -42,13 +42,13 @@ Blockly.Blocks['rb_variable_setVariable'] = {
                 ["List", "@"],
                 ["Dict", "&"],
             ]), "variable_type")
-        .appendField(new Blockly.FieldTextInput(""), "variable_name");
+        .appendField(new Blockly.FieldTextInput("Variable_Name"), "variable_name");
         
     this.appendValueInput("add_variable")
         .appendField("=")
         .setCheck("Variable") 
     
-    this.setPreviousStatement(true, ['rb_fw_Variables','rb_variable_setVariable']);
+    this.setPreviousStatement(true, ['rb_variable_setVariable']);
     this.setNextStatement(true, ['rb_variable_setVariable']);
     this.setInputsInline(true);
     this.setColour(rb_variable_color);
@@ -65,6 +65,43 @@ pythonGenerator.forBlock['rb_variable_setVariable'] = function(block) {
     // Format: ${variable_name}    value
     var code = `${variable_type}{${variable_name}}${variable_value ? `${rb_indent}${variable_value}` : ''}\n`;
     return code;
+};
+
+// RB: Setting Type Variable arg Block
+Blockly.Blocks['rb_type_variable_arg'] = {
+  init: function() {
+    // Create a value input instead of dummy input
+    this.appendValueInput("Variable")  // Named input for potential connections
+        .appendField(
+            new Blockly.FieldDropdown([
+                ["Variable", "$"],
+                ["List", "@"],
+                ["Dict", "&"],
+            ]), "variable_type")
+        .appendField("{")
+        .appendField(new Blockly.FieldTextInput("Arg_Name"), "args")
+        .appendField("}");
+
+    this.setOutput(true, 'Variable'); 
+    this.setColour(rb_variable_color);
+    this.setTooltip("Setting Variables args");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['rb_type_variable_arg'] = function(block) {
+  var variable_type = block.getFieldValue('variable_type') || '$';
+  var variable_args = block.getFieldValue('args') || '';
+  var value_input = pythonGenerator.valueToCode(block, 'Variable', pythonGenerator.ORDER_ATOMIC) || '';
+  var code = '';
+
+  if (value_input) {
+    code = `${variable_type}{${variable_args.trim()}}${rb_indent}${value_input}`;
+  } else {
+    code = `${variable_type}{${variable_args.trim()}}`;
+  }
+
+  return [code, pythonGenerator.ORDER_ATOMIC];
 };
 
 // RB: Setting Variable Content Block

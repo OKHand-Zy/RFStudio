@@ -15,7 +15,7 @@ Blockly.Blocks['rb_fw_Settings'] = {
       .appendField("*** Settings ***")
 
     this.appendStatementInput("Settings")
-      .setCheck(['rb_setting_import', 'rb_setting_content'])
+      .setCheck(['rb_setting_section_container', 'rb_setting_content'])
     
     this.setNextStatement(true, ['rb_fw_Variables']) 
     this.setColour(rb_setting_color)
@@ -41,24 +41,42 @@ ${settings_content}`;
   return code;  
 }
 
-// RB: Setting imprt Block
-Blockly.Blocks['rb_setting_import'] = {
+// RB: Setting section Block
+// https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-694
+Blockly.Blocks['rb_setting_section_container'] = {
   init: function() {
     this.appendDummyInput("import_file")
       .appendField(new Blockly.FieldDropdown([
         ["Library", "Library"],
-        ["Documentation", "Documentation"],
         ["Resource", "Resource"],
+        ["Variables", "Variables"],
+        ["Name", "Name"],
+        ["Documentation", "Documentation"],
+        ["Metadata", "Metadata"],
+        ["Suite Setup", "Suite Setup"],
+        ["Suite Teardown", "Suite Teardown"],
+        ["Test Tags", "Test Tags"],
+        ["Force Tags", "Force Tags"],
+        ["Default Tags", "Default Tags"],
+        ["Keyword Tags", "Keyword Tags"],
+        ["Test Setup", "Test Setup"],
+        ["Test Teardown", "Test Teardown"],
+        ["Test Template", "Test Template"],
+        ["Timeout", "Timeout"],
+        ["Task Setup", "Task Setup"],
+        ["Task Teardown", "Task Teardown"],
+        ["Task Template", "Task Template"],
+        ["Task Timeout", "Task Timeout"],
       ]), "import_type")
-      .appendField(new Blockly.FieldTextInput("import_resource"), "import_resource")
+      .appendField(new Blockly.FieldTextInput("Import_Resource"), "import_resource")
       
     this.appendValueInput("args")
         .appendField("  ")
         .setCheck("Setting") 
     
     this.setOutput(false, "Setting");
-    this.setPreviousStatement(true, ['rb_fw_Settings','rb_setting_import']);
-    this.setNextStatement(true, ['rb_setting_import']);
+    this.setPreviousStatement(true, ['rb_fw_Settings','rb_setting_section_container']);
+    this.setNextStatement(true, ['rb_setting_section_container']);
     this.setInputsInline(true);
     this.setColour(rb_setting_color);
     this.setTooltip("Setting Import Something");
@@ -66,7 +84,7 @@ Blockly.Blocks['rb_setting_import'] = {
   }
 };
 
-pythonGenerator.forBlock['rb_setting_import'] = function(block) {
+pythonGenerator.forBlock['rb_setting_section_container'] = function(block) {
   var import_type = block.getFieldValue('import_type');
   var import_resource = block.getFieldValue('import_resource');
   var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';

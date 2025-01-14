@@ -149,3 +149,382 @@ pythonGenerator.forBlock['example_block'] = function(block) {
   // 返回正確格式的 Python 代碼
   return [`print(${textValue})`, pythonGenerator.ORDER_NONE];
 };
+
+// mutator 與 codecompose 和 decompose (Logic.js if.else model)
+// Ref: https://github.com/google/blockly/blob/5a4e30a176b7155cfe3aa777a9241b0bf4fd829f/blocks/logic.js#L360
+// issue: https://github.com/google/blockly/issues/7546
+// 垂直擴展
+const baseMutatorMixin = {
+  /**
+   * 將 Block 狀態保存到 XML
+   */
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('items', this.itemCount_);
+    return container;
+  },
+
+  /**
+   * 從 XML 載入 Block 狀態
+   */
+  domToMutation: function(xmlElement) {
+    const items = parseInt(xmlElement.getAttribute('items'), 10);
+    this.itemCount_ = isNaN(items) ? 0 : items;
+    this.updateShape_();
+  },
+
+  /**
+   * 建立 mutator UI
+   */
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock(this.containerBlockType);
+    containerBlock.initSvg();
+    
+    let connection = containerBlock.getInput('STACK').connection;
+    for (let i = 0; i < this.itemCount_; i++) {
+      const itemBlock = workspace.newBlock(this.itemBlockType);
+      itemBlock.initSvg();
+      connection.connect(itemBlock.previousConnection);
+      connection = itemBlock.nextConnection;
+    }
+    
+    return containerBlock;
+  },
+
+  /**
+   * 從 mutator UI 重建主要 Block 
+   */
+  compose: function(containerBlock) {
+    const connections = [];
+    let itemBlock = containerBlock.getInputTargetBlock('STACK');
+    
+    while (itemBlock && !itemBlock.isInsertionMarker()) {
+      connections.push(itemBlock.valueConnection_);
+      itemBlock = itemBlock.nextConnection && 
+                itemBlock.nextConnection.targetBlock();
+    }
+    
+    this.itemCount_ = connections.length;
+    this.updateShape_();
+    
+    // 重新連接所有輸入
+    for (let i = 0; i < this.itemCount_; i++) {
+      if (connections[i]) {
+        this.getInput('ADD' + i).connection.connect(connections[i]);
+      }
+    }
+  },
+
+  /**
+   * 保存連接資訊 
+   */
+  saveConnections: function(containerBlock) {
+    let itemBlock = containerBlock.getInputTargetBlock('STACK');
+    let i = 0;
+    
+    while (itemBlock) {
+      const input = this.getInput('ADD' + i);
+      itemBlock.valueConnection_ = input && input.connection.targetConnection;
+      itemBlock = itemBlock.nextConnection &&
+                itemBlock.nextConnection.targetBlock();
+      i++;
+    }
+  }
+};
+
+/**
+ * 動態列表產生器
+ */
+Blockly.Blocks['New_dynamic_list_creator'] = {
+  init: function() {
+    this.setColour(260);
+    this.itemCount_ = 2;
+    this.containerBlockType = 'list_container';
+    this.itemBlockType = 'list_item';
+    
+    this.setMutator(new Blockly.icons.MutatorIcon([this.itemBlockType], this));
+    this.setOutput(true, 'Array');
+    this.setTooltip("建立具有任意數量項目的列表");
+    this.updateShape_();
+  },
+
+  updateShape_: function() {
+    // 移除現有輸入
+    if (this.getInput('EMPTY')) {
+      this.removeInput('EMPTY');
+    }
+    for (let i = 0; this.getInput('ADD' + i); i++) {
+      this.removeInput('ADD' + i);
+    }
+
+    // 重建區塊
+    if (this.itemCount_ === 0) {
+      this.appendDummyInput('EMPTY')
+          .appendField("空列表");
+    } else {
+      for (let i = 0; i < this.itemCount_; i++) {
+        this.appendValueInput('ADD' + i)
+            .setCheck(null)
+            .appendField(i === 0 ? "列表包含" : "和");
+      }
+    }
+  },
+  
+  ...baseMutatorMixin
+};
+// Mutator dialog item block
+Blockly.Blocks['list_container'] = {
+  init: function() {
+    this.setColour(260);
+    this.appendDummyInput()
+        .appendField("list items");
+    this.appendStatementInput('STACK');
+    this.setTooltip("Add or remove items");
+    this.contextMenu = false;
+  }
+};
+// Mutator dialog item block
+Blockly.Blocks['list_item'] = {
+  init: function() {
+    this.setColour(260);
+    this.appendDummyInput()
+        .appendField("item");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip("Add an item to the list");
+    this.contextMenu = false;
+  }
+};
+
+/**
+ * 產生 Python 程式碼
+ */
+pythonGenerator.forBlock['New_dynamic_list_creator'] = function(block) {
+  const elements = [];
+  for (let i = 0; i < block.itemCount_; i++) {
+    const value = pythonGenerator.valueToCode(block, 'ADD' + i, 
+      pythonGenerator.ORDER_NONE) || 'None';
+    elements.push(value);
+  }
+  return ['[' + elements.join(', ') + ']', pythonGenerator.ORDER_ATOMIC];
+};
+
+// ==================================================================
+// 水平擴展
+const HZ_MutatorMixin = {
+    mutationToDom: function() {
+        const container = document.createElement('mutation');
+        container.setAttribute('items', this.itemCount_);
+        return container;
+    },
+
+    domToMutation: function(xmlElement) {
+        const items = parseInt(xmlElement.getAttribute('items'), 10);
+        this.itemCount_ = isNaN(items) ? 0 : items;
+        this.updateShape_();
+    },
+
+    decompose: function(workspace) {
+        const containerBlock = workspace.newBlock(this.containerBlockType);
+        containerBlock.initSvg();
+        
+        let connection = containerBlock.getInput('STACK').connection;
+        for (let i = 0; i < this.itemCount_; i++) {
+            const itemBlock = workspace.newBlock(this.itemBlockType);
+            itemBlock.initSvg();
+            // Connect value input instead of statement
+            connection.connect(itemBlock.outputConnection);
+            connection = itemBlock.getInput('content').connection;
+        }
+        
+        return containerBlock;
+    },
+
+    compose: function(containerBlock) {
+        const connections = [];
+        let itemBlock = containerBlock.getInputTargetBlock('STACK');
+        
+        while (itemBlock && !itemBlock.isInsertionMarker()) {
+            connections.push(itemBlock.valueConnection_);
+            itemBlock = itemBlock.getInput('content') && 
+                          itemBlock.getInput('content').connection.targetBlock();
+        }
+        
+        this.itemCount_ = connections.length;
+        this.updateShape_();
+        
+        for (let i = 0; i < this.itemCount_; i++) {
+            if (connections[i]) {
+                this.getInput('ADD' + i).connection.connect(connections[i]);
+            }
+        }
+    },
+
+    saveConnections: function(containerBlock) {
+        let itemBlock = containerBlock.getInputTargetBlock('STACK');
+        let i = 0;
+        
+        while (itemBlock) {
+            const input = this.getInput('ADD' + i);
+            itemBlock.valueConnection_ = input && input.connection.targetConnection;
+            itemBlock = itemBlock.getInput('content') &&
+                          itemBlock.getInput('content').connection.targetBlock();
+            i++;
+        }
+    }
+};
+
+Blockly.Blocks['dynamic_HZ_list_creator'] = {
+    init: function() {
+        this.setColour(260);
+        this.itemCount_ = 2;
+        this.containerBlockType = 'HZ_list_container';
+        this.itemBlockType = 'HZ_list_item';
+        
+        this.setInputsInline(true);
+        this.setMutator(new Blockly.icons.MutatorIcon([this.itemBlockType], this));
+        this.setOutput(true, 'Array');
+        this.setTooltip("Create a list with any number of items");
+        this.updateShape_();
+    },
+
+    updateShape_: function() {
+        if (this.getInput('EMPTY')) {
+            this.removeInput('EMPTY');
+        }
+        for (let i = 0; this.getInput('ADD' + i); i++) {
+            this.removeInput('ADD' + i);
+        }
+
+        if (this.itemCount_ === 0) {
+            this.appendDummyInput('EMPTY')
+                    .appendField("empty list");
+        } else {
+          for (let i = 0; i < this.itemCount_; i++) {
+              this.appendValueInput('ADD' + i)
+                .setCheck("Variable")
+                .appendField(i === 0 ? "list with" : "and");
+          }
+          
+        }
+    },
+    ...HZ_MutatorMixin
+};
+
+// 修改 list_container block
+Blockly.Blocks['HZ_list_container'] = {
+  init: function() {
+    this.appendValueInput('STACK')
+        .appendField("list items")
+        .setCheck(null)
+    
+    this.setOutput(null)
+    this.setInputsInline(true);
+    this.setTooltip("Add or remove items");
+    this.contextMenu = false;
+    this.setColour(260);
+  }
+};
+
+// 修改 list_item block
+Blockly.Blocks['HZ_list_item'] = {
+    init: function() {
+            this.appendValueInput("content")
+                .appendField("args")
+                .setCheck("Variable")
+                    
+            this.setOutput(true, "Variable");  
+            this.setColour(260);
+            this.setTooltip("Input content");
+            this.setHelpUrl("");
+    }
+};
+
+pythonGenerator.forBlock['dynamic_HZ_list_creator'] = function(block) {
+    const elements = [];
+    for (let i = 0; i < block.itemCount_; i++) {
+        const value = pythonGenerator.valueToCode(block, 'ADD' + i, 
+            pythonGenerator.ORDER_NONE) || 'None';
+        elements.push(value);
+    }
+    return ['[' + elements.join(', ') + ']', pythonGenerator.ORDER_ATOMIC];
+};
+
+
+// 驗證
+Blockly.Blocks['dynamic_style_block'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Style: ")
+        .appendField(new Blockly.FieldDropdown([
+          ["Default", "DEFAULT"],
+          ["Red", "RED"],
+          ["Green", "GREEN"],
+          ["Blue", "BLUE"]
+        ]), "STYLE");
+    this.appendValueInput("TEXT")
+        .setCheck("String")
+        .appendField("Text:");
+    
+    this.setOutput(true, "String");
+    this.setColour(230);
+    this.setTooltip("A block that changes its style based on selection");
+    this.setHelpUrl("");
+
+    // Track if extra input exists
+    this.hasExtraInput = false;
+
+    this.setOnChange(function(changeEvent) {
+      if (changeEvent.type == Blockly.Events.BLOCK_CHANGE &&
+          changeEvent.name == "STYLE") {
+        this.updateShape_();
+      }
+    });
+  },
+
+  updateShape_: function() {
+    var style = this.getFieldValue('STYLE');
+    
+    // Handle extra input for red style
+    if (style === 'RED' && !this.hasExtraInput) {
+      // Add extra input for red style
+      this.appendValueInput("EXTRA_INPUT")
+          .setCheck("String")
+          .appendField("Extra Input:");
+      this.hasExtraInput = true;
+    } else if (style !== 'RED' && this.hasExtraInput) {
+      // Remove extra input for other styles
+      this.removeInput("EXTRA_INPUT");
+      this.hasExtraInput = false;
+    }
+
+    // Update color based on style
+    switch(style) {
+      case 'RED':
+        this.setColour(0);
+        break;
+      case 'GREEN':
+        this.setColour(120);
+        break;
+      case 'BLUE':
+        this.setColour(210);
+        break;
+      default:
+        this.setColour(230);
+    }
+  }
+};
+
+pythonGenerator.forBlock['dynamic_style_block'] = function(block) {
+  var style = block.getFieldValue('STYLE');
+  var text = pythonGenerator.valueToCode(block, 'TEXT', pythonGenerator.ORDER_ATOMIC) || '""';
+  
+  // Handle extra input in code generation
+  var extraInput = '';
+  if (style === 'RED') {
+    extraInput = pythonGenerator.valueToCode(block, 'EXTRA_INPUT', pythonGenerator.ORDER_ATOMIC) || '""';
+    return [`f"Style: {${style}}, Text: {${text}}, Extra: {${extraInput}}"`, pythonGenerator.ORDER_NONE];
+  }
+  
+  return [`f"Style: {${style}}, Text: {${text}}"`, pythonGenerator.ORDER_NONE];
+};
