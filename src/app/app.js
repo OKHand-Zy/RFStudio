@@ -2,27 +2,28 @@
 import React, { useState } from "react";
 import { BlocklyWorkspace } from "react-blockly";
 import {pythonGenerator} from 'blockly/python';
-
+// UI
 import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
 import DownloadButton from "@/components/btn_download";
-
-import "@/components/Blocks/Framework/rb_setting";
-import "@/components/Blocks/Framework/rb_variable";
-import "@/components/Blocks/Framework/rb_testcase";
-import "@/components/Blocks/Framework/rb_keyword";
-
-import "@/components/Blocks/rb_BuiltIn";
+// RobotFrameWork Blocks
+import "@/components/Blocks/RobotFramework/rb_setting";
+import "@/components/Blocks/RobotFramework/rb_variable";
+import "@/components/Blocks/RobotFramework/rb_testcase";
+import "@/components/Blocks/RobotFramework/rb_keyword";
+// Common Blocks
+import "@/components/Blocks/common";
+import "@/components/Blocks/RobotLibrary/BuiltIn";
 import "@/components/Blocks/example_Blocks";
 
 export default function App() {
   const [xml, setXml] = useState("");
   const [CodeSpaceCode, setCodeSpaceCode] = useState("");
-
+  
   const initialXml =
     '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"></field></block></xml>';
   
-    const toolboxCategories = {
+  const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
       {
@@ -30,8 +31,41 @@ export default function App() {
         name: "Commands",
         colour: "#FF0000",
         contents: [
-          
-        ],
+          {
+            kind: "category",
+            name: "Variables",
+            colour: "#FF0000",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_cm_variable",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_content",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_date",
+              },
+            ]
+          },
+          {
+            kind: "category",
+            name: "Documentation",
+            colour: "#FF0000",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_cm_inline_styles"
+              },
+              {
+                kind: "block",
+                type: "rb_cm_custom_links"
+              },
+            ]
+          },
+        ]
       },
       {
         kind: "category",
@@ -86,7 +120,17 @@ export default function App() {
           },
           {
             kind: "block",
-            type: "data_reference_block"
+            type: "greet_person",
+            inputs: {
+              NAME: {
+                shadow: {
+                  type: "text",
+                  fields: {
+                    TEXT: "小明"  // 預設值
+                  }
+                }
+              }
+            }
           },
         ],
       },
@@ -109,12 +153,12 @@ export default function App() {
               },
               {
                 kind: "block",
-                type: "rb_setting_section_container",
+                type: "rb_setting_remote_library",
               },
               {
                 kind: "block",
-                type: "rb_setting_content"
-              }
+                type: "rb_setting_section_container",
+              },
             ]
           },
           {
@@ -129,14 +173,6 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_variable_setVariable",
-              },
-              {
-                kind: "block",
-                type: "rb_type_variable_arg",
-              },
-              {
-                kind: "block",
-                type: "rb_variable_content"
               }
             ]
           },
@@ -180,14 +216,6 @@ export default function App() {
           }
         ]
       },    
-      {
-        kind: "category",
-        name: "RB_Common",
-        colour: "#A65C81",
-        contents: [
-          
-        ],
-      },
       {
         kind: "category",
         name: "RB_BuiltIn",

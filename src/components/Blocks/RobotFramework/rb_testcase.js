@@ -3,8 +3,8 @@ import {pythonGenerator} from 'blockly/python';
 
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
-const rb_indent = '    ';
-const rb_testcase_color = 150;
+const robot_indent = '    ';
+const block_color = 150;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
 // RB: TestCases Group Block
@@ -18,7 +18,7 @@ Blockly.Blocks['rb_fw_TestCases'] = {
     
     this.setPreviousStatement(true, ['rb_fw_TestCases'])
     this.setNextStatement(true, ['rb_fw_Keywords'])
-    this.setColour(rb_testcase_color)
+    this.setColour(block_color)
     this.setTooltip("Create robotframework TestCases Group")
     this.setHelpUrl("")
   }
@@ -43,7 +43,7 @@ Blockly.Blocks['rb_testcase_function'] = {
       this.setPreviousStatement(true, ['rb_fw_TestCases','rb_testcase_function']);
       this.setNextStatement(true, ['rb_testcase_function']);
       this.setInputsInline(true);
-      this.setColour(rb_testcase_color);
+      this.setColour(block_color);
       this.setTooltip("Create a TestCase function");
       this.setHelpUrl("");
   }
@@ -51,7 +51,7 @@ Blockly.Blocks['rb_testcase_function'] = {
 
 pythonGenerator.forBlock['rb_testcase_function'] = function (block) {
   var testcase_name = block.getFieldValue('testcase_name');
-  pythonGenerator.INDENT = rb_indent;
+  pythonGenerator.INDENT = robot_indent;
   var statements_content = pythonGenerator.statementToCode(block, 'testcase_content') || '';
   pythonGenerator.INDENT = default_indent;
   var code = `${testcase_name}\n${statements_content}\n`;
@@ -74,13 +74,12 @@ Blockly.Blocks['rb_testcase_section_container'] = {
       
     this.appendValueInput("args")
         .appendField("  ")
-        .setCheck("section_args") 
+        .setCheck("Variable") 
     
-    this.setOutput(false, "section_args");
     this.setPreviousStatement(true, ['rb_fw_TestCases', 'rb_testcase_function', 'rb_testcase_section_container']);
     this.setNextStatement(true, ['rb_testcase_function', 'rb_testcase_section_container']);
     this.setInputsInline(true);
-    this.setColour(rb_testcase_color);
+    this.setColour(block_color);
     this.setTooltip("Setting section");
     this.setHelpUrl("");
   }
@@ -90,6 +89,6 @@ pythonGenerator.forBlock['rb_testcase_section_container'] = function(block) {
   var section_type = block.getFieldValue('section_type');
   var content = block.getFieldValue('content');
   var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
-  var code = `${section_type}${rb_indent}${content}${resource_args ? `${rb_indent}${resource_args}` : ''}\n`;
+  var code = `${section_type}${robot_indent}${content}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
   return code;
 };

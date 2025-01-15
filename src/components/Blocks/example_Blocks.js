@@ -528,3 +528,24 @@ pythonGenerator.forBlock['dynamic_style_block'] = function(block) {
   
   return [`f"Style: {${style}}, Text: {${text}}"`, pythonGenerator.ORDER_NONE];
 };
+
+//Test
+Blockly.Blocks['greet_person'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck("String")
+        .appendField("跟");
+
+    this.appendDummyInput()
+        .appendField("說你好");
+    
+        this.setColour(160);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip("向某人打招呼");
+  }
+};
+pythonGenerator.forBlock['greet_person'] = function(block) {
+  const name = pythonGenerator.valueToCode(block, 'NAME', pythonGenerator.ORDER_ATOMIC) || '"未知"';
+  return `console.log("你好, " + ${name});\n`;
+};

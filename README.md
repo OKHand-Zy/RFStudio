@@ -5,6 +5,7 @@ A visual programming tool for creating Robot Framework test scripts using block-
 
 The goal of this project is to provide a learning website that facilitates a faster onboarding process for users who are new to or not yet comfortable with Robot Framework.
 
+使用於 >= Robot Framework 6.1 
 ## Features
 
 - Visual block-based programming interface using Blockly
@@ -43,6 +44,11 @@ yarn dev
 ```
 
 4. Open your browser and visit http://localhost:3000
+
+## Future
+
+- [ ] Add import other Robot Framework library html file transfer to blockly
+ 
 
 ## Contributing
 
