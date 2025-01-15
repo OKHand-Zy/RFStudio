@@ -154,6 +154,22 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_setting_remote_library",
+                // 設定文字輸入框的預設值
+                fields: {
+                  remote_link: "http://127.0.0.1:8270",  // Remote_Link 的預設值
+                  liberary_name: "RemoteLib"             // Liberary_Name 的預設值
+                },
+                // 設定 args 輸入的 shadow block
+                inputs: {
+                  "args": {                     // 對應 appendValueInput("args")
+                    shadow: {
+                      type: "rb_cm_content",   // 使用變數積木作為 shadow block
+                      fields: {
+                        CONTENT: "args=None"             // 設定變數名稱
+                      }
+                    }
+                  }
+                }
               },
               {
                 kind: "block",
