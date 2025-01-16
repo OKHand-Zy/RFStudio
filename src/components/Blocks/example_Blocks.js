@@ -411,7 +411,6 @@ Blockly.Blocks['dynamic_HZ_list_creator'] = {
     ...HZ_MutatorMixin
 };
 
-// 修改 list_container block
 Blockly.Blocks['HZ_list_container'] = {
   init: function() {
     this.appendValueInput('STACK')
@@ -426,7 +425,6 @@ Blockly.Blocks['HZ_list_container'] = {
   }
 };
 
-// 修改 list_item block
 Blockly.Blocks['HZ_list_item'] = {
     init: function() {
             this.appendValueInput("content")
@@ -548,4 +546,123 @@ Blockly.Blocks['greet_person'] = {
 pythonGenerator.forBlock['greet_person'] = function(block) {
   const name = pythonGenerator.valueToCode(block, 'NAME', pythonGenerator.ORDER_ATOMIC) || '"未知"';
   return `console.log("你好, " + ${name});\n`;
+};
+
+// 稍微簡單一點的 mutator
+const Library_MutatorMixin = {
+  mutationToDom: function() {
+      const container = document.createElement('mutation');
+      container.setAttribute('items', this.itemCount_);
+      return container;
+  },
+
+  domToMutation: function(xmlElement) {
+      const items = parseInt(xmlElement.getAttribute('items'), 10);
+      this.itemCount_ = isNaN(items) ? 0 : items;
+      this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+      const containerBlock = workspace.newBlock(this.containerBlockType);
+      containerBlock.initSvg();
+      
+      let connection = containerBlock.getInput('STACK').connection;
+      if (this.itemCount_ > 0) {
+          const itemBlock = workspace.newBlock(this.itemBlockType);
+          itemBlock.initSvg();
+          connection.connect(itemBlock.outputConnection);
+      }
+      
+      return containerBlock;
+  },
+
+  compose: function(containerBlock) {
+      const itemBlock = containerBlock.getInputTargetBlock('STACK');
+      this.itemCount_ = itemBlock && !itemBlock.isInsertionMarker() ? 1 : 0;
+      this.updateShape_();
+  },
+
+  saveConnections: function(containerBlock) {
+      const itemBlock = containerBlock.getInputTargetBlock('STACK');
+      if (itemBlock) {
+          const input = this.getInput('LIBRARY_AS');
+          if (input) {
+              const field = input.fieldRow.find(field => field.name === 'library_name');
+              if (field) {
+                  itemBlock.valueConnection_ = field.getValue();
+              }
+          }
+      }
+  }
+};
+
+Blockly.Blocks['Import_Library'] = {
+  init: function() {
+    this.setColour(260);
+    this.itemCount_ = 0;
+    this.containerBlockType = 'library_container';
+    this.itemBlockType = 'as_item';
+      
+    this.appendDummyInput("import_file")
+      .appendField(new Blockly.FieldDropdown([
+        ["Library", "Library"],
+        ["Resource", "Resource"],
+      ]), "import_type")
+      .appendField(new Blockly.FieldTextInput("Import_Resource"), "import_resource")
+    
+    this.appendValueInput("args")
+        .appendField("  ")
+        .setCheck("Variable")
+
+    this.updateShape_()
+    
+    this.setInputsInline(true);
+    this.setMutator(new Blockly.icons.MutatorIcon([this.itemBlockType], this));
+    this.setOutput(true, 'Array');
+    this.setTooltip("Create a list with any number of items");
+  },
+
+  updateShape_: function() {
+    if (this.getInput('LIBRARY_AS')) {
+      this.removeInput('LIBRARY_AS');
+    }
+
+    if (this.itemCount_ > 0) {
+      this.appendDummyInput('LIBRARY_AS')
+        .appendField("AS")
+        .appendField(new Blockly.FieldTextInput("Library_Name"), "library_name");
+    }
+  },
+  ...Library_MutatorMixin
+};
+
+Blockly.Blocks['library_container'] = {
+  init: function() {
+    this.appendValueInput('STACK')
+        .appendField("Import Resource")
+        .setCheck(null)
+    
+    this.setOutput(null)
+    this.setInputsInline(true);
+    this.setTooltip("Add or remove items");
+    this.contextMenu = false;
+    this.setColour(260);
+  }
+};
+
+Blockly.Blocks['as_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("AS")
+      .appendField("Other Name");
+
+    this.setOutput(true, "Variable");  
+    this.setColour(260);
+    this.setTooltip("Input content");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['Import_Library'] = function(block) {
+return ``;
 };

@@ -15,7 +15,7 @@ Blockly.Blocks['rb_fw_Settings'] = {
       .appendField("*** Settings ***")
 
     this.appendStatementInput("Settings")
-      .setCheck(['rb_setting_section_container', 'rb_setting_content'])
+      .setCheck(['rb_setting_section', 'rb_setting_content'])
     
     this.setNextStatement(true, ['rb_fw_Variables']) 
     this.setColour(block_color)
@@ -41,13 +41,209 @@ ${settings_content}`;
   return code;  
 }
 
+// RB: Setting import Library Block
+const Library_MutatorMixin = {
+  mutationToDom: function() {
+      const container = document.createElement('mutation');
+      container.setAttribute('items', this.itemCount_);
+      return container;
+  },
+
+  domToMutation: function(xmlElement) {
+      const items = parseInt(xmlElement.getAttribute('items'), 10);
+      this.itemCount_ = isNaN(items) ? 0 : items;
+      this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+      const containerBlock = workspace.newBlock(this.containerBlockType);
+      containerBlock.initSvg();
+      
+      let connection = containerBlock.getInput('STACK').connection;
+      if (this.itemCount_ > 0) {
+          const itemBlock = workspace.newBlock(this.itemBlockType);
+          itemBlock.initSvg();
+          connection.connect(itemBlock.outputConnection);
+      }
+      
+      return containerBlock;
+  },
+
+  compose: function(containerBlock) {
+      const itemBlock = containerBlock.getInputTargetBlock('STACK');
+      this.itemCount_ = itemBlock && !itemBlock.isInsertionMarker() ? 1 : 0;
+      this.updateShape_();
+  },
+
+  saveConnections: function(containerBlock) {
+      const itemBlock = containerBlock.getInputTargetBlock('STACK');
+      if (itemBlock) {
+          const input = this.getInput('LIBRARY_AS');
+          if (input) {
+              const field = input.fieldRow.find(field => field.name === 'short_name');
+              if (field) {
+                  itemBlock.valueConnection_ = field.getValue();
+              }
+          }
+      }
+  }
+};
+
+Blockly.Blocks['rb_setting_import_library'] = {
+  init: function() {
+    this.containerBlockType = 'library_container';
+    this.itemBlockType = 'as_item';
+    this.itemCount_ = 0;
+
+    this.appendDummyInput("import_file")
+      .appendField("Library ")
+      .appendField(new Blockly.FieldTextInput("Library_Name"), "import_library");
+    
+    this.appendValueInput("args")
+      .appendField(" ")
+      .setCheck("Variable")
+
+    this.updateShape_()
+    this.setMutator(new Blockly.icons.MutatorIcon([this.itemBlockType], this));
+
+    this.setPreviousStatement(true, ['rb_fw_Settings', 'rb_setting_section', 'rb_setting_import_library']);
+    this.setNextStatement(true, ['rb_setting_section', 'rb_setting_import_library']);
+    this.setInputsInline(true);
+    this.setColour(block_color);
+    this.setTooltip("Setting Import Library");
+    this.setHelpUrl("");
+  },
+  updateShape_: function() {
+      if (this.getInput('LIBRARY_AS')) {
+        this.removeInput('LIBRARY_AS');
+      }
+  
+      if (this.itemCount_ > 0) {
+        this.appendDummyInput('LIBRARY_AS')
+          .appendField("AS")
+          .appendField(new Blockly.FieldTextInput("Short_Name"), "short_name");
+      }
+    },
+    ...Library_MutatorMixin
+};
+
+Blockly.Blocks['library_container'] = {
+  init: function() {
+    this.appendValueInput('STACK')
+        .appendField("Import Library")
+        .setCheck(null)
+    
+    this.setOutput(null)
+    this.setInputsInline(true);
+    this.setTooltip("Add or remove items");
+    this.contextMenu = false;
+    this.setColour(260);
+  }
+};
+
+Blockly.Blocks['as_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("AS Short Name")
+
+    this.setOutput(true, "Variable");  
+    this.setColour(260);
+    this.setTooltip("Input content");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['rb_setting_import_library'] = function(block) {
+  const libraryName = block.getFieldValue('import_library');
+  const argsValue = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  let shortName = '';
+  const shortNameField = block.getField('short_name');
+  
+  if (shortNameField) {
+    shortName = shortNameField.getValue();
+  }
+  let code = `Library${robot_indent}${libraryName}`;
+
+  if (argsValue) {
+    code += `${robot_indent}${argsValue}`;
+  }
+  
+  if (shortName) {
+    code += `${robot_indent}AS${robot_indent}${shortName}`;
+  }
+
+  code += '\n';  
+  return code;
+};
+
+// RB: Setting import Remote Library Block
+Blockly.Blocks['rb_setting_import_remote_library'] = {
+  init: function() {
+    this.containerBlockType = 'library_container';
+    this.itemBlockType = 'as_item';
+    this.itemCount_ = 0;
+
+    this.appendDummyInput("import_file")
+      .appendField("Library  Remote")
+      .appendField(new Blockly.FieldTextInput("Library_Url"), "import_library");
+    
+    this.appendValueInput("args")
+      .appendField(" ")
+      .setCheck("Variable")
+
+    this.updateShape_()
+    this.setMutator(new Blockly.icons.MutatorIcon([this.itemBlockType], this));
+
+    this.setPreviousStatement(true, ['rb_fw_Settings', 'rb_setting_section', 'rb_setting_import_library']);
+    this.setNextStatement(true, ['rb_setting_section', 'rb_setting_import_library']);
+    this.setInputsInline(true);
+    this.setColour(block_color);
+    this.setTooltip("Setting Import Library");
+    this.setHelpUrl("");
+  },
+  updateShape_: function() {
+      if (this.getInput('LIBRARY_AS')) {
+        this.removeInput('LIBRARY_AS');
+      }
+  
+      if (this.itemCount_ > 0) {
+        this.appendDummyInput('LIBRARY_AS')
+          .appendField("AS")
+          .appendField(new Blockly.FieldTextInput("Short_Name"), "short_name");
+      }
+    },
+    ...Library_MutatorMixin
+};
+
+pythonGenerator.forBlock['rb_setting_import_remote_library'] = function(block) {
+  const libraryName = block.getFieldValue('import_library');
+  const argsValue = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  let shortName = '';
+  const shortNameField = block.getField('short_name');
+  
+  if (shortNameField) {
+    shortName = shortNameField.getValue();
+  }
+  let code = `Library${robot_indent}Remote${robot_indent}${libraryName}`;
+
+  if (argsValue) {
+    code += `${robot_indent}${argsValue}`;
+  }
+  
+  if (shortName) {
+    code += `${robot_indent}AS${robot_indent}${shortName}`;
+  }
+
+  code += '\n';  
+  return code;
+};
+
 // RB: Setting section Block
 // https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-694
-Blockly.Blocks['rb_setting_section_container'] = {
+Blockly.Blocks['rb_setting_section'] = {
   init: function() {
     this.appendDummyInput("import_file")
       .appendField(new Blockly.FieldDropdown([
-        ["Library", "Library"],
         ["Resource", "Resource"],
         ["Variables", "Variables"],
         ["Name", "Name"],
@@ -75,8 +271,8 @@ Blockly.Blocks['rb_setting_section_container'] = {
         .setCheck("Variable") 
 
     this.setOutput(false, "Setting");
-    this.setPreviousStatement(true, ['rb_fw_Settings','rb_setting_section_container']);
-    this.setNextStatement(true, ['rb_setting_section_container']);
+    this.setPreviousStatement(true, ['rb_fw_Settings','rb_setting_section']);
+    this.setNextStatement(true, ['rb_setting_section']);
     this.setInputsInline(true);
     this.setColour(block_color);
     this.setTooltip("Setting Import Something");
@@ -84,38 +280,10 @@ Blockly.Blocks['rb_setting_section_container'] = {
   }
 };
 
-pythonGenerator.forBlock['rb_setting_section_container'] = function(block) {
+pythonGenerator.forBlock['rb_setting_section'] = function(block) {
   var import_type = block.getFieldValue('import_type');
   var import_resource = block.getFieldValue('import_resource');
   var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
   var code = `${import_type}${robot_indent}${import_resource}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
   return code;
 };
-
-// RB: remote library
-Blockly.Blocks['rb_setting_remote_library'] = {
-  init: function() {
-    this.appendValueInput("args")
-      .appendField("Remote")
-      .appendField(new Blockly.FieldTextInput("Remote_Link"), "remote_link")
-
-    this.appendDummyInput("")
-      .appendField("As")
-      .appendField(new Blockly.FieldTextInput("Liberary_Name"), "liberary_name")  
-
-    this.setOutput(true, "Variable");
-    this.setInputsInline(true);
-    this.setColour(block_color);
-    this.setTooltip("Import Remote Library");
-    this.setHelpUrl("");
-  }
-};
-pythonGenerator.forBlock['rb_setting_remote_library'] = function(block) {
-  const remoteLink = block.getFieldValue('remote_link');
-  const libraryName = block.getFieldValue('liberary_name');
-  const args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
-
-  const code = `Remote${robot_indent}${remoteLink}${args ? `${robot_indent}${args}`:''}${robot_indent}As${robot_indent}${libraryName}\n`;
-
-  return code;
-}
