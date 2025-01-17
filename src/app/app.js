@@ -46,7 +46,23 @@ export default function App() {
               },
               {
                 kind: "block",
+                type: "rb_cm_index",
+              },
+              {
+                kind: "block",
                 type: "rb_cm_date",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_operating_system",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_empty",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_automatic_variables",
               },
             ]
           },
@@ -196,6 +212,32 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_testcase_section_container"
+              },
+              {
+                kind: "block",
+                type: "rb_testcase_assign_variables",
+                inputs: {
+                  variables: { 
+                    shadow: {
+                      type: 'rb_cm_variable',
+                      fields: {
+                        variable: 'Variable'
+                      }
+                    }
+                  },
+                  verified: {
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Verified"
+                      }
+                    }
+                  }
+                },
+              },
+              {
+                kind: "block",
+                type: "rb_testcase_var",
               },
             ]
           },

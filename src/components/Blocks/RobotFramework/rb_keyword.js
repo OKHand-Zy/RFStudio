@@ -24,8 +24,8 @@ Blockly.Blocks['rb_fw_Keywords'] = {
 };
 
 pythonGenerator.forBlock['rb_fw_Keywords'] = function(block) {
-  var keywords_content = pythonGenerator.statementToCode(block, 'Keywords') || '';
-  var code = `*** Keywords ***
+  const keywords_content = pythonGenerator.statementToCode(block, 'Keywords') || '';
+  let code = `*** Keywords ***
 ${keywords_content}`;
   
   return code;  
@@ -49,12 +49,12 @@ Blockly.Blocks['rb_keyword_function'] = {
 };
 
 pythonGenerator.forBlock['rb_keyword_function'] = function (block) {
-  var keyword_name = block.getFieldValue('keyword_name');
+  const keyword_name = block.getFieldValue('keyword_name');
   pythonGenerator.INDENT = robot_indent;
-  var statements_content = pythonGenerator.statementToCode(block, 'keyword_content') || '';
+  const statements_content = pythonGenerator.statementToCode(block, 'keyword_content') || '';
   pythonGenerator.INDENT = default_indent;
   
-  var code = `${keyword_name}\n${statements_content}\n`;
+  let code = `${keyword_name}\n${statements_content}\n`;
   return code;
 };
 
@@ -88,10 +88,9 @@ Blockly.Blocks['rb_keyword_function_arg_container'] = {
 };
 
 pythonGenerator.forBlock['rb_keyword_function_arg_container'] = function(block) {
-  var variable_type = block.getFieldValue('variable_type');  
-  var variable_value = pythonGenerator.valueToCode(block, 'add_args', pythonGenerator.ORDER_ATOMIC) || '';
-    
-    // Format: ${variable_name}    value
-    var code = `${variable_value ? `[${variable_type}]${robot_indent}${variable_value}` : ''}\n`;
-    return code;
+  const variable_type = block.getFieldValue('variable_type');  
+  const variable_value = pythonGenerator.valueToCode(block, 'add_args', pythonGenerator.ORDER_ATOMIC) || '';
+
+  let code = `${variable_value ? `[${variable_type}]${robot_indent}${variable_value}` : ''}\n`;
+  return code;
 };

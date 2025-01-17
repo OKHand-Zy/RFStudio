@@ -25,8 +25,8 @@ Blockly.Blocks['rb_fw_Variables'] = {
 };
 
 pythonGenerator.forBlock['rb_fw_Variables'] = function(block) {
-  var variables_content = pythonGenerator.statementToCode(block, 'Variables') || '';
-  var code = `*** Variables ***
+  const variables_content = pythonGenerator.statementToCode(block, 'Variables') || '';
+  let code = `*** Variables ***
 ${variables_content}`;
   
   return code;  
@@ -58,11 +58,10 @@ Blockly.Blocks['rb_variable_setVariable'] = {
 };
 
 pythonGenerator.forBlock['rb_variable_setVariable'] = function(block) {
-    var variable_type = block.getFieldValue('variable_type');
-    var variable_name = block.getFieldValue('variable_name');
-    var variable_value = pythonGenerator.valueToCode(block, 'add_variable', pythonGenerator.ORDER_ATOMIC) || '';
-    
-    // Format: ${variable_name}    value
-    var code = `${variable_type}{${variable_name}}${variable_value ? `${robot_indent}${variable_value}` : ''}\n`;
+    const variable_type = block.getFieldValue('variable_type');
+    const variable_name = block.getFieldValue('variable_name');
+    const variable_value = pythonGenerator.valueToCode(block, 'add_variable', pythonGenerator.ORDER_ATOMIC) || '';
+
+    let code = `${variable_type}{${variable_name}}${variable_value}\n`;
     return code;
 };

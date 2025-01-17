@@ -25,8 +25,8 @@ Blockly.Blocks['rb_fw_TestCases'] = {
 };
 
 pythonGenerator.forBlock['rb_fw_TestCases'] = function(block) {
-  var testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
-  var code = `*** TestCases ***
+  const testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
+  let code = `*** TestCases ***
 ${testcases_content}`;
   
   return code;  
@@ -50,11 +50,11 @@ Blockly.Blocks['rb_testcase_function'] = {
 };
 
 pythonGenerator.forBlock['rb_testcase_function'] = function (block) {
-  var testcase_name = block.getFieldValue('testcase_name');
+  const testcase_name = block.getFieldValue('testcase_name');
   pythonGenerator.INDENT = robot_indent;
-  var statements_content = pythonGenerator.statementToCode(block, 'testcase_content') || '';
+  const statements_content = pythonGenerator.statementToCode(block, 'testcase_content') || '';
   pythonGenerator.INDENT = default_indent;
-  var code = `${testcase_name}\n${statements_content}\n`;
+  let code = `${testcase_name}\n${statements_content}\n`;
   return code;
 };
 
@@ -86,9 +86,84 @@ Blockly.Blocks['rb_testcase_section_container'] = {
 };
 
 pythonGenerator.forBlock['rb_testcase_section_container'] = function(block) {
-  var section_type = block.getFieldValue('section_type');
-  var content = block.getFieldValue('content');
-  var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
-  var code = `${section_type}${robot_indent}${content}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
+  const section_type = block.getFieldValue('section_type');
+  const content = block.getFieldValue('content');
+  const resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  let code = `${section_type}${robot_indent}${content}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
   return code;
+};
+
+// RB: TestCase Assign Variables Block
+Blockly.Blocks['rb_testcase_assign_variables'] = {
+  init: function() {
+    this.appendValueInput("variables")
+
+    this.appendDummyInput()
+        .appendField("=");
+
+    this.appendValueInput("verified")
+
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setInputsInline(true);
+    this.setColour(block_color);
+    this.setTooltip("Setting section");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['rb_testcase_assign_variables'] = function(block) {
+  const value_variables = pythonGenerator.valueToCode(block, 'variables', pythonGenerator.ORDER_ATOMIC) || '';
+  const value_verified = pythonGenerator.valueToCode(block, 'verified', pythonGenerator.ORDER_ATOMIC) || '';
+  pythonGenerator.INDENT = default_indent;  
+  let code = `${value_variables} =${value_verified}\n`;
+  pythonGenerator.INDENT = robot_indent;
+  
+  return code;
+}
+
+// RB: TestCase Var Block (Support RBF>=7.0)
+Blockly.Blocks['rb_testcase_var'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("VAR  ")
+      .appendField(
+        new Blockly.FieldDropdown([
+          ["Variable", "$"],
+          ["List", "@"],
+          ["Dict", "&"],
+        ]), "variable_type")
+      .appendField(new Blockly.FieldTextInput("Variable_Name"), "variable_name");
+        
+    this.appendValueInput("add_variable")
+        .appendField("=")
+        .setCheck("Variable") 
+    
+      this.appendDummyInput()
+        .appendField("scope=")
+        .appendField(
+          new Blockly.FieldDropdown([
+            ["LOCAL", ""],
+            ["TEST", "TEST"],
+            ["SUITE", "SUITE"],
+            ["SUITES", "SUITES"],
+            ["GLOBAL", "GLOBAL"],
+          ]), "scope_type")
+
+    this.setPreviousStatement(true, ['rb_variable_setVariable']);
+    this.setNextStatement(true, ['rb_variable_setVariable']);
+    this.setInputsInline(true);
+    this.setColour(block_color);
+    this.setTooltip("Setting Variables");
+    this.setHelpUrl("");
+  }
+};
+
+pythonGenerator.forBlock['rb_testcase_var'] = function(block) {
+    const variable_type = block.getFieldValue('variable_type');
+    const variable_name = block.getFieldValue('variable_name');
+    const variable_value = pythonGenerator.valueToCode(block, 'add_variable', pythonGenerator.ORDER_ATOMIC) || '';
+    const scope_type = block.getFieldValue('scope_type');
+    let code = `VAR${robot_indent}${variable_type}{${variable_name}}${variable_value}${scope_type ? `${robot_indent}scope=${scope_type}` : ''}\n`;
+    return code;
 };

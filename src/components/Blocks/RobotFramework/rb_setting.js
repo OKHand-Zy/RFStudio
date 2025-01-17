@@ -33,9 +33,8 @@ pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
   );
   import_Library += hasBuiltInBlocks ? `Library${robot_indent}BuiltIn\n` : '';
   
-  var settings_content = import_Library + (pythonGenerator.statementToCode(block, 'Settings') || '');
-
-  var code = `*** Settings ***
+  let settings_content = import_Library + (pythonGenerator.statementToCode(block, 'Settings') || '');
+  let code = `*** Settings ***
 ${settings_content}`;
   
   return code;  
@@ -281,9 +280,9 @@ Blockly.Blocks['rb_setting_section'] = {
 };
 
 pythonGenerator.forBlock['rb_setting_section'] = function(block) {
-  var import_type = block.getFieldValue('import_type');
-  var import_resource = block.getFieldValue('import_resource');
-  var resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
-  var code = `${import_type}${robot_indent}${import_resource}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
+  const import_type = block.getFieldValue('import_type');
+  const import_resource = block.getFieldValue('import_resource');
+  const resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  let code = `${import_type}${robot_indent}${import_resource}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
   return code;
 };
