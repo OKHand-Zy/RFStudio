@@ -13,8 +13,11 @@ import "@/components/Blocks/RobotFramework/rb_variable";
 import "@/components/Blocks/RobotFramework/rb_testcase";
 import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
-import "@/components/Blocks/common";
+import "@/components/Blocks/Common/common";
+import "@/components/Blocks/Common/function";
+// RobotFrameWork Library Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn";
+// Example Blocks
 import "@/components/Blocks/example_Blocks";
 
 export default function App() {
@@ -79,6 +82,17 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_cm_custom_links"
+              },
+            ]
+          },
+          {
+            kind: "category",
+            name: "Base Functions",
+            colour: "#FF0000",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_cm_return"
               },
             ]
           },
