@@ -26,7 +26,7 @@ Blockly.Blocks['rb_fw_TestCases'] = {
 
 pythonGenerator.forBlock['rb_fw_TestCases'] = function(block) {
   const testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
-  let code = `*** TestCases ***
+  let code = `*** TestCases or Tasks ***
 ${testcases_content}`;
   
   return code;  

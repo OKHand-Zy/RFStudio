@@ -7,6 +7,7 @@ import Navbar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
 import DownloadButton from "@/components/btn_download";
 // RobotFrameWork Blocks
+import "@/components/Blocks/RobotFramework/rb_comments";
 import "@/components/Blocks/RobotFramework/rb_setting";
 import "@/components/Blocks/RobotFramework/rb_variable";
 import "@/components/Blocks/RobotFramework/rb_testcase";
@@ -158,6 +159,17 @@ export default function App() {
         name: "RB_Framework",
         colour: "#A65C81",
         contents: [
+          {
+            kind: "category",
+            name: "Comments",
+            colour: "#A65C81",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_cmt_comment",
+              },
+            ]
+          },
           {
             kind: "category",
             name: "Settings",

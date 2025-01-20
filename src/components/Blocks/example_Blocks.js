@@ -1,4 +1,5 @@
 import * as Blockly from 'blockly';
+import {registerFieldMultilineInput, FieldMultilineInput} from '@blockly/field-multilineinput';
 import {pythonGenerator} from 'blockly/python';
 
 // 修改 pythonGenerator 的縮排設定

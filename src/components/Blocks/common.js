@@ -278,3 +278,4 @@ pythonGenerator.forBlock['rb_cm_automatic_variables'] = function(block) {
 
   return [code, pythonGenerator.ORDER_ATOMIC];
 }
+

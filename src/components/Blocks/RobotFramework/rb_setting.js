@@ -17,6 +17,7 @@ Blockly.Blocks['rb_fw_Settings'] = {
     this.appendStatementInput("Settings")
       .setCheck(['rb_setting_section', 'rb_setting_content'])
     
+    this.setPreviousStatement(true, ['rb_fw_Settings'])
     this.setNextStatement(true, ['rb_fw_Variables']) 
     this.setColour(block_color)
     this.setTooltip("Create robotframework Setting Group")
