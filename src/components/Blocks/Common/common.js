@@ -4,6 +4,7 @@ import {pythonGenerator} from 'blockly/python';
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
 const robot_indent = '    ';
+const split_mark = '|';
 const block_color = 10;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
@@ -35,7 +36,7 @@ pythonGenerator.forBlock['rb_cm_variable'] = function(block) {
   var value_input = pythonGenerator.valueToCode(block, 'Variable', pythonGenerator.ORDER_ATOMIC) || '';
   var code = '';
 
-  code = `${robot_indent}${variable_type}{${variable.trim()}}${value_input}`;
+  code = `${split_mark}${variable_type}{${variable.trim()}}${value_input}`;
 
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
@@ -84,7 +85,7 @@ pythonGenerator.forBlock['rb_cm_content'] = function(block) {
   const connected_value = pythonGenerator.valueToCode(block, 'content', pythonGenerator.ORDER_ATOMIC) || '';
   let code = '';
 
-  code = `${robot_indent}${text_content}${connected_value}`;
+  code = `${split_mark}${text_content}${connected_value}`;
   
   return [code, pythonGenerator.ORDER_ATOMIC];
 };

@@ -5,6 +5,7 @@ import {pythonGenerator} from 'blockly/python';
 const default_indent = '';
 const robot_indent = '    ';
 const block_color = 200;
+const split_mark = '|';
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
 // RB: Keywords Group Block

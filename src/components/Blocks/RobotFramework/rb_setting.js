@@ -4,8 +4,8 @@ import {pythonGenerator} from 'blockly/python';
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
 const robot_indent = '    ';
+const split_mark = '|';
 const block_color = 50;
-
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
 // RB: Settings Group Block

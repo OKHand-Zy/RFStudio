@@ -14,6 +14,7 @@ import "@/components/Blocks/RobotFramework/rb_testcase";
 import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
 import "@/components/Blocks/Common/common";
+import "@/components/Blocks/Common/logic";
 import "@/components/Blocks/Common/function";
 // RobotFrameWork Library Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn";
@@ -103,6 +104,10 @@ export default function App() {
         name: "Logic",
         colour: "#5C81A6",
         contents: [
+          {
+            kind: "block",
+            type: "rb_logic_if_end",
+          },
           {
             kind : "block",
             type: "logic_boolean"

@@ -4,6 +4,7 @@ import {pythonGenerator} from 'blockly/python';
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
 const robot_indent = '    ';
+const split_mark = '|';
 const block_color = 150;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
@@ -114,7 +115,9 @@ Blockly.Blocks['rb_testcase_assign_variables'] = {
 
 pythonGenerator.forBlock['rb_testcase_assign_variables'] = function(block) {
   const value_variables = pythonGenerator.valueToCode(block, 'variables', pythonGenerator.ORDER_ATOMIC) || '';
+  
   const value_verified = pythonGenerator.valueToCode(block, 'verified', pythonGenerator.ORDER_ATOMIC) || '';
+  
   pythonGenerator.INDENT = default_indent;  
   let code = `${value_variables} =${value_verified}\n`;
   pythonGenerator.INDENT = robot_indent;
