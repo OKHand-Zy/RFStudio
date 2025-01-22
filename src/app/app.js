@@ -95,6 +95,10 @@ export default function App() {
                 kind: "block",
                 type: "rb_cm_return"
               },
+              {
+                kind: "block",
+                type: "rb_cm_loop_control"
+              },
             ]
           },
         ]
@@ -105,16 +109,60 @@ export default function App() {
         colour: "#5C81A6",
         contents: [
           {
-            kind: "block",
-            type: "rb_logic_if_end",
+            kind: "category",
+            name: "FOR LOOP",
+            colour: "#5C81A6",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_logic_for_loop",
+              },
+              {
+                kind: "block",
+                type: "rb_logic_for_zip_mode",
+              },
+              {
+                kind: "block",
+                type: "rb_logic_for_zip_fill",
+              },
+            ]
           },
           {
-            kind: "block",
-            type: "rb_logic_if_zip_mode",
-          },
-          {
-            kind: "block",
-            type: "rb_logic_if_zip_fill",
+            kind: "category",
+            name: "WHILE LOOP",
+            colour: "#5C81A6",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_logic_while_loop",
+              },
+              {
+                kind: "block",
+                type: "rb_logic_while_value",
+                inputs: {
+                  variables: { 
+                    shadow: {
+                      type: 'rb_cm_variable',
+                      fields: {
+                        variable: 'Variable'
+                      }
+                    }
+                  },
+                  verified: {
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Verified"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                kind: "block",
+                type: "rb_logic_while_true_limit",
+              }
+            ]
           },
           {
             kind : "block",

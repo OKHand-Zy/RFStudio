@@ -1,5 +1,5 @@
 import * as Blockly from 'blockly';
-import {pythonGenerator} from 'blockly/python';
+import {PythonGenerator, pythonGenerator} from 'blockly/python';
 
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
@@ -280,3 +280,25 @@ pythonGenerator.forBlock['rb_cm_automatic_variables'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 }
 
+// Break or CONTINUE
+Blockly.Blocks['rb_cm_loop_control'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([
+          ["BREAK", "BREAK"], 
+          ["CONTINUE", "CONTINUE"]
+        ]), "control_type");
+    
+    this.setOutput(true, null);
+    this.setPreviousStatement(true, null)
+    this.setNextStatement(true, null) 
+    this.setColour(block_color);
+    this.setTooltip("Loop Control statement");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-404");
+  }
+}
+pythonGenerator.forBlock['rb_cm_loop_control'] = function(block) {
+  const control_type = block.getFieldValue('control_type')
+  let code = `${split_mark}${control_type}`
+  return [code, pythonGenerator.ORDER_ATOMIC]
+}
