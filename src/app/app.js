@@ -109,6 +109,14 @@ export default function App() {
             type: "rb_logic_if_end",
           },
           {
+            kind: "block",
+            type: "rb_logic_if_zip_mode",
+          },
+          {
+            kind: "block",
+            type: "rb_logic_if_zip_fill",
+          },
+          {
             kind : "block",
             type: "logic_boolean"
           },      

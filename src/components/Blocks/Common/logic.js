@@ -80,7 +80,7 @@ Blockly.Blocks['rb_logic_if_end'] = {
       .appendField("IF")
     
     this.appendValueInput("sub_container")
-    .appendField("IN")
+      .appendField("IN")
 
     this.appendStatementInput("Variables")
 
@@ -99,7 +99,6 @@ Blockly.Blocks['rb_logic_if_end'] = {
   },
   updateShape_: function() {
     const subContainer = this.getInput('sub_container');
-    
     if (subContainer.fieldRow.find(field => field.name === 'OPERATION')) {
       subContainer.removeField('OPERATION');
     }
@@ -120,6 +119,7 @@ Blockly.Blocks['rb_logic_if_end'] = {
           operationText = '';
       }
       subContainer.appendField(operationText, 'OPERATION');
+      
     }
   },
     ...IF_END_MutatorMixin
@@ -132,7 +132,7 @@ Blockly.Blocks['op_container'] = {
         .setCheck(null)
     
     this.appendDummyInput()
-        .appendField("END")
+        .appendField("．．．END")
 
     this.setOutput(null)
     this.setInputsInline(true);
@@ -178,21 +178,21 @@ Blockly.Blocks['op_zip_item'] = {
   }
 };
 
-
 pythonGenerator.forBlock['rb_logic_if_end'] = function(block) {
-  let mainValue = pythonGenerator.valueToCode(block, 'main_container', pythonGenerator.ORDER_ATOMIC) || ''
+  let mainValue = pythonGenerator.valueToCode(block, 'main_container', pythonGenerator.ORDER_ATOMIC) || '';
   if (mainValue) {
-    mainValue = mainValue.split(split_mark)  
-      .map(part => part.trim())       
-      .filter(part => part)           
-      .join(robot_indent);            
+    mainValue = mainValue.split(split_mark)
+      .map(part => part.trim())
+      .filter(part => part)
+      .join(robot_indent);
   }
+
   let subValue = pythonGenerator.valueToCode(block, 'sub_container', pythonGenerator.ORDER_ATOMIC) || '';
   if (subValue) {
-    subValue = subValue.split(split_mark)  
-      .map(part => part.trim())       
-      .filter(part => part)           
-      .join(robot_indent);            
+    subValue = subValue.split(split_mark)
+      .map(part => part.trim())
+      .filter(part => part)
+      .join(robot_indent);
   }
 
   let operation = '';
@@ -209,13 +209,72 @@ pythonGenerator.forBlock['rb_logic_if_end'] = function(block) {
     default:
       operation = '';
   }
+
   pythonGenerator.INDENT = robot_indent;
   let statements = pythonGenerator.statementToCode(block, 'Variables') || '  No Operation\n';
-  let code = ''
-  code += `FOR${mainValue ? `${robot_indent}${mainValue}${robot_indent}`:' ．．． '}`
-  code += `IN${operation? ` ${operation}`:''}${subValue ? `${robot_indent}${subValue}`:' ．．． '}\n`;
+  let code = '';
+  code += `FOR${mainValue ? `${robot_indent}${mainValue}${robot_indent}`:' ．．． '}`;
+  code += `IN${operation? ` ${operation}`:''}`
+  code += `${subValue ? `${robot_indent}${subValue}`:' ．．． '}\n`;
   code += `${statements}`;
   code += 'END\n';
 
   return code;
+};
+
+// IF ZIP Mode
+Blockly.Blocks['rb_logic_if_zip_mode'] = {
+  init: function() {
+    this.appendValueInput("mode_container")
+      .setCheck("FILL")
+      .appendField("mode=")
+      .appendField(new Blockly.FieldDropdown([
+        ['LONGEST', 'LONGEST'],
+        ['STRICT', 'STRICT'],
+        ['SHORTEST', 'SHORTEST']
+      ]), 'ZIP_MODE');
+    
+    this.setOutput(true, "Variable");
+    this.setColour(block_color);
+    this.setTooltip("Input IF LOOP ZIP fill value");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-395");
+  }
+};
+pythonGenerator.forBlock['rb_logic_if_zip_mode'] = function(block) {
+  const mode = block.getFieldValue('ZIP_MODE');
+  const modeValue = pythonGenerator.valueToCode(block, 'mode_container', pythonGenerator.ORDER_ATOMIC) || '';
+  let code = '';
+  code = `${split_mark}mode=${mode}${modeValue ? `${split_mark}${modeValue}` : ''}`;
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
+// IF ZIP fill
+Blockly.Blocks['rb_logic_if_zip_fill'] = {
+  init: function() {
+    const integerValidator = function(newValue) {
+      // 只允許整數（包括負數）
+      if (/^-?\d+$/.test(newValue)) {
+        return newValue;
+      }
+      return null;
+    };
+
+    const fillValue = new Blockly.FieldTextInput("0");
+    fillValue.setValidator(integerValidator);
+
+    this.appendDummyInput("fill_container")
+      .appendField("fill=")
+      .appendField(fillValue, "fill_value");
+    
+    this.setOutput(true, "FILL");  
+    this.setColour(block_color);
+    this.setTooltip("Input IF LOOP ZIP fill value");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-395");
+  }
+};
+pythonGenerator.forBlock['rb_logic_if_zip_fill'] = function(block) {
+  const fill_value = block.getFieldValue('fill_value');
+  let code = '';
+  code = `${split_mark}fill=${fill_value}`;
+  return [code, pythonGenerator.ORDER_ATOMIC];
 };
