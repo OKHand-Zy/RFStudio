@@ -24,6 +24,6 @@ Blockly.Blocks['rb_cm_return'] = {
 };
 pythonGenerator.forBlock['rb_cm_return'] = function(block) {
   const connect_content = pythonGenerator.valueToCode(block, 'connect_block', pythonGenerator.ORDER_ATOMIC) || '';
-  const code = `${robot_indent}Return${connect_content}\n`;
+  const code = `Return${connect_content}\n`;
   return code;
 };

@@ -165,16 +165,15 @@ export default function App() {
             ]
           },
           {
-            kind : "block",
-            type: "logic_boolean"
-          },      
-          {
-            kind: "block",
-            type: "controls_if",
-          },
-          {
-            kind: "block",
-            type: "logic_compare",
+            kind: "category",
+            name: "IF LOOP",
+            colour: "#5C81A6",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_logic_if_else_loop",
+              },
+            ]
           },
         ],
       },
@@ -209,6 +208,10 @@ export default function App() {
           {
             kind: "block",
             type: "dynamic_style_block"
+          },
+          { 
+            kind: "block", 
+            type: "custom_plus_minus" 
           },
           {
             kind: "block",

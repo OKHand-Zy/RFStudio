@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@blockly/block-plus-minus@^8.0.12":
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/@blockly/block-plus-minus/-/block-plus-minus-8.0.12.tgz#7f99ee323420e6eba5dc342891d35760ebf7850b"
+  integrity sha512-QqHzKJ+5SiOjac2cnACbJRbF1LxArNUx9F/Xtp6/nurcFQiw2/bp3+deIEZDSBBA3yAGj7JzFUXl7aVNmwDt3g==
+
 "@blockly/field-multilineinput@^5.0.13":
   version "5.0.13"
   resolved "https://registry.yarnpkg.com/@blockly/field-multilineinput/-/field-multilineinput-5.0.13.tgz#08d6214baf70759b2877b701e3c5e87f6b3be404"

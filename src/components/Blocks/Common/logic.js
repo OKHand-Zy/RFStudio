@@ -8,6 +8,20 @@ const split_mark = '|';
 const block_color = 30;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
+//image
+const plusImage =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
+  '9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMT' +
+  'ggMTBoLTR2LTRjMC0xLjEwNC0uODk2LTItMi0ycy0yIC44OTYtMiAybC4wNzEgNGgtNC4wNz' +
+  'FjLTEuMTA0IDAtMiAuODk2LTIgMnMuODk2IDIgMiAybDQuMDcxLS4wNzEtLjA3MSA0LjA3MW' +
+  'MwIDEuMTA0Ljg5NiAyIDIgMnMyLS44OTYgMi0ydi00LjA3MWw0IC4wNzFjMS4xMDQgMCAyLS' +
+  '44OTYgMi0ycy0uODk2LTItMi0yeiIgZmlsbD0id2hpdGUiIC8+PC9zdmc+Cg==';
+const minusImage =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw' +
+  'MC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPS' +
+  'JNMTggMTFoLTEyYy0xLjEwNCAwLTIgLjg5Ni0yIDJzLjg5NiAyIDIgMmgxMmMxLjEwNCAw' +
+  'IDItLjg5NiAyLTJzLS44OTYtMi0yLTJ6IiBmaWxsPSJ3aGl0ZSIgLz48L3N2Zz4K';
+
 // For...LOOP
 const For_END_MutatorMixin = {
   mutationToDom: function() {
@@ -417,3 +431,118 @@ pythonGenerator.forBlock['rb_logic_while_true_limit'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
   
+
+// IF ELSE LOOP
+Blockly.Blocks['rb_logic_if_else_loop'] = {
+  init: function() {
+    this.elseCount_ = 0;
+    
+    this.appendValueInput("IF0")
+        .appendField(new Blockly.FieldImage(plusImage, 15, 15, "+", () => {
+          this.addElse_();
+        }))
+        .appendField(new Blockly.FieldImage(minusImage, 15, 15, "-", () => {
+          this.removeElse_();
+        }))
+        .appendField("IF")
+    
+    this.appendStatementInput("DO0")
+
+    // Add END label at initialization
+    this.appendDummyInput('END')
+        .appendField("END");
+
+    this.setColour(210);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.updateShape_();
+  },
+
+  addElse_: function() {
+    this.elseCount_++;
+    this.updateShape_();
+  },
+
+  removeElse_: function() {
+    if (this.elseCount_ > 0) {
+      // Remove ELSE input if exists
+      if (this.getInput('ELSE')) {
+        this.removeInput('ELSE');
+      }
+      this.elseCount_--;
+      this.updateShape_();
+    }
+  },
+
+  updateShape_: function() {
+    // Remove END label first
+    if (this.getInput('END')) {
+      this.removeInput('END');
+    }
+    
+    // Remove ELSE input if exists
+    if (this.getInput('ELSE')) {
+      this.removeInput('ELSE');
+    }
+    
+    // Remove all existing else if inputs
+    for (let i = 1; this.getInput('IF' + i); i++) {
+      this.removeInput('IF' + i);
+      this.removeInput('DO' + i);
+    }
+    
+    // Rebuild else if inputs
+    for (let i = 1; i <= this.elseCount_; i++) {
+      this.appendValueInput('IF' + i)
+          .appendField('ELSE IF');
+      this.appendStatementInput('DO' + i)
+    }
+    
+    // Add else if there are else if blocks
+    if (this.elseCount_ > 0) {
+      this.appendStatementInput('ELSE')
+          .appendField('ELSE');
+    }
+
+    // Always add END label at the bottom
+    this.appendDummyInput('END')
+        .appendField("END");
+  },
+
+  mutationToDom: function() {
+    const container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('else', this.elseCount_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.elseCount_ = parseInt(xmlElement.getAttribute('else'), 10) || 0;
+    this.updateShape_();
+  }
+};
+
+pythonGenerator.forBlock['rb_logic_if_else_loop'] = function(block) {
+  pythonGenerator.INDENT = robot_indent;
+  let code = '';
+  let ifCondition = pythonGenerator.valueToCode(block, 'IF0', pythonGenerator.ORDER_NONE) || '';
+  let ifBranch = pythonGenerator.statementToCode(block, 'DO0') || '  No Operation';
+  code += `IF${robot_indent}${ifCondition}`;
+  code += `${ifBranch}`;
+  
+  let i = 1;
+  while (block.getInput('IF' + i)) {
+    let condition = pythonGenerator.valueToCode(block, 'IF' + i, pythonGenerator.ORDER_NONE) || '';
+    let branch = pythonGenerator.statementToCode(block, 'DO' + i) || '  No Operation';
+    code += 'elif' + condition + ':\n' + branch;
+    i++;
+  }
+  
+  if (block.getInput('ELSE')) {
+    let elseBranch = pythonGenerator.statementToCode(block, 'ELSE') || '  No Operation';
+    code += 'else:\n' + elseBranch;
+  }
+  code += 'END\n';
+  return code;
+};
+
+// 

@@ -1,5 +1,6 @@
 import * as Blockly from 'blockly';
 import {registerFieldMultilineInput, FieldMultilineInput} from '@blockly/field-multilineinput';
+import '@blockly/block-plus-minus';
 import {pythonGenerator} from 'blockly/python';
 
 // 修改 pythonGenerator 的縮排設定
@@ -528,7 +529,7 @@ pythonGenerator.forBlock['dynamic_style_block'] = function(block) {
   return [`f"Style: {${style}}, Text: {${text}}"`, pythonGenerator.ORDER_NONE];
 };
 
-//Test
+//showdow
 Blockly.Blocks['greet_person'] = {
   init: function() {
     this.appendValueInput("NAME")
@@ -666,4 +667,103 @@ Blockly.Blocks['as_item'] = {
 
 pythonGenerator.forBlock['Import_Library'] = function(block) {
 return ``;
+};
+
+// @blockly/block-plus-minus
+// image -> https://github.com/google/blockly-samples/blob/2d4d03f1e35a3608965ebca858bbc8cd8fb5539d/plugins/block-plus-minus/src/field_plus.js
+const plusImage =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
+  '9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMT' +
+  'ggMTBoLTR2LTRjMC0xLjEwNC0uODk2LTItMi0ycy0yIC44OTYtMiAybC4wNzEgNGgtNC4wNz' +
+  'FjLTEuMTA0IDAtMiAuODk2LTIgMnMuODk2IDIgMiAybDQuMDcxLS4wNzEtLjA3MSA0LjA3MW' +
+  'MwIDEuMTA0Ljg5NiAyIDIgMnMyLS44OTYgMi0ydi00LjA3MWw0IC4wNzFjMS4xMDQgMCAyLS' +
+  '44OTYgMi0ycy0uODk2LTItMi0yeiIgZmlsbD0id2hpdGUiIC8+PC9zdmc+Cg==';
+const minusImage =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw' +
+  'MC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPS' +
+  'JNMTggMTFoLTEyYy0xLjEwNCAwLTIgLjg5Ni0yIDJzLjg5NiAyIDIgMmgxMmMxLjEwNCAw' +
+  'IDItLjg5NiAyLTJzLS44OTYtMi0yLTJ6IiBmaWxsPSJ3aGl0ZSIgLz48L3N2Zz4K';
+Blockly.Blocks['custom_plus_minus'] = { 
+  init: function() {
+    this.elseCount_ = 0;
+    
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldImage(plusImage, 15, 15, "+", () => {
+          this.addElse_();
+        }))
+        .appendField(new Blockly.FieldImage(minusImage, 15, 15, "-", () => {
+          this.removeElse_();
+        }))
+        .appendField("if")
+    
+    this.appendValueInput("IF0")
+        .setCheck("Boolean");
+    this.appendStatementInput("DO0")
+        .appendField("do");
+        
+    this.setColour(210);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.updateShape_();
+  },
+
+  addElse_: function() {
+    this.elseCount_++;
+    this.updateShape_();
+  },
+
+  removeElse_: function() {
+    if (this.elseCount_ > 0) {
+      // 先移除 ELSE input（如果存在）
+      if (this.getInput('ELSE')) {
+        this.removeInput('ELSE');
+      }
+      this.elseCount_--;
+      this.updateShape_();
+    }
+  },
+
+  updateShape_: function() {
+    // 確保先移除舊的 ELSE input
+    if (this.getInput('ELSE')) {
+      this.removeInput('ELSE');
+    }
+    
+    // 移除所有現有的 else 輸入
+    for (let i = 1; this.getInput('IF' + i); i++) {
+      this.removeInput('IF' + i);
+      this.removeInput('DO' + i);
+    }
+    
+    // 重新建立 else if 輸入
+    for (let i = 1; i <= this.elseCount_; i++) {
+      this.appendValueInput('IF' + i)
+          .setCheck('Boolean')
+          .appendField('else if');
+      this.appendStatementInput('DO' + i)
+          .appendField('do');
+    }
+    
+    // 如果有 else，加入最後的 else
+    if (this.elseCount_ > 0) {
+      this.appendStatementInput('ELSE')
+          .appendField('else');
+    }
+  },
+
+  mutationToDom: function() {
+    const container = Blockly.utils.xml.createElement('mutation');
+    container.setAttribute('else', this.elseCount_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.elseCount_ = parseInt(xmlElement.getAttribute('else'), 10) || 0;
+    this.updateShape_();
+  }
+};
+
+// 2. 定義 JavaScript 生成器
+pythonGenerator.forBlock['custom_plus_minus'] = function(block) {
+  return ``;
 };

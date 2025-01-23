@@ -288,8 +288,7 @@ Blockly.Blocks['rb_cm_loop_control'] = {
           ["BREAK", "BREAK"], 
           ["CONTINUE", "CONTINUE"]
         ]), "control_type");
-    
-    this.setOutput(true, null);
+
     this.setPreviousStatement(true, null)
     this.setNextStatement(true, null) 
     this.setColour(block_color);
@@ -299,6 +298,6 @@ Blockly.Blocks['rb_cm_loop_control'] = {
 }
 pythonGenerator.forBlock['rb_cm_loop_control'] = function(block) {
   const control_type = block.getFieldValue('control_type')
-  let code = `${split_mark}${control_type}`
-  return [code, pythonGenerator.ORDER_ATOMIC]
+  let code = `${control_type}\n`
+  return code;
 }
