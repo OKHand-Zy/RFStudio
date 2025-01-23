@@ -8,6 +8,15 @@ const split_mark = '|';
 const block_color = 10;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
+// Formate Function
+function robotFormate(code, splitMark = '|', indent = robot_indent) {
+  if (!code) return '';
+  return code.split(splitMark)
+    .map(part => part.trim())
+    .filter(part => part)
+    .join(indent);
+}
+
 // Common: Variable
 Blockly.Blocks['rb_cm_variable'] = {
   init: function() {
@@ -231,7 +240,7 @@ Blockly.Blocks['rb_cm_empty'] = {
 pythonGenerator.forBlock['rb_cm_empty'] = function(block) {
   const empty_type = block.getFieldValue('empty_type') || '';
   const value_input = pythonGenerator.valueToCode(block, 'Variable', pythonGenerator.ORDER_ATOMIC) || '';
-  let code = empty_type+ `{EMPTY}` + value_input;
+  let code = `${split_mark}${empty_type}EMPTY${value_input}`;
 
   return [code, pythonGenerator.ORDER_ATOMIC];
 }

@@ -8,6 +8,15 @@ const split_mark = '|';
 const block_color = 150;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
+// Formate Function
+function robotFormate(code, splitMark = '|', indent = robot_indent) {
+  if (!code) return '';
+  return code.split(splitMark)
+    .map(part => part.trim())
+    .filter(part => part)
+    .join(indent);
+}
+
 // RB: TestCases Group Block
 Blockly.Blocks['rb_fw_TestCases'] = {
   init: function () {
@@ -114,10 +123,12 @@ Blockly.Blocks['rb_testcase_assign_variables'] = {
 };
 
 pythonGenerator.forBlock['rb_testcase_assign_variables'] = function(block) {
-  const value_variables = pythonGenerator.valueToCode(block, 'variables', pythonGenerator.ORDER_ATOMIC) || '';
-  
-  const value_verified = pythonGenerator.valueToCode(block, 'verified', pythonGenerator.ORDER_ATOMIC) || '';
-  
+  let value_variables = pythonGenerator.valueToCode(block, 'variables', pythonGenerator.ORDER_ATOMIC) || '';
+  value_variables = robotFormate(value_variables)
+
+  let value_verified = pythonGenerator.valueToCode(block, 'verified', pythonGenerator.ORDER_ATOMIC) || '';
+  value_verified = robotFormate(value_verified)
+
   pythonGenerator.INDENT = default_indent;  
   let code = `${value_variables} =${value_verified}\n`;
   pythonGenerator.INDENT = robot_indent;

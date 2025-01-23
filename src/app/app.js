@@ -13,11 +13,19 @@ import "@/components/Blocks/RobotFramework/rb_variable";
 import "@/components/Blocks/RobotFramework/rb_testcase";
 import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
+//Common
 import "@/components/Blocks/Common/common";
-import "@/components/Blocks/Common/logic";
+//Logic
+import "@/components/Blocks/Common/Logic/for_loop";
+import "@/components/Blocks/Common/Logic/while_loop";
+import "@/components/Blocks/Common/Logic/if_loop";
+import "@/components/Blocks/Common/Logic/try_loop";
+
 import "@/components/Blocks/Common/function";
+
 // RobotFrameWork Library Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn";
+
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
 
@@ -172,6 +180,17 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_logic_if_else_loop",
+              },
+            ]
+          },
+          {
+            kind: "category",
+            name: "TRY LOOP",
+            colour: "#5C81A6",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_logic_try_except_loop",
               },
             ]
           },

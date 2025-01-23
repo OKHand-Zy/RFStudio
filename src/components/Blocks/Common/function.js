@@ -8,6 +8,15 @@ const block_color = 10;
 const split_mark = '|';
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
+// Formate Function
+function robotFormate(code, splitMark = '|', indent = robot_indent) {
+  if (!code) return '';
+  return code.split(splitMark)
+    .map(part => part.trim())
+    .filter(part => part)
+    .join(indent);
+}
+
 // Common Function: Return
 Blockly.Blocks['rb_cm_return'] = {
   init: function() {
