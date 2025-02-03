@@ -4,25 +4,30 @@
 
 .workspace-container {
   display: flex;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  flex: 1;
+  gap: 20px;
+  padding: 4px;
+  height: calc(100vh - 120px);
+  background-color: #435fff71;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .workspace-left {
-  width: 60%;
-  height: 100%;
-  border-right: 1px solid #ccc;
+  width: 65%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .workspace-right {
-  width: 40%;
-  height: 100%;
-  padding: 20px;
+  width: 35%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
+  gap: 16px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .workspace-right pre {
@@ -34,10 +39,134 @@
 
 .workspace-right textarea {
   flex: 1;
-  width: 100% !important;
-  min-height: 200px;
-  resize: vertical;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%; /* 減去左右padding */
+  max-width: 100%;
+  padding: 12px;
+  border: 2px solid #a0a0a0;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+  box-sizing: border-box; /* 確保padding不會增加寬度 */
+  overflow-y: auto;     
+  overflow-x: auto;   
+}
+
+/* Navbar 样式 */
+.navbar {
+  padding: 16px 24px;
+  background-color: #2c3e50;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: auto; /* 將連結推到最右邊 */
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: opacity 0.2s;
+}
+
+.navbar-links a:hover {
+  opacity: 0.8;
+  text-decoration: none; /* 改變hover效果 */
+}
+
+/* Footer 样式 */
+.footer {
+  padding: 16px 24px;
+  background-color: #2c3e50;
+  color: white;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  /* ...existing code... */
+}
+
+/* ...existing code... */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  overflow: hidden; /* 移除瀏覽器捲軸 */
+}
+
+/* 按鈕樣式優化 */
+button {
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+
+/* 新增響應式設計 */
+@media (max-width: 768px) {
+  .navbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-links a {
+    padding: 0.5rem 0;
+  }
+
+  .footer-content {
+    font-size: 0.9rem;
+  }
+}
+
+/* 響應式設計優化 */
+@media (max-width: 1024px) {
+  .workspace-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .workspace-left,
+  .workspace-right {
+    width: 100%;
+  }
 }
