@@ -36,7 +36,32 @@ Blockly.Blocks['rb_fw_TestCases'] = {
 
 pythonGenerator.forBlock['rb_fw_TestCases'] = function(block) {
   const testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
-  let code = `*** TestCases or Tasks ***
+  let code = `*** TestCases ***
+${testcases_content}`;
+  
+  return code;  
+}
+
+// RB: TestCases Group Block
+Blockly.Blocks['rb_fw_Tasks'] = {
+  init: function () {
+    this.appendDummyInput('rb_fw_Tasks')
+      .appendField("*** Tasks ***")
+
+    this.appendStatementInput("Tasks")
+      .setCheck(['rb_fw_Tasks'])
+    
+    this.setPreviousStatement(true, ['rb_fw_Tasks'])
+    this.setNextStatement(true, ['rb_fw_Keywords'])
+    this.setColour(block_color)
+    this.setTooltip("Create robotframework Tasks Group")
+    this.setHelpUrl("")
+  }
+};
+
+pythonGenerator.forBlock['rb_fw_Tasks'] = function(block) {
+  const testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
+  let code = `*** Tasks ***
 ${testcases_content}`;
   
   return code;  

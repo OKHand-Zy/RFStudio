@@ -1,11 +1,11 @@
 # RobotFramework Studio 
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A visual programming tool for creating Robot Framework test scripts using block-based programming.
+    Learn Robot Framework the Easy Way: Visual Block Programming. This project delivers a visual programming tool that simplifies the creation of Robot Framework test scripts using an accessible block-based approach.
 
-The goal of this project is to provide a learning website that facilitates a faster onboarding process for users who are new to or not yet comfortable with Robot Framework.
+    Your Fast Track to Robot Framework Mastery. This project is designed as a learning website to provide a quick and easy onboarding experience for those new to or unfamiliar with Robot Framework.
 
-使用於 >= Robot Framework 7.0 
+    Works with: Robot Framework 7.0+. Guided by: Robot Framework User Guide 7.2.
+
 ## Features
 
 - Visual block-based programming interface using Blockly

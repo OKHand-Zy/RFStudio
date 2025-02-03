@@ -15,11 +15,12 @@ import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
 //Common
 import "@/components/Blocks/Common/common";
-//Logic
-import "@/components/Blocks/Common/Logic/for_loop";
-import "@/components/Blocks/Common/Logic/while_loop";
-import "@/components/Blocks/Common/Logic/if_loop";
-import "@/components/Blocks/Common/Logic/try_loop";
+//Control Structures
+import "@/components/Blocks/Common/Control_Structures/for_loop";
+import "@/components/Blocks/Common/Control_Structures/while_loop";
+import "@/components/Blocks/Common/Control_Structures/if_loop";
+import "@/components/Blocks/Common/Control_Structures/try_loop";
+import "@/components/Blocks/Common/Control_Structures/group";
 
 import "@/components/Blocks/Common/function";
 
@@ -194,6 +195,17 @@ export default function App() {
               },
             ]
           },
+          {
+            kind: "category",
+            name: "GROUP",
+            colour: "#5C81A6",
+            contents: [
+              {
+                kind: "block",
+                type: "rb_logic_group",
+              },
+            ]
+          },
         ],
       },
       {
@@ -313,6 +325,10 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_fw_TestCases"
+              },
+              {
+                kind: "block",
+                type: "rb_fw_Tasks"
               },
               {
                 kind: "block",
