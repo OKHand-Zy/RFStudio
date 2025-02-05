@@ -189,3 +189,43 @@ pythonGenerator.forBlock['rb_builtin_catenate'] = function(block) {
   code += '\n';
   return [code, pythonGenerator.ORDER_FUNCTION_CALL];
 };
+
+// BuiltIn: Continue For Loop
+Blockly.Blocks['rb_builtin_continue_for_loop'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Continue For Loop")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Continue For Loop");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Continue%20For%20Loop");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_continue_for_loop'] = function(block) {
+  let code = `${split_mark}Continue For Loop\n`;
+  return [code, pythonGenerator.ORDER_FUNCTION_CALL];
+};
+
+// BuiltIn: Continue For Loop If
+Blockly.Blocks['rb_builtin_continue_for_loop_if'] = {
+  init: function() {
+    this.appendValueInput("condition")
+      .appendField("Continue For Loop If")
+      .setCheck("Variable")
+    
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Continue For Loop If");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Continue%20For%20Loop%20If");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_continue_for_loop_if'] = function(block) {
+  let condition = pythonGenerator.valueToCode(block, 'condition', pythonGenerator.ORDER_ATOMIC) || '';
+  condition = robotFormate(condition, '|', robot_indent)
+  let code = `Continue For Loop If${robot_indent}${condition}\n`;
+  return code;
+};

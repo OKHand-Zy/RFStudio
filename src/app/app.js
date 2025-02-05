@@ -82,6 +82,28 @@ export default function App() {
               },
               {
                 kind: "block",
+                type: "rb_cm_S2S",
+                inputs: {
+                  string1: { 
+                    shadow: {
+                      type: 'rb_cm_variable',
+                      fields: {
+                        variable: 'Variable'
+                      }
+                    }
+                  },
+                  string2: {
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Valume"
+                      }
+                    }
+                  }
+                },
+              },
+              {
+                kind: "block",
                 type: "rb_cm_index",
               },
               {
@@ -433,6 +455,14 @@ export default function App() {
           {
             kind: "block",
             type: "rb_builtin_catenate",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_continue_for_loop",  
+          },  
+          {
+            kind: "block",
+            type: "rb_builtin_continue_for_loop_if",
           },
         ],
       },

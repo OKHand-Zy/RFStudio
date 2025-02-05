@@ -79,6 +79,35 @@ pythonGenerator.forBlock['rb_cm_V2V'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
 
+// Common: String = String
+Blockly.Blocks['rb_cm_S2S']= {
+  init: function() {
+    this.appendValueInput("string1")
+
+    this.appendDummyInput()
+        .appendField("==");
+        
+    this.appendValueInput("string2")
+    
+    this.setInputsInline(true);
+    this.setOutput(true, "Variable");  
+    this.setColour(block_color);
+    this.setTooltip("Setting Variables args");
+  }
+};
+
+pythonGenerator.forBlock['rb_cm_S2S'] = function(block) {
+  let string1 = pythonGenerator.valueToCode(block, 'string1', pythonGenerator.ORDER_ATOMIC) || '';
+  string1 = robotFormate(string1)
+  
+  let string2 = pythonGenerator.valueToCode(block, 'string2', pythonGenerator.ORDER_ATOMIC) || '';
+  string2 = robotFormate(string2)
+
+  let code = `${split_mark}'${string1}' == '${string2}'`;
+  
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
 // Common: index
 Blockly.Blocks['rb_cm_index'] = {
   init: function() {
