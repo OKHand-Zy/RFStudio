@@ -60,6 +60,28 @@ export default function App() {
               },
               {
                 kind: "block",
+                type: "rb_cm_V2V",
+                inputs: {
+                  value1: { 
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Valume"
+                      }
+                    }
+                  },
+                  value2: {
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Valume"
+                      }
+                    }
+                  }
+                },
+              },
+              {
+                kind: "block",
                 type: "rb_cm_index",
               },
               {
@@ -77,6 +99,14 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_cm_automatic_variables",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_time_string",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_timer_string",
               },
             ]
           },
@@ -107,6 +137,10 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_cm_loop_control"
+              },
+              {
+                kind: "block",
+                type: "rb_cm_reserved_tags"
               },
             ]
           },
@@ -394,11 +428,11 @@ export default function App() {
         contents: [
           {
             kind: "block",
-            type: "sleep",
+            type: "rb_builtin_call_method",
           },
           {
             kind: "block",
-            type: "Get_Time",
+            type: "rb_builtin_catenate",
           },
         ],
       },

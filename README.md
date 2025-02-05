@@ -1,10 +1,11 @@
 # RobotFramework Studio 
 
-    Learn Robot Framework the Easy Way: Visual Block Programming. This project delivers a visual programming tool that simplifies the creation of Robot Framework test scripts using an accessible block-based approach.
+**Learn Robot Framework the Easy Way:** Visual Block Programming. This project delivers a visual programming tool that simplifies the creation of Robot Framework test scripts using an accessible block-based approach.
 
-    Your Fast Track to Robot Framework Mastery. This project is designed as a learning website to provide a quick and easy onboarding experience for those new to or unfamiliar with Robot Framework.
+Your Fast Track to Robot Framework Mastery. This project is designed as a learning website to provide a quick and easy onboarding experience for those new to or unfamiliar with Robot Framework.
 
-    Works with: Robot Framework 7.0+. Guided by: Robot Framework User Guide 7.2.
+**Works with: Robot Framework 7.0+.**   
+**Guided by: Robot Framework User Guide 7.2.**
 
 ## Features
 

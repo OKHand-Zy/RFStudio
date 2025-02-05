@@ -50,6 +50,35 @@ pythonGenerator.forBlock['rb_cm_variable'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
 
+// Common: Value = Value
+Blockly.Blocks['rb_cm_V2V']= {
+  init: function() {
+    this.appendValueInput("value1")
+
+    this.appendDummyInput()
+        .appendField("=");
+        
+    this.appendValueInput("value2")
+    
+    this.setInputsInline(true);
+    this.setOutput(true, "Variable");  
+    this.setColour(block_color);
+    this.setTooltip("Setting Variables args");
+  }
+};
+
+pythonGenerator.forBlock['rb_cm_V2V'] = function(block) {
+  let value1 = pythonGenerator.valueToCode(block, 'value1', pythonGenerator.ORDER_ATOMIC) || '';
+  value1 = robotFormate(value1)
+  
+  let value2 = pythonGenerator.valueToCode(block, 'value2', pythonGenerator.ORDER_ATOMIC) || '';
+  value2 = robotFormate(value2)
+
+  let code = `${value1}=${value2}`;
+  
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
 // Common: index
 Blockly.Blocks['rb_cm_index'] = {
   init: function() {
@@ -146,7 +175,7 @@ Blockly.Blocks['rb_cm_inline_styles'] = {
     this.setOutput(true, 'Documentation');
     this.setColour(block_color);
     this.setTooltip("Setting Variables args");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#inline-styles");
   }
 };
 
@@ -180,7 +209,7 @@ Blockly.Blocks['rb_cm_custom_links'] = {
     this.setOutput(true, 'Documentation');
     this.setColour(block_color);
     this.setTooltip("Setting Custom Links or Images");
-    this.setHelpUrl("");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#custom-links-and-images");
   }
 };
 pythonGenerator.forBlock['rb_cm_custom_links'] = function(block) {
@@ -289,24 +318,63 @@ pythonGenerator.forBlock['rb_cm_automatic_variables'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 }
 
-// Break or CONTINUE
-Blockly.Blocks['rb_cm_loop_control'] = {
+// Common: Time_String
+Blockly.Blocks['rb_cm_time_string'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([
-          ["BREAK", "BREAK"], 
-          ["CONTINUE", "CONTINUE"]
-        ]), "control_type");
-
-    this.setPreviousStatement(true, null)
-    this.setNextStatement(true, null) 
+    this.appendValueInput("Time_Container")
+      .appendField(new Blockly.FieldTextInput("00"), "time_value")
+      .appendField(new Blockly.FieldDropdown([
+        ['weeks','w'],
+        ['days','d'],
+        ['hours', 'h'],
+        ['minutes', 'm'],
+        ['seconds', 's'],
+        ['milliseconds','ms'],
+        ['microseconds','μs'],
+        ['nanoseconds','ns']
+      ]), "time_type")
+      
+    this.setOutput(true, "Variable");
     this.setColour(block_color);
-    this.setTooltip("Loop Control statement");
-    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#toc-entry-404");
-  }
-}
-pythonGenerator.forBlock['rb_cm_loop_control'] = function(block) {
-  const control_type = block.getFieldValue('control_type')
-  let code = `${control_type}\n`
-  return code;
-}
+    this.setTooltip("Robot Framework Time String");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#time-as-time-string");
+  },
+};
+pythonGenerator.forBlock['rb_cm_time_string'] = function(block) {
+  let timeValue = block.getFieldValue('time_value');
+  let timeType = block.getFieldValue('time_type');
+  let timeContainer = pythonGenerator.valueToCode(block, 'Time_Container', pythonGenerator.ORDER_ATOMIC) || '';
+
+  timeContainer = robotFormate(timeContainer, '|', default_indent)
+
+  let code = `${split_mark}${timeValue}${timeType}${timeContainer}`;
+
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
+// Common: Timer_String
+Blockly.Blocks['rb_cm_timer_string'] = {
+  init: function() {
+    this.appendValueInput("Timer_Container")
+      .appendField(new Blockly.FieldTextInput("00"), "HH")
+      .appendField(":")
+      .appendField(new Blockly.FieldTextInput("00"), "MM")
+      .appendField(":")
+      .appendField(new Blockly.FieldTextInput("00"), "SS")
+      
+    this.setOutput(true, "Variable");
+    this.setColour(block_color);
+    this.setTooltip("Robot Framework Timer String");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#time-as-timer-string");
+  },
+};
+pythonGenerator.forBlock['rb_cm_timer_string'] = function(block) {
+  const hours = block.getFieldValue('HH');
+  const minutes = block.getFieldValue('MM');
+  const seconds = block.getFieldValue('SS');
+
+  const timerContainer = pythonGenerator.valueToCode(block, 'Timer_Container', pythonGenerator.ORDER_ATOMIC) || '';
+  const code = `${split_mark}${hours}:${minutes}:${seconds}${timerContainer}`;
+
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
