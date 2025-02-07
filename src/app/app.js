@@ -29,6 +29,7 @@ import "@/components/Blocks/RobotLibrary/BuiltIn";
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
+import { inputs } from "blockly";
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -463,6 +464,94 @@ export default function App() {
           {
             kind: "block",
             type: "rb_builtin_continue_for_loop_if",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_binary",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_boolean",
+            inputs: {
+              value_block: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_integer",
+            inputs: {
+              value_block: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_number",
+            inputs: {
+              value_block: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_hex",
+            inputs: {
+              value_container: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_octal",
+            inputs: {
+              value_container: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_string",
+            inputs: {
+              value_block: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
           },
         ],
       },
