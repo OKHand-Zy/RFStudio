@@ -29,7 +29,7 @@ import "@/components/Blocks/RobotLibrary/BuiltIn";
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
-import { inputs } from "blockly";
+
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -58,6 +58,14 @@ export default function App() {
               {
                 kind: "block",
                 type: "rb_cm_content",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_html_content",
+              },
+              {
+                kind: "block",
+                type: "rb_cm_math_symbols",
               },
               {
                 kind: "block",
@@ -552,6 +560,155 @@ export default function App() {
                 }
               }
             },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_create_dictionary",
+            inputs: {
+              create_dictionary_container: { 
+                shadow: {
+                  type: 'rb_cm_V2V',
+                  inputs: {
+                    value1: { 
+                      shadow: {
+                        type: 'rb_cm_content',
+                        fields: {
+                          CONTENT: "Valume"
+                        }
+                      }
+                    },
+                    value2: {
+                      shadow: {
+                        type: 'rb_cm_content',
+                        fields: {
+                          CONTENT: "Valume"
+                        }
+                      }
+                    },
+                  },
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_create_list",
+            inputs: {
+              create_list_container: {
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              } 
+            }
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_evaluate",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_exit_for_loop",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_exit_for_loop_if",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_fail",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_fatal_error",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_count",
+            inputs: {
+              container: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_length",
+            inputs: {
+              container: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_library_instance",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_time",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_variable_value",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_get_variables",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_import_library",
+            inputs: {
+              library_name: {
+                shadow: {
+                  type: 'rb_cm_content',
+                  fields: {
+                    CONTENT: "Library"
+                  }
+                }
+              }
+            }
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_import_resource",
+            inputs: {
+              resource: {
+                shadow: {
+                  type: 'rb_cm_content',
+                  fields: {
+                    CONTENT: "Resource"
+                  }
+                }
+              }
+            }
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_import_variables",
+            inputs: {
+              container: { 
+                shadow: {
+                  type: 'rb_cm_content',
+                  fields: {
+                    CONTENT: "Variables"
+                  }
+                }
+              } 
+            }
           },
         ],
       },

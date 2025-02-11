@@ -17,6 +17,45 @@ function robotFormate(code, splitMark = '|', indent = robot_indent) {
     .join(indent);
 }
 
+// Common: Math Symbols
+Blockly.Blocks['rb_cm_math_symbols'] = {
+  init: function() {
+    this.appendValueInput("symbols_container")
+      .appendField(new Blockly.FieldDropdown([
+          ["+", "+"],
+          ["-", "-"],
+          ["*", "*"],
+          ["/", "/"],
+          ["%", "%"],
+          ["**", "**"],
+          ["//", "//"],
+          ["^", "^"],
+          ["@", "@"],
+          ["&", "&"],
+          ["|", "|"],
+          ["~", "~"],
+          ["<", "<"],
+          ["<=", "<="],
+          [">", ">"],
+          [">=", ">="],
+          ["==", "=="],
+          ["!=", "!="],
+        ]), "symbols")
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.setTooltip("Common: Math Symbols");
+  }
+};
+
+pythonGenerator.forBlock['rb_cm_math_symbols'] = function(block) {
+  let container = pythonGenerator.valueToCode(block, 'symbols_container', pythonGenerator.ORDER_ATOMIC) || '';
+  container = robotFormate(container, '|', default_indent);
+  let symbol = block.getFieldValue('symbols');
+  symbol = robotFormate(symbol, '|', robot_indent);
+  let code = `${symbol}${container}`;
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
 // Common: Variable
 Blockly.Blocks['rb_cm_variable'] = {
   init: function() {
@@ -146,13 +185,37 @@ Blockly.Blocks['rb_cm_content'] = {
     this.setHelpUrl("");
   }
 };
-
 pythonGenerator.forBlock['rb_cm_content'] = function(block) {
   const text_content = block.getFieldValue('CONTENT');
   const connected_value = pythonGenerator.valueToCode(block, 'content', pythonGenerator.ORDER_ATOMIC) || '';
   let code = '';
 
   code = `${split_mark}${text_content}${connected_value}`;
+  
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
+// Common: HTML Content
+Blockly.Blocks['rb_cm_html_content'] = {
+  init: function() {
+    this.appendValueInput("content")
+      .appendField("*HTML*")
+      .appendField(new Blockly.FieldTextInput("<p>HTML_Content<p>"), "html_content")
+      .setCheck("Variable")
+    
+    this.setOutput(true, "Variable");  
+    this.setColour(block_color);
+    this.setTooltip("HTML Content");
+  }
+};
+pythonGenerator.forBlock['rb_cm_html_content'] = function(block) {
+  let html_content = block.getFieldValue('html_content') || '';
+  html_content = robotFormate(html_content, '|', default_indent)
+
+  let connected_value = pythonGenerator.valueToCode(block, 'content', pythonGenerator.ORDER_ATOMIC) || '';
+  connected_value = robotFormate(connected_value, '|', robot_indent)
+
+  let code = `${split_mark}*HTML*${html_content}${robot_indent}${connected_value}`;
   
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
