@@ -1725,7 +1725,7 @@ Blockly.Blocks['rb_builtin_get_library_instance'] = {
 Blockly.Blocks['get_library_instance_container'] = {
   init: function() {
     this.appendValueInput('container')
-      .appendField("Get_Library_Instance");
+      .appendField("Get Library Instance");
     this.setColour(block_color);
     this.contextMenu = false;
     this.setTooltip("Evaluates the given expression in Python and returns the result.");
@@ -1880,7 +1880,7 @@ Blockly.Blocks['rb_builtin_get_variables'] = {
 Blockly.Blocks['get_variables_container'] = {
   init: function() {
     this.appendValueInput('container')
-      .appendField("Get_Library_Instance");
+      .appendField("Get Variables");
     this.setColour(block_color);
     this.contextMenu = false;
     this.setTooltip("Returns a dictionary containing all variables in the current scope.");
@@ -1989,7 +1989,7 @@ Blockly.Blocks['rb_builtin_import_library'] = {
 Blockly.Blocks['import_library_container'] = {
   init: function() {
     this.appendValueInput('container')
-      .appendField("Import_Library");
+      .appendField("Import Library");
     this.setColour(block_color);
     this.contextMenu = false;
     this.setTooltip("Imports a library with the given name and optional arguments.");
@@ -2066,3 +2066,250 @@ pythonGenerator.forBlock['rb_builtin_import_variables'] = function(block) {
   return code;
 };
 
+// BuiltIn: Keyword Should Exist
+const Keyword_Should_Exist_MutatorMixin = {
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('hasAll', this.hasAll_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.hasAll_ = xmlElement.getAttribute('hasAll') === 'true';
+    this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock('mutation_option_container');
+    containerBlock.initSvg();
+    
+    let connection = containerBlock.getInput('container').connection;
+    
+    if (this.hasAll_) {
+      const allBlock = workspace.newBlock('option_message_item');
+      allBlock.initSvg();
+      connection.connect(allBlock.outputConnection);
+    }
+
+    return containerBlock;
+  },
+
+  compose: function(containerBlock) {    
+    const allBlock = containerBlock.getInput('container').connection.targetBlock();
+    this.hasAll_ = allBlock && allBlock.type === 'option_message_item';
+    
+    this.updateShape_();
+  },
+
+  saveConnections: function(containerBlock) {
+    // No connections need to be saved since we only have a dropdown
+  }
+};
+
+Blockly.Blocks['rb_builtin_keyword_should_exist'] = {
+  init: function() {
+    this.containerBlockType = 'mutation_option_container';
+    this.itemBlockTypes = ['option_message_item']; 
+    this.hasAll_ = false;
+
+    this.appendDummyInput("container")
+      .appendField("Keyword Should Exist")
+      .appendField(new Blockly.FieldTextInput("Input_KeyWord"), "keyword");
+
+    this.setMutator(new Blockly.icons.MutatorIcon(this.itemBlockTypes, this));
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Keyword Should Exist");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Keyword%20Should%20Exist");
+  },
+
+  updateShape_: function() {
+    // Remove existing inputs except the first one
+    const inputs = this.inputList.slice(1);
+    for (const input of inputs) {
+      if (input && input.name) {  
+        this.removeInput(input.name);
+      }
+    }
+
+    if (this.hasAll_) {
+      this.appendDummyInput('msg_input')
+        .appendField("msg=")
+        .appendField(new Blockly.FieldTextInput("Exist_Show_Message"), "msg_arg");
+    }
+  },
+
+  ...Keyword_Should_Exist_MutatorMixin
+};
+
+Blockly.Blocks['mutation_option_container'] = {
+  init: function() {
+    this.appendValueInput('container')
+      .appendField("Keyword Should Exist");
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Evaluates the given expression in Python and returns the result.");
+  }
+};
+
+Blockly.Blocks['option_message_item'] = {
+  init: function() {
+    this.appendDummyInput('option_value')
+      .appendField("arg:message")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_keyword_should_exist'] = function(block) {
+  const keyword_name = block.getFieldValue('keyword');
+
+  const hasMessage = block.hasAll_;
+  let code = '';
+  
+  if (hasMessage) {
+    let message = block.getFieldValue('msg_arg');
+    code = `Keyword Should Exist${robot_indent}${keyword_name}${robot_indent}msg=${message}\n`;
+  }else{
+    code = `Keyword Should Exist${robot_indent}${keyword_name}\n`;
+  }
+
+  return code;
+};
+
+// BuiltIn: Length Should Be
+const Length_Should_Be_MutatorMixin = {
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('hasAll', this.hasAll_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.hasAll_ = xmlElement.getAttribute('hasAll') === 'true';
+    this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock('mutation_option_container');
+    containerBlock.initSvg();
+    
+    let connection = containerBlock.getInput('container').connection;
+    
+    if (this.hasAll_) {
+      const allBlock = workspace.newBlock('option_message_item');
+      allBlock.initSvg();
+      connection.connect(allBlock.outputConnection);
+    }
+
+    return containerBlock;
+  },
+
+  compose: function(containerBlock) {    
+    const allBlock = containerBlock.getInput('container').connection.targetBlock();
+    this.hasAll_ = allBlock && allBlock.type === 'option_message_item';
+    
+    this.updateShape_();
+  },
+
+  saveConnections: function(containerBlock) {
+    // No connections need to be saved since we only have a dropdown
+  }
+};
+
+Blockly.Blocks['rb_builtin_length_should_be'] = {
+  init: function() {
+    this.containerBlockType = 'mutation_option_container';
+    this.itemBlockTypes = ['option_message_item']; 
+    this.hasAll_ = false;
+
+    this.appendValueInput("container")
+      .appendField("Length Should Be")
+    
+    this.appendValueInput("length")
+      .appendField("Length=")
+
+    this.setMutator(new Blockly.icons.MutatorIcon(this.itemBlockTypes, this));
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Length Should Be");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Length%20Should%20Be");
+  },
+
+  updateShape_: function() {
+    // Remove existing inputs except the first one
+    const inputs = this.inputList.slice(2);
+    for (const input of inputs) {
+      if (input && input.name && input.name !== 'container' && input.name !== 'length') {  
+        this.removeInput(input.name);
+    }
+    }
+
+    if (this.hasAll_) {
+      this.appendDummyInput('msg_input')
+        .appendField("msg=")
+        .appendField(new Blockly.FieldTextInput("Exist_Show_Message"), "msg_arg");
+    }
+  },
+
+  ...Length_Should_Be_MutatorMixin
+};
+
+Blockly.Blocks['mutation_option_container'] = {
+  init: function() {
+    this.appendValueInput('container')
+      .appendField("Length Should Be");
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Verifies that the length of the given item is correct.");
+  }
+};
+
+Blockly.Blocks['option_message_item'] = {
+  init: function() {
+    this.appendDummyInput('option_value')
+      .appendField("arg:message")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_length_should_be'] = function(block) {
+  // Get the value from the container input
+  let containerCode = pythonGenerator.valueToCode(
+    block, 'container', pythonGenerator.ORDER_ATOMIC
+  ) || '';
+  containerCode = robotFormate(containerCode, '|', robot_indent)
+
+  let length = pythonGenerator.valueToCode(
+    block, 'length', pythonGenerator.ORDER_ATOMIC
+  ) || '';
+  length = robotFormate(length, '|', robot_indent)
+
+  const hasMessage = block.hasAll_;
+  let code = `Length Should Be`;
+
+  if (containerCode) {
+    code += `${robot_indent}${containerCode}`;
+  }
+  if (length) {
+    code += `${robot_indent}${length}`;
+  }
+
+  if (hasMessage) {
+    let message = block.getFieldValue('msg_arg');
+    code += `${robot_indent}msg=${message}\n`;
+  }else{
+    code += `\n`;
+  }
+  
+  return code
+};

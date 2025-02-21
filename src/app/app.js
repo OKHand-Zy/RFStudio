@@ -710,6 +710,15 @@ export default function App() {
               } 
             }
           },
+          {
+            kind: "block",
+            type: "rb_builtin_keyword_should_exist",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_length_should_be",
+          },
+          
         ],
       },
       {
