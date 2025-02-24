@@ -718,7 +718,10 @@ export default function App() {
             kind: "block",
             type: "rb_builtin_length_should_be",
           },
-          
+          {
+            kind: "block",
+            type: "rb_builtin_Log"
+          }
         ],
       },
       {

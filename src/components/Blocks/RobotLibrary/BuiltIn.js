@@ -2313,3 +2313,360 @@ pythonGenerator.forBlock['rb_builtin_length_should_be'] = function(block) {
   
   return code
 };
+
+// BuiltIn: Log
+const Log_MutatorMixin = {
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('haslevel', this.haslevel_);
+    container.setAttribute('hashtml', this.hashtml_);
+    container.setAttribute('hashconsole', this.hashconsole_);
+    container.setAttribute('hashformatter', this.hashformatter_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.haslevel_ = xmlElement.getAttribute('haslevel') === 'true';
+    this.hashtml_ = xmlElement.getAttribute('hashtml') === 'true';
+    this.hashconsole_ = xmlElement.getAttribute('hashconsole') === 'true';
+    this.hashformatter_ = xmlElement.getAttribute('hashformatter') === 'true';
+    this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock('log_option_container');
+    containerBlock.initSvg();
+    
+    let connection = containerBlock.getInput('container').connection;
+    
+    if (this.haslevel_) {
+      const levelBlock = workspace.newBlock('option_level_item');
+      levelBlock.initSvg();
+      connection.connect(levelBlock.outputConnection);
+      connection = levelBlock.getInput('level_container').connection;
+    }
+  
+    if (this.hashtml_) {
+      const htmlBlock = workspace.newBlock('option_html_item');
+      htmlBlock.initSvg();
+      connection.connect(htmlBlock.outputConnection);
+      connection = htmlBlock.getInput('html_container').connection;
+    }
+  
+    if (this.hashconsole_) {
+      const consoleBlock = workspace.newBlock('option_console_item');
+      consoleBlock.initSvg();
+      connection.connect(consoleBlock.outputConnection);
+      connection = consoleBlock.getInput('console_container').connection;
+    }
+  
+    if (this.hashformatter_) {
+      const formatterBlock = workspace.newBlock('option_formatter_item');
+      formatterBlock.initSvg();
+      connection.connect(formatterBlock.outputConnection);
+    }
+    
+    return containerBlock;
+  },
+
+  compose: function(containerBlock) {
+    let itemBlock = containerBlock.getInputTargetBlock('container');
+    
+    // Store connections for reconnection
+    const connections = new Map();
+    ['message', 'level', 'html', 'console', 'formatter'].forEach(type => {
+      const input = this.getInput(type);
+      if (input && input.connection && input.connection.targetConnection) {
+        connections.set(type, input.connection.targetConnection);
+      }
+    });
+    
+    // Reset flags
+    this.haslevel_ = false;
+    this.hashtml_ = false;
+    this.hashconsole_ = false;
+    this.hashformatter_ = false;
+    
+    // Track seen block types
+    const seenTypes = new Set();
+    
+    // Process chain of blocks
+    while (itemBlock) {
+      const blockType = itemBlock.type;
+      
+      // If we've seen this type before, disconnect it
+      if (seenTypes.has(blockType)) {
+        const nextBlock = itemBlock.getInputTargetBlock('level_container') ||
+                        itemBlock.getInputTargetBlock('html_container') ||
+                        itemBlock.getInputTargetBlock('console_container') ||
+                        itemBlock.getInputTargetBlock('formatter_container');
+        
+        // Disconnect this block
+        if (itemBlock.outputConnection && itemBlock.outputConnection.targetConnection) {
+          itemBlock.outputConnection.targetConnection.disconnect();
+        }
+        
+        // Move to next block
+        itemBlock = nextBlock;
+        continue;
+      }
+      
+      // Process the block
+      switch(blockType) {
+        case 'option_level_item':
+          this.haslevel_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'option_html_item':
+          this.hashtml_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'option_console_item':
+          this.hashconsole_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'option_formatter_item':
+          this.hashformatter_ = true;
+          seenTypes.add(blockType);
+          break;
+      }
+      
+      itemBlock = itemBlock.getInputTargetBlock('level_container') ||
+                  itemBlock.getInputTargetBlock('html_container') ||
+                  itemBlock.getInputTargetBlock('console_container') ||
+                  itemBlock.getInputTargetBlock('formatter_container');
+    }
+    
+    this.updateShape_();
+    
+    // Reconnect saved connections
+    connections.forEach((connection, type) => {
+      const input = this.getInput(type);
+      if (input && input.connection) {
+        input.connection.connect(connection);
+      }
+    });
+  },
+
+  saveConnections: function(containerBlock) {
+    let itemBlock = containerBlock.getInputTargetBlock('container');
+    const seenTypes = new Set();
+    
+    while (itemBlock) {
+      const blockType = itemBlock.type;
+      
+      // Skip duplicate blocks
+      if (seenTypes.has(blockType)) {
+        itemBlock = itemBlock.getInputTargetBlock('level_container') ||
+                  itemBlock.getInputTargetBlock('html_container') ||
+                  itemBlock.getInputTargetBlock('console_container') ||
+                  itemBlock.getInputTargetBlock('formatter_container');
+        continue;
+      }
+      
+      let input;
+      switch(blockType) {
+        case 'option_level_item':
+          input = this.getInput('level');
+          seenTypes.add(blockType);
+          break;
+        case 'option_html_item':
+          input = this.getInput('html');
+          seenTypes.add(blockType);
+          break;
+        case 'option_console_item':
+          input = this.getInput('console');
+          seenTypes.add(blockType);
+          break;
+        case 'option_formatter_item':
+          input = this.getInput('formatter');
+          seenTypes.add(blockType);
+          break;        
+      }
+      
+      if (input && input.connection && input.connection.targetConnection) {
+        itemBlock.valueConnection_ = input.connection.targetConnection;
+      }
+      
+      itemBlock = itemBlock.getInputTargetBlock('level_container') ||
+                itemBlock.getInputTargetBlock('html_container') ||
+                itemBlock.getInputTargetBlock('console_container') ||
+                itemBlock.getInputTargetBlock('formatter_container');
+    }
+  }
+};
+
+Blockly.Blocks['rb_builtin_Log'] = {
+  init: function() {
+    this.containerBlockType = 'log_option_container';
+    this.itemBlockTypes = ['option_level_item', 'option_html_item', 'option_console_item', 'option_formatter_item'];
+    this.haslevel_ = false;
+    this.hashtml_ = false;
+    this.hashconsole_ = false;
+    this.hashformatter_ = false;
+
+    this.appendValueInput("message")
+      .appendField("Log")
+      .setCheck(null);
+
+    this.setMutator(new Blockly.icons.MutatorIcon(this.itemBlockTypes, this));
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Log");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Log");
+  },
+
+  updateShape_: function() {
+    // Remove existing inputs except the first one
+    const inputs = this.inputList.slice(1);
+    for (const input of inputs) {
+      this.removeInput(input.name);
+    }
+    
+    if (this.haslevel_) {
+      this.appendDummyInput('level_input')
+        .appendField("level=")
+        .appendField(new Blockly.FieldDropdown([
+          ["INFO", "INFO"],
+          ["TRACE", "TRACE"],
+          ["WARN", "WARN"],
+          ["FAIL", "FAIL"],
+          ["DEBUG", "DEBUG"],
+        ]), "level_arg");
+    }
+
+    if (this.hashtml_) {
+      this.appendDummyInput('html_input')
+        .appendField("html=")
+        .appendField(new Blockly.FieldDropdown([
+          ["False", "False"],
+          ["True", "True"],
+        ]), "html_arg");
+    }
+
+    if (this.hashconsole_) {
+      this.appendDummyInput('console_input')
+        .appendField("console=")
+        .appendField(new Blockly.FieldDropdown([
+          ["False", "False"],
+          ["True", "True"],
+        ]), "console_arg");
+    }
+    
+    if (this.hashformatter_) {
+      this.appendDummyInput('formatter_input')
+        .appendField("formatter=")
+        .appendField(new Blockly.FieldDropdown([
+          ["str", "str"],
+          ["repr", "repr"],
+          ["ascii", "ascii"],
+          ["len", "len"],
+          ["type", "type"],
+        ]), "formatter_arg");
+    }
+
+  },
+
+  ...Log_MutatorMixin
+};
+
+Blockly.Blocks['log_option_container'] = {
+  init: function() {
+    this.appendValueInput('container')
+      .appendField("Log");
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Logs the given message with the given level.");
+  }
+};
+
+Blockly.Blocks['option_level_item'] = {
+  init: function() {
+    this.appendValueInput('modules')
+      .appendField("arg:level")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['option_level_item'] = {
+  init: function() {
+    this.appendValueInput('level_container')
+      .appendField("arg:level")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['option_html_item'] = {
+  init: function() {
+    this.appendValueInput('html_container')
+      .appendField("arg:html")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['option_console_item'] = {
+  init: function() {
+    this.appendValueInput('console_container')
+      .appendField("arg:console")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['option_formatter_item'] = {
+  init: function() {
+    this.appendValueInput('formatter_container')
+      .appendField("arg:formatter")
+
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_Log'] = function(block) {
+  let message = pythonGenerator.valueToCode(block, 'message', pythonGenerator.ORDER_ATOMIC) || '';
+  message = robotFormate(message)
+  const kwargs = [];
+
+  if (block.haslevel_) {
+    const level = block.getFieldValue('level_arg');
+    kwargs.push(`level=${level}`);
+  }
+  
+  if (block.hashtml_) {
+    const html = block.getFieldValue('html_arg');
+    kwargs.push(`html=${html}`);
+  }
+  
+  if (block.hashconsole_) {
+    const console = block.getFieldValue('console_arg');
+    kwargs.push(`console=${console}`);
+  }
+  
+  if (block.hashformatter_) {
+    const formatter = block.getFieldValue('formatter_arg');
+    kwargs.push(`formatter=${formatter}`);
+  }
+  
+  // Combine all arguments
+  let code = `Log${robot_indent}${message ? `${message}${robot_indent}` : ''}`;
+  if (kwargs.length > 0) {
+    code += kwargs.join(`${robot_indent}`);
+  }
+  code += '\n';
+  return code;
+}
