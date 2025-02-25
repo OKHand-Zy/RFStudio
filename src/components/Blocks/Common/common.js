@@ -102,7 +102,7 @@ Blockly.Blocks['rb_cm_V2V']= {
     this.setInputsInline(true);
     this.setOutput(true, "Variable");  
     this.setColour(block_color);
-    this.setTooltip("Setting Variables args");
+    this.setTooltip("Setting Variables To Variables");
   }
 };
 
@@ -113,7 +113,7 @@ pythonGenerator.forBlock['rb_cm_V2V'] = function(block) {
   let value2 = pythonGenerator.valueToCode(block, 'value2', pythonGenerator.ORDER_ATOMIC) || '';
   value2 = robotFormate(value2)
 
-  let code = `${value1}=${value2}`;
+  let code = `${value1}=${robot_indent}${value2}`;
   
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
@@ -416,6 +416,7 @@ Blockly.Blocks['rb_cm_time_string'] = {
     this.appendValueInput("Time_Container")
       .appendField(new Blockly.FieldTextInput("00"), "time_value")
       .appendField(new Blockly.FieldDropdown([
+        ['times','times'],
         ['weeks','w'],
         ['days','d'],
         ['hours', 'h'],

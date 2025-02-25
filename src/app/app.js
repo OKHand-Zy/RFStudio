@@ -25,7 +25,13 @@ import "@/components/Blocks/Common/Control_Structures/group";
 import "@/components/Blocks/Common/function";
 
 // RobotFrameWork Library Blocks
-import "@/components/Blocks/RobotLibrary/BuiltIn";
+import "@/components/Blocks/RobotLibrary/BuiltIn/BuiltIn";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Get";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Log";
+
+
+
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
@@ -448,6 +454,28 @@ export default function App() {
                 kind: "block",
                 type: "rb_keyword_function_arg_container"
               },
+              {
+                kind: "block",
+                type: "rb_keyword_A2V",
+                inputs: {
+                  value1: { 
+                    shadow: {
+                      type: 'rb_cm_content',
+                      fields: {
+                        CONTENT: "Arguments"
+                      }
+                    }
+                  },
+                  value2: {
+                    shadow: {
+                      type: 'rb_cm_variable',
+                      fields: {
+                        variable: 'Variable'
+                      }
+                    }
+                  },
+                },
+              }
             ]
           }
         ]
@@ -464,6 +492,10 @@ export default function App() {
           {
             kind: "block",
             type: "rb_builtin_catenate",
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_comment",
           },
           {
             kind: "block",
@@ -721,7 +753,52 @@ export default function App() {
           {
             kind: "block",
             type: "rb_builtin_Log"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_log_many"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_log2console"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_log_variables"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_no_operation"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_pass_execution"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_pass_execution_if"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_regexp_escape"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_reload_library"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_remove_tags"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_repeat_keyword"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_replace_variables"
           }
+
         ],
       },
       {

@@ -104,3 +104,32 @@ pythonGenerator.forBlock['rb_keyword_function_arg_container'] = function(block) 
   let code = `${variable_value ? `[${variable_type}]${robot_indent}${variable_value}` : ''}\n`;
   return code;
 };
+
+// KeyWord: Arg=Value
+Blockly.Blocks['rb_keyword_A2V']= {
+  init: function() {
+    this.appendValueInput("value1")
+
+    this.appendDummyInput()
+        .appendField("=")
+        
+    this.appendValueInput("value2")
+    
+    this.setInputsInline(true);
+    this.setOutput(true, null);  
+    this.setColour(block_color);
+    this.setTooltip("Setting Variables To Args");
+  }
+};
+
+pythonGenerator.forBlock['rb_keyword_A2V'] = function(block) {
+  let value1 = pythonGenerator.valueToCode(block, 'value1', pythonGenerator.ORDER_ATOMIC) || '';
+  value1 = robotFormate(value1)
+  
+  let value2 = pythonGenerator.valueToCode(block, 'value2', pythonGenerator.ORDER_ATOMIC) || '';
+  value2 = robotFormate(value2)
+
+  let code = `${value1}=${value2}`;
+  
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
