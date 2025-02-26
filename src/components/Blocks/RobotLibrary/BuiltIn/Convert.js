@@ -331,6 +331,43 @@ pythonGenerator.forBlock['rb_builtin_convert_to_boolean'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
 
+// BuiltIn: Convert To Bytes
+Blockly.Blocks['rb_builtin_convert_to_bytes'] = {
+  init: function() {
+    this.appendValueInput("value_container")
+      .appendField("Convert To Bytes")
+      .setCheck("Variable")
+    
+    this.appendDummyInput("type_block")
+      .appendField("Type=")
+      .appendField(new Blockly.FieldDropdown([
+        ["text", "text"], 
+        ["int", "int"],
+        ["hex", "hex"],
+        ["binary", "bin"],
+      ]), "type");
+    
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Convert To Bytes");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Convert%20To%20Bytes");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_convert_to_bytes'] = function(block) {
+  let values = pythonGenerator.valueToCode(block, 'value_container', pythonGenerator.ORDER_ATOMIC) || '';
+  values = robotFormate(values, '|', robot_indent)
+  
+  let type = block.getFieldValue('type') || '';
+  
+  let code = `Convert To Bytes`;
+  code += `${values ? `${robot_indent}${values}` : ''}`
+  code += `${type ? `${robot_indent}${type}` : ''}`
+  code += `\n`
+
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
 // BuiltIn: Convert To Hex
 const ConvertToHex_MutatorMixin = {
   mutationToDom: function() {

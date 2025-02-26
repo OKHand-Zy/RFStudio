@@ -26,12 +26,36 @@ import "@/components/Blocks/Common/function";
 
 // RobotFrameWork Library Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn/BuiltIn";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Variable";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Get";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Log";
+import "@/components/Blocks/RobotLibrary/BuiltIn/KeyWord";
+import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Other";
 
+// ToolBoxs
+import {
+  Command_Variables, 
+  Command_Documentation, 
+  Command_BaseFunctions
+} from "@/components/ToolBoxs/TB_Commands";
 
+import {
+  Logic_For_Loop,
+  Logic_While_Loop,
+  Logic_If_Loop,
+  Logic_Try_Loop,
+  Logic_Group,
+} from "@/components/ToolBoxs/TB_Logic"; 
 
+import { 
+  RBF_Comments,
+  RBF_Settings,
+  RBF_Variables,
+  RBF_TestCases,
+  RBF_KeyWords,
+} from "@/components/ToolBoxs/TB_Framrok";
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
@@ -47,253 +71,6 @@ export default function App() {
   const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
-      {
-        kind: "category",
-        name: "Commands",
-        colour: "#FF0000",
-        contents: [
-          {
-            kind: "category",
-            name: "Variables",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_variable",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_content",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_html_content",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_math_symbols",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_V2V",
-                inputs: {
-                  value1: { 
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Valume"
-                      }
-                    }
-                  },
-                  value2: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Valume"
-                      }
-                    }
-                  }
-                },
-              },
-              {
-                kind: "block",
-                type: "rb_cm_S2S",
-                inputs: {
-                  string1: { 
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                  string2: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Valume"
-                      }
-                    }
-                  }
-                },
-              },
-              {
-                kind: "block",
-                type: "rb_cm_index",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_date",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_operating_system",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_empty",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_automatic_variables",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_time_string",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_timer_string",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Documentation",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_inline_styles"
-              },
-              {
-                kind: "block",
-                type: "rb_cm_custom_links"
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Base Functions",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_return"
-              },
-              {
-                kind: "block",
-                type: "rb_cm_loop_control"
-              },
-              {
-                kind: "block",
-                type: "rb_cm_reserved_tags"
-              },
-            ]
-          },
-        ]
-      },
-      {
-        kind: "category",
-        name: "Logic",
-        colour: "#5C81A6",
-        contents: [
-          {
-            kind: "category",
-            name: "FOR LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_for_loop",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_for_zip_mode",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_for_zip_fill",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "WHILE LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_while_loop",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_while_value",
-                inputs: {
-                  variables: { 
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                  verified: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Verified"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                kind: "block",
-                type: "rb_logic_while_true_limit",
-              }
-            ]
-          },
-          {
-            kind: "category",
-            name: "IF LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_if_else_loop",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "TRY LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_try_except_loop",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "GROUP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_group",
-              },
-            ]
-          },
-        ],
-      },
-      {
-        kind: "category",
-        name: "Math",
-        colour: "#5CA65C",
-        contents: [
-          {
-            kind: "block",
-            type: "math_round",
-          },
-          {
-            kind: "block",
-            type: "math_number",
-          },
-        ],
-      }, 
       {
         kind: "category",
         name: "Test",
@@ -333,151 +110,42 @@ export default function App() {
       },
       {
         kind: "sep"
-      }, 
+      },
+      {
+        kind: "category",
+        name: "Commands",
+        colour: "#FF0000",
+        contents: [
+          Command_Variables,
+          Command_Documentation,
+          Command_BaseFunctions,
+        ]
+      },
+      {
+        kind: "category",
+        name: "Logic",
+        colour: "#5C81A6",
+        contents: [
+          Logic_For_Loop,
+          Logic_While_Loop,
+          Logic_If_Loop,
+          Logic_Try_Loop,
+          Logic_Group,
+        ],
+      },
+      {
+        kind: "sep"
+      },  
       {
         kind: "category",
         name: "RB_Framework",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "category",
-            name: "Comments",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cmt_comment",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Settings",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Settings",
-              },
-              {
-                kind: "block",
-                type: "rb_setting_import_library",
-              },
-              {
-                kind: "block",
-                type: "rb_setting_import_remote_library"
-              },
-              {
-                kind: "block",
-                type: "rb_setting_section",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Variables",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Variables",
-              },
-              {
-                kind: "block",
-                type: "rb_variable_setVariable",
-              }
-            ]
-          },
-          {
-            kind: "category",
-            name: "TestCases",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_TestCases"
-              },
-              {
-                kind: "block",
-                type: "rb_fw_Tasks"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_function"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_section_container"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_assign_variables",
-                inputs: {
-                  variables: { 
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                  verified: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Verified"
-                      }
-                    }
-                  }
-                },
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_var",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "KeyWords",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Keywords"
-              },
-              {
-                kind: "block",
-                type: "rb_keyword_function"
-              },
-              {
-                kind: "block",
-                type: "rb_keyword_function_arg_container"
-              },
-              {
-                kind: "block",
-                type: "rb_keyword_A2V",
-                inputs: {
-                  value1: { 
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Arguments"
-                      }
-                    }
-                  },
-                  value2: {
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                },
-              }
-            ]
-          }
+          RBF_Comments,
+          RBF_Settings,
+          RBF_Variables,
+          RBF_TestCases,
+          RBF_KeyWords,
         ]
       },    
       {
@@ -514,6 +182,20 @@ export default function App() {
             type: "rb_builtin_convert_to_boolean",
             inputs: {
               value_block: { 
+                shadow: {
+                  type: 'rb_cm_variable',
+                  fields: {
+                    variable: 'Variable'
+                  }
+                }
+              }
+            },
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_convert_to_bytes",
+            inputs: {
+              value_container: { 
                 shadow: {
                   type: 'rb_cm_variable',
                   fields: {
@@ -797,7 +479,48 @@ export default function App() {
           {
             kind: "block",
             type: "rb_builtin_replace_variables"
-          }
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_return_from_keyword"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_return_from_keyword_if"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_continue_on_failure"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_ignore_error"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_return"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_return_if"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_return_status"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_and_warn_on_failure"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if"
+          },
+          
 
         ],
       },

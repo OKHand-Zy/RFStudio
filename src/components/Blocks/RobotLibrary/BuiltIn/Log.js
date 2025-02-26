@@ -18,47 +18,6 @@ function robotFormate(code, splitMark = '|', indent = robot_indent) {
     .join(indent);
 }
 
-// BuiltIn: Comment
-registerFieldMultilineInput();
-Blockly.Blocks['rb_builtin_comment'] = {
-  init: function () {
-    this.appendDummyInput('rb_builtin_comment')
-      .appendField("Comments=")
-
-    this.appendDummyInput()
-      .appendField(
-        new FieldMultilineInput(
-          'Description:\nAuthor:\nDate:\nVersion:'
-        ),
-        'COMMENT'
-      );
-    this.setPreviousStatement(true, null)
-    this.setNextStatement(true, null) 
-    this.setColour(block_color);
-    this.setTooltip("BuiltIn：Multiline Comment");
-    this.setHelpUrl("");
-  },
-};
-pythonGenerator.forBlock['rb_builtin_comment'] = function(block) {
-  let comment_text = block.getFieldValue('COMMENT');
-
-  const lines = comment_text.split('\n');
-  let formatted_comment = '';
-  
-  if (lines.length > 0) {
-    // 第一行作為主要 Comment 內容
-    formatted_comment = `Comment${robot_indent}${lines[0]}`;
-    // 從第二行開始，每行前面添加 "..."
-    for (let i = 1; i < lines.length; i++) {
-      formatted_comment += `\n...${robot_indent}${robot_indent}${lines[i]}`;
-    }
-  } else {
-    formatted_comment = `Comment${robot_indent}`;
-  }
-  
-  return formatted_comment + '\n';
-};
-
 // BuiltIn: Log
 const Log_MutatorMixin = {
     mutationToDom: function() {
@@ -740,5 +699,50 @@ pythonGenerator.forBlock['rb_builtin_log_variables'] = function(block) {
   let level = block.getFieldValue('variables');
   level = level ? `level=${level}` : '';
   let code = `Log Variables${level ? `${robot_indent}${level}` : ''}\n`
+  return code;
+};
+
+// BuiltIn: Reset Log Level
+Blockly.Block['rb_builtin_reset_log_level'] = {
+  init: function() {
+    this.appendDummyInput("container")
+      .appendField("Reset Log Level")
+
+    this.setPreviousStatement(true, null)
+    this.setNextStatement(true, null)
+    this.setColour(block_color)
+    this.setTooltip("BuiltIn: Reset Log Level")
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Reset%20Log%20Level")
+  }
+};
+pythonGenerator.forBlock['rb_builtin_reset_log_level'] = function(block) {
+  let code = `Reset Log Level\n`;
+  return code;
+};
+
+// BuiltIn: Set Log Level
+Blockly.Block['rb_builtin_set_log_level'] = {
+  init: function() {
+    this.appendDummyInput("container")
+      .appendField("Set Log Level")
+      .appendField(new Blockly.FieldDropdown([
+        ["TRACE", "TRACE"],
+        ["DEBUG", "DEBUG"],
+        ["INFO", "INFO"],
+        ["WARN", "WARN"],
+        ["NONE", "NONE"],
+      ]), "level")
+    
+    this.setPreviousStatement(true, null)
+    this.setNextStatement(true, null)
+    this.setColour(block_color)
+    this.setTooltip("BuiltIn: Set Log Level")
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Set%20Log%20Level")
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_set_log_level'] = function(block) {
+  let level = block.getFieldValue('level') || '';
+  let code = `Set Log Level${robot_indent}${level}\n`;
   return code;
 };
