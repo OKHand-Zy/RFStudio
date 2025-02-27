@@ -65,7 +65,33 @@ export const Command_Variables = {
       },
       {
         kind: "block",
+        type: "other_create_keyword_arg",
+        inputs: {
+          arg: {
+            shadow: {
+              type: 'rb_cm_content',
+              fields: {
+                CONTENT: "ArgName"
+              }
+            }
+          }, 
+          value: {
+            shadow: {
+              type: 'rb_cm_content',
+              fields: {
+                CONTENT: "Valume"
+              }
+            }
+          }
+        }
+      },
+      {
+        kind: "block",
         type: "rb_cm_index",
+      },
+      {
+        kind: "block",
+        type: "other_create_logic_statement",
       },
       {
         kind: "block",

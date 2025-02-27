@@ -721,7 +721,7 @@ pythonGenerator.forBlock['rb_builtin_reset_log_level'] = function(block) {
 };
 
 // BuiltIn: Set Log Level
-Blockly.Block['rb_builtin_set_log_level'] = {
+Blockly.Blocks['rb_builtin_set_log_level'] = {
   init: function() {
     this.appendDummyInput("container")
       .appendField("Set Log Level")
@@ -743,6 +743,12 @@ Blockly.Block['rb_builtin_set_log_level'] = {
 
 pythonGenerator.forBlock['rb_builtin_set_log_level'] = function(block) {
   let level = block.getFieldValue('level') || '';
-  let code = `Set Log Level${robot_indent}${level}\n`;
+  
+  let code = `Set Log Level`;
+  code += `${robot_indent}${level}\n`;
+  
   return code;
 };
+
+
+

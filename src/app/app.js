@@ -26,11 +26,13 @@ import "@/components/Blocks/Common/function";
 
 // RobotFrameWork Library Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn/BuiltIn";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Resource"
 import "@/components/Blocks/RobotLibrary/BuiltIn/Variable";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Get";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Log";
 import "@/components/Blocks/RobotLibrary/BuiltIn/KeyWord";
+import "@/components/Blocks/RobotLibrary/BuiltIn/TestManagement"
 import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Other";
 
@@ -498,6 +500,10 @@ export default function App() {
           },
           {
             kind: "block",
+            type: "rb_builtin_run_keyword_and_expect_error"
+          },
+          {
+            kind: "block",
             type: "rb_builtin_run_keyword_and_ignore_error"
           },
           {
@@ -520,8 +526,82 @@ export default function App() {
             kind: "block",
             type: "rb_builtin_run_keyword_if"
           },
-          
-
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if_all_tests_passed"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if_any_tests_failed"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if_test_failed"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if_test_passed"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_if_timeout_occurred"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keyword_unless"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_run_keywords"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_global_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_library_search_order"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_local_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_log_level"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_suite_documentation"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_suite_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_tags"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_suite_metadata"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_task_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_test_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_variable"
+          },
+          {
+            kind: "block",
+            type: "rb_builtin_set_variable_if"
+          }
         ],
       },
       {
