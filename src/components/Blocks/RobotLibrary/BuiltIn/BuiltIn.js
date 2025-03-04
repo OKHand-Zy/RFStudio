@@ -1,14 +1,7 @@
 import * as Blockly from 'blockly';
-import {pythonGenerator} from 'blockly/python';
+import {PythonGenerator, pythonGenerator} from 'blockly/python';
 
-// 修改 pythonGenerator 的縮排設定
-const default_indent = '';
-const robot_indent = '    ';
-const split_mark = '|';
-const block_color = 30;
-pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
-
-//image
+// image
 const plusImage =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
   '9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMT' +
@@ -22,6 +15,13 @@ const minusImage =
   'JNMTggMTFoLTEyYy0xLjEwNCAwLTIgLjg5Ni0yIDJzLjg5NiAyIDIgMmgxMmMxLjEwNCAw' +
   'IDItLjg5NiAyLTJzLS44OTYtMi0yLTJ6IiBmaWxsPSJ3aGl0ZSIgLz48L3N2Zz4K';
 
+// 修改 pythonGenerator 的縮排設定
+const default_indent = '';
+const robot_indent = '    ';
+const split_mark = '|';
+const block_color = 10;
+pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
+
 // Formate Function
 function robotFormate(code, splitMark = '|', indent = robot_indent) {
   if (!code) return '';
@@ -30,3 +30,28 @@ function robotFormate(code, splitMark = '|', indent = robot_indent) {
     .filter(part => part)
     .join(indent);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,6 +15,7 @@ import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
 //Common
 import "@/components/Blocks/Common/common";
+import "@/components/Blocks/Common/Other";
 //Control Structures
 import "@/components/Blocks/Common/Control_Structures/for_loop";
 import "@/components/Blocks/Common/Control_Structures/while_loop";
@@ -25,10 +26,54 @@ import "@/components/Blocks/Common/Control_Structures/group";
 import "@/components/Blocks/Common/function";
 
 // RobotFrameWork Library Blocks
-import "@/components/Blocks/RobotLibrary/BuiltIn";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Resource"
+import "@/components/Blocks/RobotLibrary/BuiltIn/Variable";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
+import "@/components/Blocks/RobotLibrary/BuiltIn/Log";
+import "@/components/Blocks/RobotLibrary/BuiltIn/KeyWord";
+import "@/components/Blocks/RobotLibrary/BuiltIn/TestManagement"
+import "@/components/Blocks/RobotLibrary/BuiltIn/Assertion"
+import "@/components/Blocks/RobotLibrary/BuiltIn/FlowControl";
+import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
+
+// ToolBoxs
+import {
+  Command_Variables, 
+  Command_Documentation, 
+  Command_BaseFunctions
+} from "@/components/ToolBoxs/TB_Commands";
+
+import {
+  Logic_For_Loop,
+  Logic_While_Loop,
+  Logic_If_Loop,
+  Logic_Try_Loop,
+  Logic_Group,
+} from "@/components/ToolBoxs/TB_Logic"; 
+
+import { 
+  TB_BuiltIn_FlowContol,
+  TB_BuiltIn_Keyword,
+  TB_BuiltIn_Variable,
+  TB_BuiltIn_Assert,
+  TB_BuiltIn_Convert,
+  TB_BuiltIn_Log,
+  TB_BuiltIn_TestManagement,
+  TB_BuiltIn_Resource,
+  TB_BuiltIn_UtilTools,
+} from "@/components/ToolBoxs/TB_BuiltIn";
+
+import { 
+  RBF_Comments,
+  RBF_Settings,
+  RBF_Variables,
+  RBF_TestCases,
+  RBF_KeyWords,
+} from "@/components/ToolBoxs/TB_Framrok";
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
+
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -40,189 +85,6 @@ export default function App() {
   const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
-      {
-        kind: "category",
-        name: "Commands",
-        colour: "#FF0000",
-        contents: [
-          {
-            kind: "category",
-            name: "Variables",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_variable",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_content",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_index",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_date",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_operating_system",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_empty",
-              },
-              {
-                kind: "block",
-                type: "rb_cm_automatic_variables",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Documentation",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_inline_styles"
-              },
-              {
-                kind: "block",
-                type: "rb_cm_custom_links"
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Base Functions",
-            colour: "#FF0000",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cm_return"
-              },
-              {
-                kind: "block",
-                type: "rb_cm_loop_control"
-              },
-            ]
-          },
-        ]
-      },
-      {
-        kind: "category",
-        name: "Logic",
-        colour: "#5C81A6",
-        contents: [
-          {
-            kind: "category",
-            name: "FOR LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_for_loop",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_for_zip_mode",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_for_zip_fill",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "WHILE LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_while_loop",
-              },
-              {
-                kind: "block",
-                type: "rb_logic_while_value",
-                inputs: {
-                  variables: { 
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                  verified: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Verified"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                kind: "block",
-                type: "rb_logic_while_true_limit",
-              }
-            ]
-          },
-          {
-            kind: "category",
-            name: "IF LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_if_else_loop",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "TRY LOOP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_try_except_loop",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "GROUP",
-            colour: "#5C81A6",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_logic_group",
-              },
-            ]
-          },
-        ],
-      },
-      {
-        kind: "category",
-        name: "Math",
-        colour: "#5CA65C",
-        contents: [
-          {
-            kind: "block",
-            type: "math_round",
-          },
-          {
-            kind: "block",
-            type: "math_number",
-          },
-        ],
-      }, 
       {
         kind: "category",
         name: "Test",
@@ -262,160 +124,63 @@ export default function App() {
       },
       {
         kind: "sep"
-      }, 
+      },
+      {
+        kind: "category",
+        name: "Commands",
+        colour: "#FF0000",
+        contents: [
+          Command_Variables,
+          Command_Documentation,
+          Command_BaseFunctions,
+        ]
+      },
+      {
+        kind: "category",
+        name: "Logic",
+        colour: "#5C81A6",
+        contents: [
+          Logic_For_Loop,
+          Logic_While_Loop,
+          Logic_If_Loop,
+          Logic_Try_Loop,
+          Logic_Group,
+        ],
+      },
+      {
+        kind: "sep"
+      },  
       {
         kind: "category",
         name: "RB_Framework",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "category",
-            name: "Comments",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_cmt_comment",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Settings",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Settings",
-              },
-              {
-                kind: "block",
-                type: "rb_setting_import_library",
-              },
-              {
-                kind: "block",
-                type: "rb_setting_import_remote_library"
-              },
-              {
-                kind: "block",
-                type: "rb_setting_section",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "Variables",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Variables",
-              },
-              {
-                kind: "block",
-                type: "rb_variable_setVariable",
-              }
-            ]
-          },
-          {
-            kind: "category",
-            name: "TestCases",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_TestCases"
-              },
-              {
-                kind: "block",
-                type: "rb_fw_Tasks"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_function"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_section_container"
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_assign_variables",
-                inputs: {
-                  variables: { 
-                    shadow: {
-                      type: 'rb_cm_variable',
-                      fields: {
-                        variable: 'Variable'
-                      }
-                    }
-                  },
-                  verified: {
-                    shadow: {
-                      type: 'rb_cm_content',
-                      fields: {
-                        CONTENT: "Verified"
-                      }
-                    }
-                  }
-                },
-              },
-              {
-                kind: "block",
-                type: "rb_testcase_var",
-              },
-            ]
-          },
-          {
-            kind: "category",
-            name: "KeyWords",
-            colour: "#A65C81",
-            contents: [
-              {
-                kind: "block",
-                type: "rb_fw_Keywords"
-              },
-              {
-                kind: "block",
-                type: "rb_keyword_function"
-              },
-              {
-                kind: "block",
-                type: "rb_keyword_function_arg_container"
-              },
-            ]
-          }
+          RBF_Comments,
+          RBF_Settings,
+          RBF_Variables,
+          RBF_TestCases,
+          RBF_KeyWords,
         ]
       },    
       {
         kind: "category",
-        name: "RB_BuiltIn",
+        name: "RBL_BuiltIn",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "sleep",
-          },
-          {
-            kind: "block",
-            type: "Get_Time",
-          },
-        ],
+          TB_BuiltIn_FlowContol,
+          TB_BuiltIn_Keyword,
+          TB_BuiltIn_Variable,
+          TB_BuiltIn_Assert,
+          TB_BuiltIn_Convert,
+          TB_BuiltIn_Log,
+          TB_BuiltIn_TestManagement,
+          TB_BuiltIn_Resource,
+          TB_BuiltIn_UtilTools,
+        ]
       },
       {
         kind: "category",
-        name: "RB_Collections",
-        colour: "#A65C81",
-        contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
-        ],
-      },
-      {
-        kind: "category",
-        name: "RB_DateTime",
+        name: "RBL_Collections",
         colour: "#A65C81",
         contents: [
           {
@@ -426,7 +191,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Dialogs",
+        name: "RBL_DateTime",
         colour: "#A65C81",
         contents: [
           {
@@ -437,7 +202,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_OperatingSystem",
+        name: "RBL_Dialogs",
         colour: "#A65C81",
         contents: [
           {
@@ -448,7 +213,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Process",
+        name: "RBL_OperatingSystem",
         colour: "#A65C81",
         contents: [
           {
@@ -459,7 +224,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Screenshot",
+        name: "RBL_Process",
         colour: "#A65C81",
         contents: [
           {
@@ -470,7 +235,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_String",
+        name: "RBL_Screenshot",
         colour: "#A65C81",
         contents: [
           {
@@ -481,7 +246,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Telnet",
+        name: "RBL_String",
         colour: "#A65C81",
         contents: [
           {
@@ -492,7 +257,18 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_XML",
+        name: "RBL_Telnet",
+        colour: "#A65C81",
+        contents: [
+          {
+            kind: "block",
+            type: "text",
+          },
+        ],
+      },
+      {
+        kind: "category",
+        name: "RBL_XML",
         colour: "#A65C81",
         contents: [
           {

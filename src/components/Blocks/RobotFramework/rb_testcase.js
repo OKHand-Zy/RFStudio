@@ -60,7 +60,7 @@ Blockly.Blocks['rb_fw_Tasks'] = {
 };
 
 pythonGenerator.forBlock['rb_fw_Tasks'] = function(block) {
-  const testcases_content = pythonGenerator.statementToCode(block, 'TestCases') || '';
+  const testcases_content = pythonGenerator.statementToCode(block, 'Tasks') || '';
   let code = `*** Tasks ***
 ${testcases_content}`;
   
@@ -75,7 +75,7 @@ Blockly.Blocks['rb_testcase_function'] = {
       this.appendStatementInput("testcase_content")
           .setCheck(null);
       
-      this.setPreviousStatement(true, ['rb_fw_TestCases','rb_testcase_function']);
+      this.setPreviousStatement(true, ['rb_fw_TestCases', 'rb_fw_Tasks', 'rb_testcase_function']);
       this.setNextStatement(true, ['rb_testcase_function']);
       this.setInputsInline(true);
       this.setColour(block_color);
@@ -111,7 +111,7 @@ Blockly.Blocks['rb_testcase_section_container'] = {
         .appendField("  ")
         .setCheck("Variable") 
     
-    this.setPreviousStatement(true, ['rb_fw_TestCases', 'rb_testcase_function', 'rb_testcase_section_container']);
+    this.setPreviousStatement(true, ['rb_fw_TestCases', 'rb_fw_Tasks', 'rb_testcase_function', 'rb_testcase_section_container']);
     this.setNextStatement(true, ['rb_testcase_function', 'rb_testcase_section_container']);
     this.setInputsInline(true);
     this.setColour(block_color);
@@ -124,7 +124,7 @@ pythonGenerator.forBlock['rb_testcase_section_container'] = function(block) {
   const section_type = block.getFieldValue('section_type');
   const content = block.getFieldValue('content');
   const resource_args = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
-  let code = `${section_type}${robot_indent}${content}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
+  let code = `[${section_type}]${robot_indent}${content}${resource_args ? `${robot_indent}${resource_args}` : ''}\n`;
   return code;
 };
 
@@ -155,7 +155,7 @@ pythonGenerator.forBlock['rb_testcase_assign_variables'] = function(block) {
   value_verified = robotFormate(value_verified)
 
   pythonGenerator.INDENT = default_indent;  
-  let code = `${value_variables} =${value_verified}\n`;
+  let code = `${value_variables}=${robot_indent}${value_verified}\n`;
   pythonGenerator.INDENT = robot_indent;
   
   return code;
