@@ -15,6 +15,7 @@ import "@/components/Blocks/RobotFramework/rb_keyword";
 // Common Blocks
 //Common
 import "@/components/Blocks/Common/common";
+import "@/components/Blocks/Common/Other";
 //Control Structures
 import "@/components/Blocks/Common/Control_Structures/for_loop";
 import "@/components/Blocks/Common/Control_Structures/while_loop";
@@ -25,16 +26,15 @@ import "@/components/Blocks/Common/Control_Structures/group";
 import "@/components/Blocks/Common/function";
 
 // RobotFrameWork Library Blocks
-import "@/components/Blocks/RobotLibrary/BuiltIn/BuiltIn";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Resource"
 import "@/components/Blocks/RobotLibrary/BuiltIn/Variable";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
-import "@/components/Blocks/RobotLibrary/BuiltIn/Get";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Log";
 import "@/components/Blocks/RobotLibrary/BuiltIn/KeyWord";
 import "@/components/Blocks/RobotLibrary/BuiltIn/TestManagement"
+import "@/components/Blocks/RobotLibrary/BuiltIn/Assertion"
+import "@/components/Blocks/RobotLibrary/BuiltIn/FlowControl";
 import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
-import "@/components/Blocks/RobotLibrary/BuiltIn/Other";
 
 // ToolBoxs
 import {
@@ -50,6 +50,18 @@ import {
   Logic_Try_Loop,
   Logic_Group,
 } from "@/components/ToolBoxs/TB_Logic"; 
+
+import { 
+  TB_BuiltIn_FlowContol,
+  TB_BuiltIn_Keyword,
+  TB_BuiltIn_Variable,
+  TB_BuiltIn_Assert,
+  TB_BuiltIn_Convert,
+  TB_BuiltIn_Log,
+  TB_BuiltIn_TestManagement,
+  TB_BuiltIn_Resource,
+  TB_BuiltIn_UtilTools,
+} from "@/components/ToolBoxs/TB_BuiltIn";
 
 import { 
   RBF_Comments,
@@ -152,461 +164,23 @@ export default function App() {
       },    
       {
         kind: "category",
-        name: "RB_BuiltIn",
+        name: "RBL_BuiltIn",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "rb_builtin_call_method",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_catenate",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_comment",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_continue_for_loop",  
-          },  
-          {
-            kind: "block",
-            type: "rb_builtin_continue_for_loop_if",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_binary",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_boolean",
-            inputs: {
-              value_block: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_bytes",
-            inputs: {
-              value_container: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_integer",
-            inputs: {
-              value_block: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_number",
-            inputs: {
-              value_block: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_hex",
-            inputs: {
-              value_container: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_octal",
-            inputs: {
-              value_container: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_convert_to_string",
-            inputs: {
-              value_block: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_create_dictionary",
-            inputs: {
-              create_dictionary_container: { 
-                shadow: {
-                  type: 'rb_cm_V2V',
-                  inputs: {
-                    value1: { 
-                      shadow: {
-                        type: 'rb_cm_content',
-                        fields: {
-                          CONTENT: "Valume"
-                        }
-                      }
-                    },
-                    value2: {
-                      shadow: {
-                        type: 'rb_cm_content',
-                        fields: {
-                          CONTENT: "Valume"
-                        }
-                      }
-                    },
-                  },
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_create_list",
-            inputs: {
-              create_list_container: {
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              } 
-            }
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_evaluate",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_exit_for_loop",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_exit_for_loop_if",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_fail",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_fatal_error",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_count",
-            inputs: {
-              container: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_length",
-            inputs: {
-              container: { 
-                shadow: {
-                  type: 'rb_cm_variable',
-                  fields: {
-                    variable: 'Variable'
-                  }
-                }
-              }
-            },
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_library_instance",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_time",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_variable_value",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_get_variables",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_import_library",
-            inputs: {
-              library_name: {
-                shadow: {
-                  type: 'rb_cm_content',
-                  fields: {
-                    CONTENT: "Library"
-                  }
-                }
-              }
-            }
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_import_resource",
-            inputs: {
-              resource: {
-                shadow: {
-                  type: 'rb_cm_content',
-                  fields: {
-                    CONTENT: "Resource"
-                  }
-                }
-              }
-            }
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_import_variables",
-            inputs: {
-              container: { 
-                shadow: {
-                  type: 'rb_cm_content',
-                  fields: {
-                    CONTENT: "Variables"
-                  }
-                }
-              } 
-            }
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_keyword_should_exist",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_length_should_be",
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_Log"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_log_many"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_log2console"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_log_variables"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_no_operation"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_pass_execution"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_pass_execution_if"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_regexp_escape"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_reload_library"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_remove_tags"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_repeat_keyword"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_replace_variables"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_return_from_keyword"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_return_from_keyword_if"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_continue_on_failure"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_expect_error"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_ignore_error"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_return"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_return_if"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_return_status"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_and_warn_on_failure"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if_all_tests_passed"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if_any_tests_failed"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if_test_failed"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if_test_passed"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_if_timeout_occurred"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keyword_unless"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_run_keywords"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_global_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_library_search_order"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_local_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_log_level"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_suite_documentation"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_suite_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_tags"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_suite_metadata"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_task_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_test_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_variable"
-          },
-          {
-            kind: "block",
-            type: "rb_builtin_set_variable_if"
-          }
-        ],
+          TB_BuiltIn_FlowContol,
+          TB_BuiltIn_Keyword,
+          TB_BuiltIn_Variable,
+          TB_BuiltIn_Assert,
+          TB_BuiltIn_Convert,
+          TB_BuiltIn_Log,
+          TB_BuiltIn_TestManagement,
+          TB_BuiltIn_Resource,
+          TB_BuiltIn_UtilTools,
+        ]
       },
       {
         kind: "category",
-        name: "RB_Collections",
+        name: "RBL_Collections",
         colour: "#A65C81",
         contents: [
           {
@@ -617,7 +191,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_DateTime",
+        name: "RBL_DateTime",
         colour: "#A65C81",
         contents: [
           {
@@ -628,7 +202,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Dialogs",
+        name: "RBL_Dialogs",
         colour: "#A65C81",
         contents: [
           {
@@ -639,7 +213,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_OperatingSystem",
+        name: "RBL_OperatingSystem",
         colour: "#A65C81",
         contents: [
           {
@@ -650,7 +224,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Process",
+        name: "RBL_Process",
         colour: "#A65C81",
         contents: [
           {
@@ -661,7 +235,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Screenshot",
+        name: "RBL_Screenshot",
         colour: "#A65C81",
         contents: [
           {
@@ -672,7 +246,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_String",
+        name: "RBL_String",
         colour: "#A65C81",
         contents: [
           {
@@ -683,7 +257,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_Telnet",
+        name: "RBL_Telnet",
         colour: "#A65C81",
         contents: [
           {
@@ -694,7 +268,7 @@ export default function App() {
       },
       {
         kind: "category",
-        name: "RB_XML",
+        name: "RBL_XML",
         colour: "#A65C81",
         contents: [
           {

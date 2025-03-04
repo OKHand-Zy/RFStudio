@@ -200,7 +200,7 @@ const Log_MutatorMixin = {
     }
   };
   
-  Blockly.Blocks['rb_builtin_Log'] = {
+  Blockly.Blocks['rb_builtin_log'] = {
     init: function() {
       this.containerBlockType = 'log_option_container';
       this.itemBlockTypes = ['option_level_item', 'option_html_item', 'option_console_item', 'option_formatter_item'];
@@ -233,6 +233,7 @@ const Log_MutatorMixin = {
         this.appendDummyInput('level_input')
           .appendField("level=")
           .appendField(new Blockly.FieldDropdown([
+            ["default", ""],
             ["INFO", "INFO"],
             ["TRACE", "TRACE"],
             ["WARN", "WARN"],
@@ -245,6 +246,7 @@ const Log_MutatorMixin = {
         this.appendDummyInput('html_input')
           .appendField("html=")
           .appendField(new Blockly.FieldDropdown([
+            ["default", ""],
             ["False", "False"],
             ["True", "True"],
           ]), "html_arg");
@@ -254,6 +256,7 @@ const Log_MutatorMixin = {
         this.appendDummyInput('console_input')
           .appendField("console=")
           .appendField(new Blockly.FieldDropdown([
+            ["default", ""],
             ["False", "False"],
             ["True", "True"],
           ]), "console_arg");
@@ -263,6 +266,7 @@ const Log_MutatorMixin = {
         this.appendDummyInput('formatter_input')
           .appendField("formatter=")
           .appendField(new Blockly.FieldDropdown([
+            ["default", ""],
             ["str", "str"],
             ["repr", "repr"],
             ["ascii", "ascii"],
@@ -330,7 +334,7 @@ const Log_MutatorMixin = {
     }
   };
   
-  pythonGenerator.forBlock['rb_builtin_Log'] = function(block) {
+  pythonGenerator.forBlock['rb_builtin_log'] = function(block) {
     let message = pythonGenerator.valueToCode(block, 'message', pythonGenerator.ORDER_ATOMIC) || '';
     message = robotFormate(message)
     const kwargs = [];
@@ -579,6 +583,7 @@ Blockly.Blocks['rb_builtin_log2console'] = {
       this.appendDummyInput('stream_input')
         .appendField("stream=")
         .appendField(new Blockly.FieldDropdown([
+          ["default", ""],
           ["STDOUT", "STDOUT"],
           ["STDERR", "STDERR"],
         ]), "stream_arg");
@@ -588,6 +593,7 @@ Blockly.Blocks['rb_builtin_log2console'] = {
       this.appendDummyInput('newline_input')
         .appendField("no_newline=")
         .appendField(new Blockly.FieldDropdown([
+          ["default", ""],
           ["False", "False"],
           ["True", "True"],
         ]), "newline_arg");
@@ -682,7 +688,7 @@ pythonGenerator.forBlock['rb_builtin_log2console'] = function(block) {
 Blockly.Blocks['rb_builtin_log_variables'] = {
   init: function() {
     this.appendDummyInput("variable_container")
-      .appendField("Log Variables  ")
+      .appendField("Log Variables")
       .appendField("Level=")
       .appendField(new Blockly.FieldTextInput("INFO"), "variables");
 
@@ -703,18 +709,20 @@ pythonGenerator.forBlock['rb_builtin_log_variables'] = function(block) {
 };
 
 // BuiltIn: Reset Log Level
-Blockly.Block['rb_builtin_reset_log_level'] = {
+Blockly.Blocks['rb_builtin_reset_log_level'] = {
   init: function() {
-    this.appendDummyInput("container")
-      .appendField("Reset Log Level")
-
-    this.setPreviousStatement(true, null)
-    this.setNextStatement(true, null)
-    this.setColour(block_color)
-    this.setTooltip("BuiltIn: Reset Log Level")
-    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Reset%20Log%20Level")
+    this.appendDummyInput()
+      .appendField("Reset Log Level");
+    
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Reset Log Level");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Reset%20Log%20Level");
   }
 };
+
+// Generator code remains the same
 pythonGenerator.forBlock['rb_builtin_reset_log_level'] = function(block) {
   let code = `Reset Log Level\n`;
   return code;

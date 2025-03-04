@@ -123,7 +123,7 @@ Blockly.Blocks['rb_builtin_run_keyword_and_continue_on_failure'] = {
       .appendField("Run Keyword And Continue On Failure ")
       .setCheck(null);
     
-    this.setInputsInline(true);
+    this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(block_color);
@@ -1014,8 +1014,8 @@ Blockly.Blocks['rb_builtin_run_keyword_unless'] = {
       .appendField("Condition：")
       .setCheck("Variable")
 
-    this.appendValueInput("value_container")
-      .appendField("Return Values：")
+    this.appendValueInput("keyword_container")
+      .appendField("KeyWord：")
       .setCheck(null);
     
     this.setPreviousStatement(true, null);
@@ -1030,12 +1030,12 @@ pythonGenerator.forBlock['rb_builtin_run_keyword_unless'] = function(block) {
   let condition = pythonGenerator.valueToCode(block, 'condition_container', pythonGenerator.ORDER_ATOMIC) || '';
   condition = robotFormate(condition, '|', default_indent)
 
-  let value = pythonGenerator.valueToCode(block, 'value_container', pythonGenerator.ORDER_ATOMIC) || '';
-  value = robotFormate(value, '|', robot_indent)
+  let keyword = pythonGenerator.valueToCode(block, 'keyword_container', pythonGenerator.ORDER_ATOMIC) || '';
+  keyword = robotFormate(keyword, '|', robot_indent)
 
   let code = `Run Keyword Unless`
   code += `${robot_indent}${condition}`;
-  code += `${robot_indent}${value}`;
+  code += `${robot_indent}${keyword}`;
   code += '\n';
   return code;
 };

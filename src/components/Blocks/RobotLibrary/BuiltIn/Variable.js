@@ -121,7 +121,8 @@ Blockly.Blocks['rb_builtin_get_variables'] = {
       this.appendDummyInput('decoration_input')
         .appendField("no_decoration=")
         .appendField(new Blockly.FieldDropdown([
-          ["False", ""],
+          ["default", ""],
+          ["False", "False"],
           ["True", "True"],
         ]), "decoration_arg");
     }
@@ -198,6 +199,49 @@ pythonGenerator.forBlock['rb_builtin_set_global_variable'] = function(block) {
   code += `${variable ? `${robot_indent}${variable}`:``}`
   code += `${value ? `${robot_indent}${value}\n`:`\n`}`
   
+  return code;
+};
+
+// BuiltIn: Import Variables
+Blockly.Blocks['rb_builtin_import_variables'] = {
+  init: function() {
+    this.appendValueInput("container")
+      .appendField("Import Variables")
+      .setCheck("Variable")
+    
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Import Variables");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Import%20Variables");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_import_variables'] = function(block) {
+  let container = pythonGenerator.valueToCode(block, 'container', pythonGenerator.ORDER_ATOMIC) || '';
+  container = robotFormate(container, '|', robot_indent)
+  let code = `Import Variables${robot_indent}${container}\n`;
+  return code;
+};
+
+// BuiltIn: Replace Variables
+Blockly.Blocks['rb_builtin_replace_variables'] = {
+  init: function() {
+    this.appendValueInput("container")
+      .appendField("Replace Variables")
+      .setCheck(null);
+    
+    this.setOutput(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Replace Variables");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Replace%20Variables");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_replace_variables'] = function(block) {
+  let variables = pythonGenerator.valueToCode(block, 'conatiner', pythonGenerator.ORDER_ATOMIC) || '';
+  variables = robotFormate(variables)
+  let code = `Replace Variables${robot_indent}${variables}\n`;
   return code;
 };
 
@@ -552,5 +596,73 @@ pythonGenerator.forBlock['rb_builtin_set_variable_if'] = function(block) {
     }
   }
 
+  return code;
+};
+
+// BuiltIn: Variable Should Exist
+Blockly.Blocks['rb_builtin_variable_should_exist'] = {
+  init: function() {
+    this.appendValueInput("variable")
+      .appendField("Variable Should Exist ")
+      .setCheck("Variable")
+    
+    this.appendValueInput("message")
+      .appendField(" msg= ")
+      .setCheck(null);
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Variable Should Exist");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Variable%20Should%20Exist");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_variable_should_exist'] = function(block) {
+  let variable = pythonGenerator.valueToCode(block, 'variable', pythonGenerator.ORDER_ATOMIC) || '';
+  variable = robotFormate(variable, '|', robot_indent)
+
+  let message = pythonGenerator.valueToCode(block, 'message', pythonGenerator.ORDER_ATOMIC) || '';
+  message = robotFormate(message, '|', default_indent)
+
+  let code = `Variable Should Exist`
+  code += `${variable ? `${robot_indent}${variable}`:``}`
+  code += `${message ? `${robot_indent}msg=${message}`:``}`
+  code += '\n'
+  return code;
+};
+
+// BuiltIn: Variable Should Not Exist
+Blockly.Blocks['rb_builtin_variable_should_not_exist'] = {
+  init: function() {
+    this.appendValueInput("variable")
+      .appendField("Variable Should Not Exist ")
+      .setCheck("Variable")
+    
+    this.appendValueInput("message")
+      .appendField(" msg= ")
+      .setCheck(null);
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Variable Should Not Exist");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Variable%20Should%20Not%20Exist");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_variable_should_not_exist'] = function(block) {
+  let variable = pythonGenerator.valueToCode(block, 'variable', pythonGenerator.ORDER_ATOMIC) || '';
+  variable = robotFormate(variable, '|', robot_indent)
+
+  let message = pythonGenerator.valueToCode(block, 'message', pythonGenerator.ORDER_ATOMIC) || '';
+  message = robotFormate(message, '|', default_indent)
+
+  let code = `Variable Should Not Exist`
+  code += `${variable ? `${robot_indent}${variable}`:``}`
+  code += `${message ? `${robot_indent}msg=${message}`:``}`
+  code += '\n'
   return code;
 };

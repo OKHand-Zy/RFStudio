@@ -1,5 +1,5 @@
 # BuiltIn
-## FlowContol.js
+## FlowControl.js
 - Continue For Loop
 - Continue For Loop If
 - Exit For Loop
@@ -45,7 +45,7 @@
 - Variable Should Exist
 - Variable Should Not Exist
 
-## Assert_Verify.js
+## Assertion.js
 - Keyword Should Exist
 - Length Should Be
 - Should Be Empty

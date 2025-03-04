@@ -18,6 +18,30 @@ function robotFormate(code, splitMark = '|', indent = robot_indent) {
     .join(indent);
 }
 
+// BuiltIn: Remove Tags
+Blockly.Blocks['rb_builtin_remove_tags'] = {
+  init: function() {
+    this.appendValueInput("tags_container")
+      .appendField("Remove Tags")
+      .setCheck(null);
+    
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("BuiltIn: Remove Tags");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Remove%20Tags");
+  }
+};
+
+pythonGenerator.forBlock['rb_builtin_remove_tags'] = function(block) {
+  let tags = pythonGenerator.valueToCode(block, 'tags_container', pythonGenerator.ORDER_ATOMIC) || '';
+  tags = robotFormate(tags, '|', '  ');
+  let code = `Remove Tags${robot_indent}${tags}\n`;
+
+  return code;
+};
+
 // BuiltIn: Set Suite Documentation
 Blockly.Blocks['rb_builtin_set_suite_documentation'] = {
   init: function() {
@@ -28,14 +52,16 @@ Blockly.Blocks['rb_builtin_set_suite_documentation'] = {
     this.appendDummyInput("append_container")
       .appendField("append= ")
       .appendField(new Blockly.FieldDropdown([
-        ["False", ""],
+        ["default", ""],
+        ["False", "False"],
         ["True", "True"],
       ]), "append_arg")
     
     this.appendDummyInput("top_container")
       .appendField("top= ")
       .appendField(new Blockly.FieldDropdown([
-        ["Flase", ""],
+        ["default", ""],
+        ["Flase", "False"],
         ["True", "True"],
       ]), "top_arg")
     
@@ -90,14 +116,16 @@ Blockly.Blocks['rb_builtin_set_suite_metadata'] = {
     this.appendDummyInput("append_container")
       .appendField("append = ")
       .appendField(new Blockly.FieldDropdown([
-        ["False", ""],
+        ["default", ""],
+        ["False", "False"],
         ["True", "True"],
       ]), "append_arg")
     
     this.appendDummyInput("top_container")
       .appendField("top = ")
       .appendField(new Blockly.FieldDropdown([
-        ["False", ""],
+        ["default", ""],
+        ["False", "False"],
         ["True", "True"],
       ]), "top_arg")
     
@@ -173,7 +201,8 @@ Blockly.Blocks['rb_builtin_set_test_documentation'] = {
     this.appendDummyInput("append_container")
       .appendField("append= ")
       .appendField(new Blockly.FieldDropdown([
-        ["False", ""],
+        ["default", ""],
+        ["False", "False"],
         ["True", "True"],
       ]), "append_arg")
     
@@ -220,7 +249,8 @@ Blockly.Blocks['rb_builtin_set_test_message'] = {
     this.appendDummyInput("append_container")
       .appendField("append= ")
       .appendField(new Blockly.FieldDropdown([
-        ["False", ""],
+        ["default", ""],
+        ["False", "False"],
         ["True", "True"],
       ]), "append_arg")
     

@@ -306,15 +306,6 @@ Blockly.Blocks['rb_builtin_convert_to_boolean'] = {
       .appendField("Convert To Boolean")
       .setCheck("Variable")
     
-    this.appendDummyInput("type_block")
-      .appendField("Type=")
-      .appendField(new Blockly.FieldDropdown([
-        ["text", ""], 
-        ["int", "int"],
-        ["hex", "hex"],
-        ["binary", "bin"],
-      ]), "type");
-    
     this.setOutput(true, null);
     this.setColour(block_color);
     this.setTooltip("BuiltIn: Convert To Boolean");
@@ -325,7 +316,6 @@ Blockly.Blocks['rb_builtin_convert_to_boolean'] = {
 pythonGenerator.forBlock['rb_builtin_convert_to_boolean'] = function(block) {
   let value = pythonGenerator.valueToCode(block, 'value_block', pythonGenerator.ORDER_ATOMIC) || '';
   value = robotFormate(value, '|', robot_indent)
-  let type = block.getFieldValue('type') || '';
   let code = `Convert To Boolean${robot_indent}${value}${type ? `${robot_indent}${type}` : ''}\n`;
 
   return [code, pythonGenerator.ORDER_ATOMIC];
@@ -339,8 +329,9 @@ Blockly.Blocks['rb_builtin_convert_to_bytes'] = {
       .setCheck("Variable")
     
     this.appendDummyInput("type_block")
-      .appendField("Type=")
+      .appendField(" Input Type= ")
       .appendField(new Blockly.FieldDropdown([
+        ["default", ""],
         ["text", "text"], 
         ["int", "int"],
         ["hex", "hex"],
@@ -598,7 +589,8 @@ Blockly.Blocks['rb_builtin_convert_to_hex'] = {
       this.appendDummyInput('lowercase_input')
         .appendField("lowercase=")
         .appendField(new Blockly.FieldDropdown ([
-          ["False", ""],
+          ["default", ""],
+          ["False", "False"],
           ["True", "True"],
         ]), "lowercase_arg");
     }
