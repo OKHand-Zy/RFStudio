@@ -36,6 +36,13 @@ import "@/components/Blocks/RobotLibrary/BuiltIn/Assertion"
 import "@/components/Blocks/RobotLibrary/BuiltIn/FlowControl";
 import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
 
+import "@/components/Blocks/RobotLibrary/Collections/List";
+import "@/components/Blocks/RobotLibrary/Collections/Dictionary";
+import "@/components/Blocks/RobotLibrary/Collections/Convert";
+import "@/components/Blocks/RobotLibrary/Collections/Comparison";
+import "@/components/Blocks/RobotLibrary/Collections/Match";
+import "@/components/Blocks/RobotLibrary/Collections/Log";
+
 // ToolBoxs
 import {
   Command_Variables, 
