@@ -50,6 +50,23 @@ import {
   Command_BaseFunctions
 } from "@/components/ToolBoxs/TB_Commands";
 
+import { 
+  RBF_Comments,
+  RBF_Settings,
+  RBF_Variables,
+  RBF_TestCases,
+  RBF_KeyWords,
+} from "@/components/ToolBoxs/TB_Framrok";
+
+import {
+  TB_Collections_List,
+  TB_Collections_Dictionary,
+  TB_Collections_Convert,
+  TB_Collections_Comparison,
+  TB_Collections_Match,
+  TB_Collections_Log,
+} from "@/components/ToolBoxs/TB_Collections"
+
 import {
   Logic_For_Loop,
   Logic_While_Loop,
@@ -70,13 +87,6 @@ import {
   TB_BuiltIn_UtilTools,
 } from "@/components/ToolBoxs/TB_BuiltIn";
 
-import { 
-  RBF_Comments,
-  RBF_Settings,
-  RBF_Variables,
-  RBF_TestCases,
-  RBF_KeyWords,
-} from "@/components/ToolBoxs/TB_Framrok";
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
@@ -190,11 +200,13 @@ export default function App() {
         name: "RBL_Collections",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
-        ],
+          TB_Collections_List,
+          TB_Collections_Dictionary,
+          TB_Collections_Convert,
+          TB_Collections_Comparison,
+          TB_Collections_Match,
+          TB_Collections_Log,
+        ]
       },
       {
         kind: "category",

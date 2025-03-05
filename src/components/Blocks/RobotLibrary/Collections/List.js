@@ -23,3 +23,47 @@ const split_mark = '|';
 const block_color = 10;
 pythonGenerator.INDENT = default_indent; // 將預設縮排設為空字串
 
+// Formate Function
+function robotFormate(code, splitMark = '|', indent = robot_indent) {
+  if (!code) return '';
+  return code.split(splitMark)
+    .map(part => part.trim())
+    .filter(part => part)
+    .join(indent);
+}
+
+// Collections: Append To List
+Blockly.Blocks['rbl_collections_append_to_list'] = {
+  init: function() {
+    this.appendDummyInput('title')
+      .appendField('Append To List');
+
+    this.appendValueInput('list_variable_container')
+      .setCheck('Variable')
+    
+    this.appendValueInput('items')
+      .appendField('Values：')
+      .setCheck(null);
+    
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip('BuiltIn: Append To List');
+    this.setHelpUrl('https://robotframework.org/robotframework/latest/libraries/Collections.html#Append%20To%20List');
+  }
+};
+
+pythonGenerator.forBlock['rbl_collections_append_to_list'] = function(block) {
+  let variable = pythonGenerator.valueToCode(block, 'list_variable_container', pythonGenerator.ORDER_ATOMIC) || '';
+  variable = robotFormate(variable, '|', robot_indent)
+
+  let values = pythonGenerator.valueToCode(block, 'items', pythonGenerator.ORDER_ATOMIC) || '';
+  values = robotFormate(values, '|', robot_indent)
+
+  let code = `Append To List`
+  code += `${variable ? `${robot_indent}${variable}` : ''}` 
+  code += `${values ? `${robot_indent}${values}` : ''}`
+  code += '\n'
+  return code;
+};
