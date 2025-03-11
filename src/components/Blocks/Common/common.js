@@ -89,6 +89,25 @@ pythonGenerator.forBlock['rb_cm_variable'] = function(block) {
   return [code, pythonGenerator.ORDER_ATOMIC];
 };
 
+// Common: regex_escape 
+Blockly.Blocks['rb_cm_regex_escape'] = {
+  init: function() {
+    this.appendDummyInput("regex_container")
+      .appendField("Regex：")
+      .appendField(new Blockly.FieldTextInput("Regex"), "regex")
+    
+    this.setOutput(true, "Variable");  
+    this.setColour(block_color);
+    this.setTooltip("Setting Variables args");
+  }
+};
+pythonGenerator.forBlock['rb_cm_regex_escape'] = function(block) {
+  let regex_value = block.getFieldValue('regex') || '';
+  let code = `${split_mark}regexp=${regex_value}`;
+
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
 // Common: Value = Value
 Blockly.Blocks['rb_cm_V2V']= {
   init: function() {

@@ -17,6 +17,10 @@ export const Command_Variables = {
       },
       {
         kind: "block",
+        type: "rb_cm_regex_escape"
+      },
+      {
+        kind: "block",
         type: "rb_cm_math_symbols",
       },
       {
