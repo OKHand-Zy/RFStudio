@@ -50,6 +50,11 @@ import "@/components/Blocks/RobotLibrary/DateTime/Combined";
 import "@/components/Blocks/RobotLibrary/Dialogs/Action";
 import "@/components/Blocks/RobotLibrary/Dialogs/Get";
 
+import "@/components/Blocks/RobotLibrary/Process/Management";
+import "@/components/Blocks/RobotLibrary/Process/Verification";
+import "@/components/Blocks/RobotLibrary/Process/Information";
+import "@/components/Blocks/RobotLibrary/Process/CommandLine";
+
 import "@/components/Blocks/RobotLibrary/Screenshot/Screenshot";
 
 // ToolBoxs
@@ -108,6 +113,12 @@ import {
   TB_Dialogs_Get,
 } from "@/components/ToolBoxs/TB_Dialogs"
 
+import {
+  TB_Proess_Creation_Management,
+  TB_Proess_Status_Verification,
+  TB_Proess_Information,
+  TB_Proess_CommandLine,
+} from "@/components/ToolBoxs/TB_Processes"
 
 import {
   TB_Screenshot,
@@ -269,10 +280,10 @@ export default function App() {
         name: "RBL_Process",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_Proess_Creation_Management,
+          TB_Proess_Status_Verification,
+          TB_Proess_Information,
+          TB_Proess_CommandLine,
         ],
       },
       {
