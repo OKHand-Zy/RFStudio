@@ -47,6 +47,9 @@ import "@/components/Blocks/RobotLibrary/DateTime/Date";
 import "@/components/Blocks/RobotLibrary/DateTime/Time";
 import "@/components/Blocks/RobotLibrary/DateTime/Combined";
 
+import "@/components/Blocks/RobotLibrary/Dialogs/Action";
+import "@/components/Blocks/RobotLibrary/Dialogs/Get";
+
 // ToolBoxs
 import {
   Command_Variables, 
@@ -97,6 +100,11 @@ import {
   TB_DateTime_convert,
   TB_DateTime_subtract, 
 } from "@/components/ToolBoxs/TB_DateTime"
+
+import {
+  TB_Dialogs_Action,
+  TB_Dialogs_Get,
+} from "@/components/ToolBoxs/TB_Dialogs"
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
@@ -234,10 +242,8 @@ export default function App() {
         name: "RBL_Dialogs",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_Dialogs_Action,
+          TB_Dialogs_Get,
         ],
       },
       {
