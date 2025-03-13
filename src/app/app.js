@@ -50,6 +50,8 @@ import "@/components/Blocks/RobotLibrary/DateTime/Combined";
 import "@/components/Blocks/RobotLibrary/Dialogs/Action";
 import "@/components/Blocks/RobotLibrary/Dialogs/Get";
 
+import "@/components/Blocks/RobotLibrary/Screenshot/Screenshot";
+
 // ToolBoxs
 import {
   Command_Variables, 
@@ -105,6 +107,11 @@ import {
   TB_Dialogs_Action,
   TB_Dialogs_Get,
 } from "@/components/ToolBoxs/TB_Dialogs"
+
+
+import {
+  TB_Screenshot,
+} from "@/components/ToolBoxs/TB_Screenshot"
 
 // Example Blocks
 import "@/components/Blocks/example_Blocks";
@@ -272,12 +279,7 @@ export default function App() {
         kind: "category",
         name: "RBL_Screenshot",
         colour: "#A65C81",
-        contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
-        ],
+        contents: TB_Screenshot
       },
       {
         kind: "category",

@@ -164,18 +164,16 @@ Blockly.Blocks['as_item'] = {
 
 pythonGenerator.forBlock['rb_setting_import_library'] = function(block) {
   const libraryName = block.getFieldValue('import_library');
-  const argsValue = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  let argsValue = pythonGenerator.valueToCode(block, 'args', pythonGenerator.ORDER_ATOMIC) || '';
+  argsValue = robotFormate(argsValue, '|', robot_indent)
   let shortName = '';
   const shortNameField = block.getField('short_name');
-  
   if (shortNameField) {
     shortName = shortNameField.getValue();
   }
-  let code = `Library${robot_indent}${libraryName}`;
 
-  if (argsValue) {
-    code += `${robot_indent}${argsValue}`;
-  }
+  let code = `Library${robot_indent}${libraryName}`;
+  code += `${argsValue ? `${robot_indent}${argsValue}` : ''}`;
   
   if (shortName) {
     code += `${robot_indent}AS${robot_indent}${shortName}`;
