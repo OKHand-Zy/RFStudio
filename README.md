@@ -47,9 +47,22 @@ yarn dev
 4. Open your browser and visit http://localhost:3000
 
 ## Future
-
+- [ ] Robot Framework base library v7.2.2 (2025/03/14)
+  - [x] Basic framework
+  - [x] BuiltIn
+  - [x] Collections
+  - [x] DateTime
+  - [x] Dialogs
+  - [ ] OperatingSystem
+  - [x] Process
+  - [x] Screenshot
+  - [ ] String
+  - [ ] Telnet
+  - [ ] XML
 - [ ] Add import other Robot Framework library html file transfer to blockly
  
+## Issues
+- Telnet.open_connection_container => option 拖移參數沒有防只有一個
 
 ## Contributing
 

@@ -767,3 +767,803 @@ Blockly.Blocks['custom_plus_minus'] = {
 pythonGenerator.forBlock['custom_plus_minus'] = function(block) {
   return ``;
 };
+
+
+// Note： Open Connection 初始版 
+// Telnet: Open Connection
+const open_connection_MutatorMixin = {
+  mutationToDom: function() {
+    const container = document.createElement('mutation');
+    container.setAttribute('hasAlias', this.hasAlias_);
+    container.setAttribute('hasPort', this.hasPort_);
+    container.setAttribute('hasTimeout', this.hasTimeout_);
+    container.setAttribute('hasNewline', this.hasNewline_);
+    container.setAttribute('hasPrompt', this.hasPrompt_);
+    container.setAttribute('hasPromptIsRegexp', this.hasPromptIsRegexp_);
+    container.setAttribute('hasEncoding', this.hasEncoding_);
+    container.setAttribute('hasEncodingErrors', this.hasEncodingErrors_);
+    container.setAttribute('hasDefaultLogLevel', this.hasDefaultLogLevel_);
+    container.setAttribute('hasWindowSize', this.hasWindowSize_);
+    container.setAttribute('hasEnvironUser', this.hasEnvironUser_);
+    container.setAttribute('hasTerminalEmulation', this.hasTerminalEmulation_);
+    container.setAttribute('hasTerminalType', this.hasTerminalType_);
+    container.setAttribute('hasTelnetlibLogLevel', this.hasTelnetlibLogLevel_);
+    container.setAttribute('hasConnectionTimeout', this.hasConnectionTimeout_);
+    return container;
+  },
+
+  domToMutation: function(xmlElement) {
+    this.hasAlias_ = xmlElement.getAttribute('hasAlias') === 'true';
+    this.hasPort_ = xmlElement.getAttribute('hasPort') === 'true';
+    this.hasTimeout_ = xmlElement.getAttribute('hasTimeout') === 'true';
+    this.hasNewline_ = xmlElement.getAttribute('hasNewline') === 'true';
+    this.hasPrompt_ = xmlElement.getAttribute('hasPrompt') === 'true';
+    this.hasPromptIsRegexp_ = xmlElement.getAttribute('hasPromptIsRegexp') === 'true';
+    this.hasEncoding_ = xmlElement.getAttribute('hasEncoding') === 'true';
+    this.hasEncodingErrors_ = xmlElement.getAttribute('hasEncodingErrors') === 'true';
+    this.hasDefaultLogLevel_ = xmlElement.getAttribute('hasDefaultLogLevel') === 'true';
+    this.hasWindowSize_ = xmlElement.getAttribute('hasWindowSize') === 'true';
+    this.hasEnvironUser_ = xmlElement.getAttribute('hasEnvironUser') === 'true';
+    this.hasTerminalEmulation_ = xmlElement.getAttribute('hasTerminalEmulation') === 'true';
+    this.hasTerminalType_ = xmlElement.getAttribute('hasTerminalType') === 'true';
+    this.hasTelnetlibLogLevel_ = xmlElement.getAttribute('hasTelnetlibLogLevel') === 'true';
+    this.hasConnectionTimeout_ = xmlElement.getAttribute('hasConnectionTimeout') === 'true';
+    this.updateShape_();
+  },
+
+  decompose: function(workspace) {
+    const containerBlock = workspace.newBlock('open_connection_container');
+    containerBlock.initSvg();
+    
+    let connection = containerBlock.getInput('stack').connection;
+    
+    if (this.hasAlias_) {
+      const aliasBlock = workspace.newBlock('open_connection_alias_item');
+      aliasBlock.initSvg();
+      connection.connect(aliasBlock.previousConnection);
+      connection = aliasBlock.nextConnection;
+    }
+    
+    if (this.hasPort_) {
+      const portBlock = workspace.newBlock('open_connection_port_item');
+      portBlock.initSvg();
+      connection.connect(portBlock.previousConnection);
+      connection = portBlock.nextConnection;
+    }
+    
+    if (this.hasTimeout_) {
+      const timeoutBlock = workspace.newBlock('open_connection_timeout_item');
+      timeoutBlock.initSvg();
+      connection.connect(timeoutBlock.previousConnection);
+      connection = timeoutBlock.nextConnection;
+    }
+    
+    if (this.hasNewline_) {
+      const newlineBlock = workspace.newBlock('open_connection_newline_item');
+      newlineBlock.initSvg();
+      connection.connect(newlineBlock.previousConnection);
+      connection = newlineBlock.nextConnection;
+    }
+    
+    if (this.hasPrompt_) {
+      const promptBlock = workspace.newBlock('open_connection_prompt_item');
+      promptBlock.initSvg();
+      connection.connect(promptBlock.previousConnection);
+      connection = promptBlock.nextConnection;
+    }
+    
+    if (this.hasPromptIsRegexp_) {
+      const promptIsRegexpBlock = workspace.newBlock('open_connection_prompt_is_regexp_item');
+      promptIsRegexpBlock.initSvg();
+      connection.connect(promptIsRegexpBlock.previousConnection);
+      connection = promptIsRegexpBlock.nextConnection;
+    }
+    
+    if (this.hasEncoding_) {
+      const encodingBlock = workspace.newBlock('open_connection_encoding_item');
+      encodingBlock.initSvg();
+      connection.connect(encodingBlock.previousConnection);
+      connection = encodingBlock.nextConnection;
+    }
+
+    if (this.hasEncodingErrors_) {
+      const encodingErrorsBlock = workspace.newBlock('open_connection_encoding_errors_item');
+      encodingErrorsBlock.initSvg();
+      connection.connect(encodingErrorsBlock.previousConnection);
+      connection = encodingErrorsBlock.nextConnection;
+    }
+
+    if (this.hasDefaultLogLevel_) {
+      const defaultLogLevelBlock = workspace.newBlock('open_connection_default_log_level_item');
+      encodingErrorsBlock.initSvg();
+      connection.connect(encodingErrorsBlock.previousConnection);
+      connection = encodingErrorsBlock.nextConnection;
+    }
+    
+    if (this.hasWindowSize_) {
+      const windowSizeBlock = workspace.newBlock('open_connection_window_size_item');
+      windowSizeBlock.initSvg();
+      connection.connect(windowSizeBlock.previousConnection);
+      connection = windowSizeBlock.nextConnection;
+    }
+
+    if (this.hasEnvironUser_) {
+      const environUserBlock = workspace.newBlock('open_connection_environ_user_item');
+      environUserBlock.initSvg();
+      connection.connect(environUserBlock.previousConnection);
+      connection = environUserBlock.nextConnection;
+    }
+
+    if (this.hasTerminalEmulation_) {
+      const terminalEmulationBlock = workspace.newBlock('open_connection_terminal_emulation_item');
+      terminalEmulationBlock.initSvg();
+      connection.connect(terminalEmulationBlock.previousConnection);
+      connection = terminalEmulationBlock.nextConnection;
+    }
+
+    if (this.hasTerminalType_) {
+      const terminalTypeBlock = workspace.newBlock('open_connection_terminal_type_item');
+      terminalTypeBlock.initSvg();
+      connection.connect(terminalTypeBlock.previousConnection);
+      connection = terminalTypeBlock.nextConnection;
+    }
+
+    if (this.hasTelnetlibLogLevel_) {
+      const telnetlibLogLevelBlock = workspace.newBlock('open_connection_telnetlib_log_level_item');
+      telnetlibLogLevelBlock.initSvg();
+      connection.connect(telnetlibLogLevelBlock.previousConnection);
+      connection = telnetlibLogLevelBlock.nextConnection;
+    }
+
+    if (this.hasConnectionTimeout_) {
+      const connectionTimeoutBlock = workspace.newBlock('open_connection_connection_timeout_item');
+      connectionTimeoutBlock.initSvg();
+      connection.connect(connectionTimeoutBlock.previousConnection);
+      connection = connectionTimeoutBlock.nextConnection;
+    }
+    
+    return containerBlock;
+  },
+
+  compose: function(containerBlock) {
+    // Save connections
+    const connections = new Map();
+    
+    // Save host connection
+    const hostInput = this.getInput('host');
+    if (hostInput && hostInput.connection && hostInput.connection.targetConnection) {
+      connections.set('host', hostInput.connection.targetConnection);
+    }
+    
+    // Save connections for optional parameters
+    const paramNames = [
+      'alias', 'port', 'timeout', 'newline', 'prompt', 'prompt_is_regexp',
+      'encoding', 'encoding_errors', 'default_log_level', 'window_size',
+      'environ_user', 'terminal_emulation', 'terminal_type', 'telnetlib_log_level',
+      'connection_timeout'
+    ];
+    
+    for (const param of paramNames) {
+      const input = this.getInput(param);
+      if (input && input.connection && input.connection.targetConnection) {
+        connections.set(param, input.connection.targetConnection);
+      }
+    }
+    
+    // Reset all flags
+    this.hasAlias_ = false;
+    this.hasPort_ = false;
+    this.hasTimeout_ = false;
+    this.hasNewline_ = false;
+    this.hasPrompt_ = false;
+    this.hasPromptIsRegexp_ = false;
+    this.hasEncoding_ = false;
+    this.hasEncodingErrors_ = false;
+    this.hasDefaultLogLevel_ = false;
+    this.hasWindowSize_ = false;
+    this.hasEnvironUser_ = false;
+    this.hasTerminalEmulation_ = false;
+    this.hasTerminalType_ = false;
+    this.hasTelnetlibLogLevel_ = false;
+    this.hasConnectionTimeout_ = false;
+    
+    // Track seen block types
+    const seenTypes = new Set();
+    
+    // Parse blocks from mutator dialog
+    let itemBlock = containerBlock.getInputTargetBlock('stack');
+    while (itemBlock) {
+      const blockType = itemBlock.type;
+      
+      // Skip duplicates
+      if (seenTypes.has(blockType)) {
+        itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        continue;
+      }
+      
+      // Set flags based on block types
+      switch (blockType) {
+        case 'open_connection_alias_item':
+          this.hasAlias_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_port_item':
+          this.hasPort_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_timeout_item':
+          this.hasTimeout_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_newline_item':
+          this.hasNewline_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_prompt_item':
+          this.hasPrompt_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_prompt_is_regexp_item':
+          this.hasPromptIsRegexp_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_encoding_item':
+          this.hasEncoding_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_encoding_errors_item':
+          this.hasEncodingErrors_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_default_log_level_item':
+          this.hasDefaultLogLevel_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_window_size_item':
+          this.hasWindowSize_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_environ_user_item':
+          this.hasEnvironUser_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_terminal_emulation_item':
+          this.hasTerminalEmulation_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_terminal_type_item':
+          this.hasTerminalType_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_telnetlib_log_level_item':
+          this.hasTelnetlibLogLevel_ = true;
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_connection_timeout_item':
+          this.hasConnectionTimeout_ = true;
+          seenTypes.add(blockType);
+          break;
+      }
+      
+      // Move to next block
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+    
+    // Update the shape and reconnect saved connections
+    this.updateShape_();
+    
+    connections.forEach((connection, type) => {
+      const input = this.getInput(type);
+      if (input && input.connection) {
+        input.connection.connect(connection);
+      }
+    });
+  },
+
+  saveConnections: function(containerBlock) {
+    // This function is called when saving the mutator dialog state
+    const seenTypes = new Set();
+    
+    let itemBlock = containerBlock.getInputTargetBlock('stack');
+    while (itemBlock) {
+      const blockType = itemBlock.type;
+      
+      // Skip duplicate blocks
+      if (seenTypes.has(blockType)) {
+        itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+        continue;
+      }
+      
+      // Save connection for each parameter
+      let input;
+      switch (blockType) {
+        case 'open_connection_alias_item':
+          input = this.getInput('alias');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_port_item':
+          input = this.getInput('port');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_timeout_item':
+          input = this.getInput('timeout');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_prompt_item':
+          input = this.getInput('prompt');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_prompt_is_regexp_item':
+          input = this.getInput('prompt_is_regexp');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_encoding_item':
+          input = this.getInput('encoding');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_encoding_errors_item':
+          input = this.getInput('encoding_errors');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_default_log_level_item':
+          input = this.getInput('default_log_level');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_window_size_item':
+          input = this.getInput('window_size');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_environ_user_item':
+          input = this.getInput('environ_user');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_terminal_emulation_item':
+          input = this.getInput('terminal_emulation');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_terminal_type_item':
+          input = this.getInput('terminal_type');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_telnetlib_log_level_item':
+          input = this.getInput('telnetlib_log_level');
+          seenTypes.add(blockType);
+          break;
+        case 'open_connection_connection_timeout_item':
+          input = this.getInput('connection_timeout');
+          seenTypes.add(blockType);
+          break;
+      }
+      
+      if (input && input.connection && input.connection.targetConnection) {
+        itemBlock.valueConnection_ = input.connection.targetConnection;
+      }
+      
+      itemBlock = itemBlock.nextConnection && itemBlock.nextConnection.targetBlock();
+    }
+  }
+};
+
+// Main block definition with mutator
+Blockly.Blocks['rb_telnet_open_connection'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Open Connection");
+    this.appendValueInput("host")
+      .appendField("host：")
+      .setCheck("Variable");
+    
+    // Initialize mutator flags
+    this.hasAlias_ = false;
+    this.hasPort_ = false;
+    this.hasTimeout_ = false;
+    this.hasNewline_ = false;
+    this.hasPrompt_ = false;
+    this.hasPromptIsRegexp_ = false;
+    this.hasEncoding_ = false;
+    this.hasEncodingErrors_ = false;
+    this.hasDefaultLogLevel_ = false;
+    this.hasWindowSize_ = false;
+    this.hasEnvironUser_ = false;
+    this.hasTerminalEmulation_ = false;
+    this.hasTerminalType_ = false;
+    this.hasTelnetlibLogLevel_ = false;
+    this.hasConnectionTimeout_ = false;
+    
+    // Define which blocks can appear in the mutator dialog
+    this.setMutator(new Blockly.icons.MutatorIcon([
+      'open_connection_alias_item',
+      'open_connection_port_item',
+      'open_connection_timeout_item',
+      'open_connection_newline_item',
+      'open_connection_prompt_item',
+      'open_connection_prompt_is_regexp_item',
+      'open_connection_encoding_item',
+      'open_connection_encoding_errors_item',
+      'open_connection_default_log_level_item',
+      'open_connection_window_size_item',
+      'open_connection_environ_user_item',
+      'open_connection_terminal_emulation_item',
+      'open_connection_terminal_type_item',
+      'open_connection_telnetlib_log_level_item',
+      'open_connection_connection_timeout_item'
+    ], this));
+    
+    this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.setTooltip("Telnet: Open Connection");
+    this.setHelpUrl("https://robotframework.org/robotframework/latest/libraries/Telnet.html#Open%20Connection");
+  },
+  
+  updateShape_: function() {
+    // Save host connection
+    let hostConnection = null;
+    const hostInput = this.getInput('host');
+    if (hostInput && hostInput.connection && hostInput.connection.targetConnection) {
+      hostConnection = hostInput.connection.targetConnection;
+    }
+    
+    // Save other connections
+    const connections = new Map();
+    const paramNames = [
+      'alias', 'port', 'timeout', 'newline', 'prompt', 'prompt_is_regexp',
+      'encoding', 'encoding_errors', 'default_log_level', 'window_size',
+      'environ_user', 'terminal_emulation', 'terminal_type', 'telnetlib_log_level',
+      'connection_timeout'
+    ];
+    
+    for (const param of paramNames) {
+      const input = this.getInput(param);
+      if (input && input.connection && input.connection.targetConnection) {
+        connections.set(param, input.connection.targetConnection);
+      }
+    }
+    
+    // Remove all inputs except the first dummy input
+    const inputList = this.inputList.slice();
+    for (let i = 1; i < inputList.length; i++) {
+      this.removeInput(inputList[i].name);
+    }
+    
+    // Re-add host input
+    this.appendValueInput("host")
+      .appendField("host：")
+      .setCheck("Variable");
+    
+    // Reconnect host
+    if (hostConnection && this.getInput('host').connection) {
+      this.getInput('host').connection.connect(hostConnection);
+    }
+    
+    // Add optional parameters
+    if (this.hasAlias_) {
+      this.appendValueInput("alias")
+        .appendField("alias：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasPort_) {
+      this.appendValueInput("port")
+        .appendField("port：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasTimeout_) {
+      this.appendValueInput("timeout")
+        .appendField("timeout：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasNewline_) {
+      this.appendValueInput("newline")
+        .appendField("newline：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasPrompt_) {
+      this.appendValueInput("prompt")
+        .appendField("prompt：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasPromptIsRegexp_) {
+      this.appendValueInput("prompt_is_regexp")
+        .appendField("prompt_is_regexp：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasEncoding_) {
+      this.appendValueInput("encoding")
+        .appendField("encoding：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasEncodingErrors_) {
+      this.appendValueInput("encoding_errors")
+        .appendField("encoding_errors：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasDefaultLogLevel_) {
+      this.appendValueInput("default_log_level")
+        .appendField("default_log_level：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasWindowSize_) {
+      this.appendValueInput("window_size")
+        .appendField("window_size：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasEnvironUser_) {
+      this.appendValueInput("environ_user")
+        .appendField("environ_user：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasTerminalEmulation_) {
+      this.appendValueInput("terminal_emulation")
+        .appendField("terminal_emulation：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasTerminalType_) {
+      this.appendValueInput("terminal_type")
+        .appendField("terminal_type：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasTelnetlibLogLevel_) {
+      this.appendValueInput("telnetlib_log_level")
+        .appendField("telnetlib_log_level：")
+        .setCheck("Variable");
+    }
+    
+    if (this.hasConnectionTimeout_) {
+      this.appendValueInput("connection_timeout")
+        .appendField("connection_timeout：")
+        .setCheck("Variable");
+    }
+    
+    // Reconnect saved connections
+    connections.forEach((connection, type) => {
+      const input = this.getInput(type);
+      if (input && input.connection) {
+        input.connection.connect(connection);
+      }
+    });
+  },
+  
+  // Add mutator methods
+  ...open_connection_MutatorMixin
+};
+
+// Container block for the mutator dialog
+Blockly.Blocks['open_connection_container'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Open Connection Parameters");
+      
+    this.appendStatementInput('stack')
+      .setCheck(null);
+
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add parameters to Open Connection block");
+  }
+};
+
+// Item blocks for each parameter
+Blockly.Blocks['open_connection_alias_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("alias");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add alias parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_port_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("port");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add port parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_timeout_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("timeout");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add timeout parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_newline_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("newline");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add newline parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_prompt_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("prompt");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add prompt parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_prompt_is_regexp_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("prompt_is_regexp");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add prompt_is_regexp parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_encoding_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("encoding");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add encoding parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_encoding_errors_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("encoding_errors");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add encoding_errors parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_default_log_level_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("default_log_level");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add default_log_level parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_window_size_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("window_size");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add window_size parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_environ_user_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("environ_user");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add environ_user parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_terminal_emulation_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("terminal_emulation");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add terminal_emulation parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_terminal_type_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("terminal_type");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add terminal_type parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_telnetlib_log_level_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("telnetlib_log_level");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add telnetlib_log_level parameter");
+  }
+};
+
+Blockly.Blocks['open_connection_connection_timeout_item'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("connection_timeout");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(block_color);
+    this.contextMenu = false;
+    this.setTooltip("Add connection_timeout parameter");
+  }
+};
+
+pythonGenerator.forBlock['rb_telnet_open_connection'] = function(block) {
+  // Get host value (always exists)
+  let host = pythonGenerator.valueToCode(block, 'host', pythonGenerator.ORDER_ATOMIC) || '';
+  host = robotFormate(host, '|', default_indent);
+  
+  // Define input parameters and their values
+  const parameters = [
+    'alias', 'port', 'timeout', 'newline', 'prompt', 'prompt_is_regexp',
+    'encoding', 'encoding_errors', 'default_log_level', 'window_size',
+    'environ_user', 'terminal_emulation', 'terminal_type', 
+    'telnetlib_log_level', 'connection_timeout'
+  ];
+  
+  // Build the code
+  let code = `Open Connection`;
+  code += `${host ? `${robot_indent}${host}` : ''}`;
+
+  parameters.forEach(param => {
+    if (block.getInput(param)) {
+      let value = pythonGenerator.valueToCode(block, param, pythonGenerator.ORDER_ATOMIC) || '';
+      if (value) {
+        value = robotFormate(value, '|', default_indent);
+        code += `${robot_indent}${param}=${value}`;
+      }
+    }
+  });
+  
+  code += '\n';
+  return code;
+};

@@ -1,7 +1,7 @@
 export const TB_Proess_Creation_Management = {
     kind: "category",
     name: "Creation and Management",
-    colour: "#5C81A6",
+    colour: "#A65C81",
     contents: [
         {
             kind: "block",
@@ -37,7 +37,7 @@ export const TB_Proess_Creation_Management = {
 export const TB_Proess_Status_Verification = {
     kind: "category",
     name: "Status and Verification",
-    colour: "#5C81A6",
+    colour: "#A65C81",
     contents: [
         {
             kind: "block",
@@ -61,7 +61,7 @@ export const TB_Proess_Status_Verification = {
 export const TB_Proess_Information = {
     kind: "category",
     name: "Information",
-    colour: "#5C81A6",
+    colour: "#A65C81",
     contents: [
         {
             kind: "block",
@@ -77,7 +77,7 @@ export const TB_Proess_Information = {
 export const TB_Proess_CommandLine = {
     kind: "category",
     name: "Command Line",
-    colour: "#5C81A6",
+    colour: "#A65C81",
     contents: [
         {
             kind: "block",

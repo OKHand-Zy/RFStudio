@@ -25,7 +25,7 @@ import "@/components/Blocks/Common/Control_Structures/group";
 
 import "@/components/Blocks/Common/function";
 
-// RobotFrameWork Library Blocks
+// RobotFrameWork Library: Blocks
 import "@/components/Blocks/RobotLibrary/BuiltIn/Resource"
 import "@/components/Blocks/RobotLibrary/BuiltIn/Variable";
 import "@/components/Blocks/RobotLibrary/BuiltIn/Convert";
@@ -35,27 +35,33 @@ import "@/components/Blocks/RobotLibrary/BuiltIn/TestManagement"
 import "@/components/Blocks/RobotLibrary/BuiltIn/Assertion"
 import "@/components/Blocks/RobotLibrary/BuiltIn/FlowControl";
 import "@/components/Blocks/RobotLibrary/BuiltIn/utils";
-
+// RobotFrameWork Library: Collections
 import "@/components/Blocks/RobotLibrary/Collections/List";
 import "@/components/Blocks/RobotLibrary/Collections/Dictionary";
 import "@/components/Blocks/RobotLibrary/Collections/Convert";
 import "@/components/Blocks/RobotLibrary/Collections/Comparison";
 import "@/components/Blocks/RobotLibrary/Collections/Match";
 import "@/components/Blocks/RobotLibrary/Collections/Log";
-
+// RobotFrameWork Library: DateTime
 import "@/components/Blocks/RobotLibrary/DateTime/Date";
 import "@/components/Blocks/RobotLibrary/DateTime/Time";
 import "@/components/Blocks/RobotLibrary/DateTime/Combined";
-
+// RobotFrameWork Library: Dialogs
 import "@/components/Blocks/RobotLibrary/Dialogs/Action";
 import "@/components/Blocks/RobotLibrary/Dialogs/Get";
-
+// RobotFrameWork Library: Process
 import "@/components/Blocks/RobotLibrary/Process/Management";
 import "@/components/Blocks/RobotLibrary/Process/Verification";
 import "@/components/Blocks/RobotLibrary/Process/Information";
 import "@/components/Blocks/RobotLibrary/Process/CommandLine";
-
+// RobotFrameWork Library: Screenshot
 import "@/components/Blocks/RobotLibrary/Screenshot/Screenshot";
+// RobotFrameWork Library: Telnet
+import "@/components/Blocks/RobotLibrary/Telnet/Connection";
+import "@/components/Blocks/RobotLibrary/Telnet/OpRead";
+import "@/components/Blocks/RobotLibrary/Telnet/OpWrit";
+import "@/components/Blocks/RobotLibrary/Telnet/Setting";
+import "@/components/Blocks/RobotLibrary/Telnet/Action";
 
 // ToolBoxs
 import {
@@ -124,8 +130,13 @@ import {
   TB_Screenshot,
 } from "@/components/ToolBoxs/TB_Screenshot"
 
-// Example Blocks
-import "@/components/Blocks/example_Blocks";
+import {
+  TB_Telnet_Connection,
+  TB_Telnet_OpRead,
+  TB_Telnet_OpWrit,
+  TB_Telnet_Setting,
+  TB_Telnet_Action,
+} from "@/components/ToolBoxs/TB_Telenet"
 
 
 export default function App() {
@@ -138,46 +149,6 @@ export default function App() {
   const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
-      {
-        kind: "category",
-        name: "Test",
-        colour: "#5CA65C",
-        contents: [
-          {
-            kind: "block",
-            type: "New_dynamic_list_creator"
-          },
-          {
-            kind: "block",
-            type: "dynamic_HZ_list_creator",
-          },
-          {
-            kind: "block",
-            type: "dynamic_style_block"
-          },
-          { 
-            kind: "block", 
-            type: "custom_plus_minus" 
-          },
-          {
-            kind: "block",
-            type: "greet_person",
-            inputs: {
-              NAME: {
-                shadow: {
-                  type: "text",
-                  fields: {
-                    TEXT: "小明"  // 預設值
-                  }
-                }
-              }
-            }
-          },
-        ],
-      },
-      {
-        kind: "sep"
-      },
       {
         kind: "category",
         name: "Commands",
@@ -308,10 +279,11 @@ export default function App() {
         name: "RBL_Telnet",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_Telnet_Connection,
+          TB_Telnet_OpRead,
+          TB_Telnet_OpWrit,
+          TB_Telnet_Setting,
+          TB_Telnet_Action,
         ],
       },
       {
