@@ -1,3 +1,21 @@
+export const Collections_Block_List = [
+  'rbl_collections_append_to_list', 'rbl_collections_combine_lists', 'rbl_collections_count_values_in_list',
+  'rbl_collections_get_from_list', 'rbl_collections_get_index_from_list', 'rbl_collections_get_slice_from_list',
+  'rbl_collections_insert_into_list', 'rbl_collections_list_should_not_contain_duplicates',
+  'rbl_collections_remove_duplicates', 'rbl_collections_remove_from_list', 'rbl_collections_remove_values_from_list',
+  'rbl_collections_reverse_list', 'rbl_collections_sort_list', 'rbl_collections_copy_dictionary',
+  'rbl_collections_get_dictionary_items', 'rbl_collections_get_dictionary_keys', 'rbl_collections_get_dictionary_values',
+  'rbl_collections_get_from_dictionary', 'rbl_collections_keep_in_dictionary', 'rbl_collections_pop_from_dictionary',
+  'rbl_collections_remove_from_dictionary', 'rbl_collections_set_to_dictionary', 'rbl_collections_convert_to_dictionary',
+  'rbl_collections_convert_to_list', 'rbl_collections_dictionaries_should_be_equal', 'rbl_collections_dictionary_should_contain_item',
+  'rbl_collections_dictionary_should_contain_key', 'rbl_collections_dictionary_should_contain_sub_dictionary',
+  'rbl_collections_dictionary_should_contain_value', 'rbl_collections_dictionary_should_not_contain_key',
+  'rbl_collections_dictionary_should_not_contain_value', 'rbl_collections_list_should_contain_sub_list',
+  'rbl_collections_list_should_contain_value', 'rbl_collections_list_should_not_contain_value', 'rbl_collections_lists_should_be_equal',
+  'rbl_collections_get_match_count', 'rbl_collections_get_matches', 'rbl_collections_should_contain_match',
+  'rbl_collections_should_not_contain_match', 'rbl_collections_log_dictionary', 'rbl_collections_log_list'
+]
+
 export const TB_Collections_List = {
   kind: "category",
   name: "List",

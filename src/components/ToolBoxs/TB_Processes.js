@@ -1,3 +1,12 @@
+export const Process_Block_List = [
+    'rb_process_start_process', 'rb_process_run_process', 'rb_process_terminate_process', 'rb_process_terminate_all_processes',
+    'rb_process_wait_for_process', 'rb_process_switch_process', 'rb_process_send_signal_to_process', 
+    'rb_process_verification_is_process_running', 'rb_process_verification_process_should_be_running', 
+    'rb_process_verification_process_should_be_stopped', 'rb_process_verification_get_process_result',
+    'rb_process_information_get_process_id', 'rb_process_information_get_process_object',
+    'rb_command_line_join_command_line', 'rb_command_line_split_command_line'
+]
+
 export const TB_Proess_Creation_Management = {
     kind: "category",
     name: "Creation and Management",

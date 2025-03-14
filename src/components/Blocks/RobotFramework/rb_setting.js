@@ -1,6 +1,13 @@
 import * as Blockly from 'blockly';
 import {pythonGenerator} from 'blockly/python';
 
+import {BuiltIn_Block_List} from "@/components/ToolBoxs/TB_BuiltIn";
+import {Collections_Block_List} from "@/components/ToolBoxs/TB_Collections";
+import {Dialogs_Block_List} from "@/components/ToolBoxs/TB_Dialogs";
+import {Process_Block_List} from "@/components/ToolBoxs/TB_Processes";
+import {Screenshot_Block_List} from "@/components/ToolBoxs/TB_Screenshot";
+import {Telnet_Block_List} from "@/components/ToolBoxs/TB_Telenet";
+
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
 const robot_indent = '    ';
@@ -35,17 +42,56 @@ Blockly.Blocks['rb_fw_Settings'] = {
 };
 
 pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
-  let import_Library = '';
+  let auto_import = '';
+  let import_String = pythonGenerator.statementToCode(block, 'Settings') || '';
+
   const workspace = block.workspace;
-  // 檢查工作區是否包含 BuiltIn 的 Blocks
+  // 檢查工作區是否包含 各Library 的 Blocks
   const hasBuiltInBlocks = workspace.getAllBlocks().some(block => 
-    ['sleep', 'Get_Time'].includes(block.type)
+    BuiltIn_Block_List.includes(block.type)
   );
-  import_Library += hasBuiltInBlocks ? `Library${robot_indent}BuiltIn\n` : '';
+  if (hasBuiltInBlocks && !import_String.includes('Library    BuiltIn')) {
+    auto_import += `Library${robot_indent}BuiltIn\n`;
+  }
   
-  let settings_content = import_Library + (pythonGenerator.statementToCode(block, 'Settings') || '');
-  let code = `*** Settings ***
-${settings_content}`;
+  const hasCollectionsBlocks = workspace.getAllBlocks().some(block => 
+    Collections_Block_List.includes(block.type)
+  );
+  if (hasCollectionsBlocks && !import_String.includes('Library    Collections')) {
+    auto_import += `Library${robot_indent}Collections\n`;
+  }
+
+  const hasDialogsBlocks = workspace.getAllBlocks().some(block => 
+    Dialogs_Block_List.includes(block.type)
+  );
+  if (hasDialogsBlocks && !import_String.includes('Library    Dialogs')) {
+    auto_import += `Library${robot_indent}Dialogs\n`;
+  }
+
+  const hasProcessBlocks = workspace.getAllBlocks().some(block => 
+    Process_Block_List.includes(block.type)
+  );
+  if (hasProcessBlocks && !import_String.includes('Library    Process')) {
+    auto_import += `Library${robot_indent}Process\n`;
+  }
+
+  const hasScreenshotBlocks = workspace.getAllBlocks().some(block => 
+    Screenshot_Block_List.includes(block.type)
+  );
+  if (hasScreenshotBlocks && !import_String.includes('Library    Screenshot')) {
+    auto_import += `Library${robot_indent}Screenshot\n`;
+  }
+
+  const hasTelnetBlocks = workspace.getAllBlocks().some(block => 
+    Telnet_Block_List.includes(block.type)
+  );
+  if (hasTelnetBlocks && !import_String.includes('Library    Telnet')) {
+    auto_import += `Library${robot_indent}Telnet\n`;
+  }
+
+
+
+  let code = `*** Settings ***\n${auto_import}${import_String}`;
   
   return code;  
 }

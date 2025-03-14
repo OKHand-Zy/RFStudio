@@ -62,6 +62,12 @@ import "@/components/Blocks/RobotLibrary/Telnet/OpRead";
 import "@/components/Blocks/RobotLibrary/Telnet/OpWrit";
 import "@/components/Blocks/RobotLibrary/Telnet/Setting";
 import "@/components/Blocks/RobotLibrary/Telnet/Action";
+// RobotFrameWork Library: XML
+import "@/components/Blocks/RobotLibrary/XML/Element_Add_Remove";
+import "@/components/Blocks/RobotLibrary/XML/Element_Retrieval";
+import "@/components/Blocks/RobotLibrary/XML/Element_Verification";
+import "@/components/Blocks/RobotLibrary/XML/Element_Setting";
+import "@/components/Blocks/RobotLibrary/XML/Other";
 
 // ToolBoxs
 import {
@@ -138,6 +144,13 @@ import {
   TB_Telnet_Action,
 } from "@/components/ToolBoxs/TB_Telenet"
 
+import {
+  TB_XML_Add_Remove,
+  TB_XML_Retrieval,
+  TB_XML_Setting,
+  TB_XML_Verification,
+  TB_XML_Other,
+} from "@/components/ToolBoxs/TB_XML"
 
 export default function App() {
   const [xml, setXml] = useState("");
@@ -291,10 +304,11 @@ export default function App() {
         name: "RBL_XML",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_XML_Add_Remove,
+          TB_XML_Retrieval,
+          TB_XML_Setting,
+          TB_XML_Verification,
+          TB_XML_Other,
         ],
       },
     ],

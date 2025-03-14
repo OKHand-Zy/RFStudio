@@ -1,3 +1,12 @@
+export const Telnet_Block_List = [
+  'rb_telnet_open_connection', 'rb_telnet_close_connection', 'rb_telnet_close_all_connections',
+  'rb_telnet_switch_connection', 'rb_telnet_read', 'rb_telnet_read_until', 'rb_telnet_read_until_prompt',
+  'rb_telnet_read_until_regexp', 'rb_telnet_write', 'rb_telnet_write_bare', 'rb_telnet_write_control_character',
+  'rb_telnet_write_until_expected_output', 'rb_telnet_set_timeout', 'rb_telnet_set_prompt', 
+  'rb_telnet_set_encoding', 'rb_telnet_set_newline', 'rb_telnet_set_default_log_level', 
+  'rb_telnet_set_telnetlib_log_level', 'rb_telnet_execute_command', 'rb_telnet_login'
+]
+
 export const TB_Telnet_Connection = {
   kind: "category",
   name: "Connection",

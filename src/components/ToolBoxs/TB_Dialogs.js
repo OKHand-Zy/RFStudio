@@ -1,3 +1,8 @@
+export const Dialogs_Block_List = [
+  'rb_dialogs_execute_manual_step', 'rb_dialogs_pause_execution', 'rb_dialogs_get_selection_from_user',
+  'rb_dialogs_get_selections_from_user', 'rb_dialogs_get_value_from_user'
+]
+
 export const TB_Dialogs_Action = {
   kind: "category",
   name: "Dialogs Action",
