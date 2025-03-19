@@ -7,6 +7,7 @@ import {Dialogs_Block_List} from "@/components/ToolBoxs/TB_Dialogs";
 import {Process_Block_List} from "@/components/ToolBoxs/TB_Processes";
 import {Screenshot_Block_List} from "@/components/ToolBoxs/TB_Screenshot";
 import {Telnet_Block_List} from "@/components/ToolBoxs/TB_Telenet";
+import {XML_Block_List} from "@/components/ToolBoxs/TB_XML";
 
 // 修改 pythonGenerator 的縮排設定
 const default_indent = '';
@@ -89,7 +90,12 @@ pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
     auto_import += `Library${robot_indent}Telnet\n`;
   }
 
-
+  const hasXMLBlocks = workspace.getAllBlocks().some(block => 
+    XML_Block_List.includes(block.type)
+  );
+  if (hasXMLBlocks && !import_String.includes('Library    XML')) {
+    auto_import += `Library${robot_indent}XML\n`;
+  }
 
   let code = `*** Settings ***\n${auto_import}${import_String}`;
   
