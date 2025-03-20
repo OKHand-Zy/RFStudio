@@ -1,4 +1,9 @@
 # Robot Framework - Dialogs Library
+Total：5 Keywords    
+Library version：7.2.2  
+Last Update：2025/03/20      
+Source Document：
+[Robotframework Dialogs Library Document](https://robotframework.org/robotframework/latest/libraries/Dialogs.html)
 
 ## RobotLibrary/Dialogs/Action.js
 - Execute Manual Step - 設定手動測試步驟

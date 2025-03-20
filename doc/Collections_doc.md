@@ -1,4 +1,9 @@
-# Robot Framework - Collections Library
+# Robot Framework - Collections Library 
+Total：43 Keywords  
+Library version：7.2.2  
+Last Update：2025/03/20      
+Source Document：
+[Robotframework Collections Library Document](https://robotframework.org/robotframework/latest/libraries/Collections.html)
 
 ## RobotLibrary/Collections/List.js
 - Append To List - 添加項目到列表

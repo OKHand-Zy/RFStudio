@@ -1,4 +1,9 @@
 # Robot Framework - Telnet Library
+Total：20 Keywords  
+Library version：7.2.2  
+Last Update：2025/03/20      
+Source Document：
+[Robotframework Telnet Library Document](https://robotframework.org/robotframework/latest/libraries/Telnet.html)
 
 ## RobotLibrary/Telnet/Connection.js
 - Open Connection - 開啟連接 

@@ -1,4 +1,9 @@
 # Robot Framework - XML Library
+Total：37 Keywords  
+Library version：7.2.2  
+Last Update：2025/03/20      
+Source Document：
+[Robotframework XML Library Document](https://robotframework.org/robotframework/latest/libraries/XML.html)
 
 ## RobotLibrary/XML/Element_Add_Remove.js
 - Add Element - 添加元素
@@ -19,9 +24,6 @@
 - Get Elements Texts - 獲取多個元素的文本
 - Get Element Attribute - 獲取元素屬性
 - Get Element Attributes - 獲取元素的多個屬性
-- Evaluate Xpath - 評估XPath表達式
-- Element To String - 元素轉換為字符串
-- Parse Xml - 解析XML
 
 ## RobotLibrary/XML/Element_Setting.js
 - Set Element Text - 設置元素文本
@@ -30,7 +32,6 @@
 - Set Elements Tag - 設置多個元素的標籤
 - Set Element Attribute - 設置元素屬性
 - Set Elements Attribute - 設置多個元素的屬性
-- Save Xml - 保存XML
 
 ## RobotLibrary/XML/Element_Verification.js
 - Element Should Exist - 元素應存在
@@ -44,5 +45,9 @@
 - Element Should Not Have Attribute - 元素不應有特定屬性
 
 ## RobotLibrary/XML/Other.js
+- Parse Xml - 解析XML
+- Save Xml - 保存XML
+- Evaluate Xpath - 評估XPath表達式
+- Element To String - 元素轉換為字符串
 - Copy Element - 複製元素
 - Log Element - 記錄元素

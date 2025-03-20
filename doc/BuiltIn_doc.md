@@ -1,4 +1,9 @@
 # Robot Framework - BuiltIn Library
+Total：107 Keywords   
+Library version：7.2.2  
+Last Update：2025/03/20    
+Source Document：
+[Robotframework BuiltIn Library Document](https://robotframework.org/robotframework/latest/libraries/BuiltIn.html)
 
 ## RobotLibrary/BuiltIn/FlowControl.js
 - Continue For Loop - 繼續循環

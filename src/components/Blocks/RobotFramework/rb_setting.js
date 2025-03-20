@@ -3,9 +3,11 @@ import {pythonGenerator} from 'blockly/python';
 
 import {BuiltIn_Block_List} from "@/components/ToolBoxs/TB_BuiltIn";
 import {Collections_Block_List} from "@/components/ToolBoxs/TB_Collections";
+import {DateTime_Blocks_List} from "@/components/ToolBoxs/TB_DateTime";
 import {Dialogs_Block_List} from "@/components/ToolBoxs/TB_Dialogs";
 import {Process_Block_List} from "@/components/ToolBoxs/TB_Processes";
 import {Screenshot_Block_List} from "@/components/ToolBoxs/TB_Screenshot";
+import {String_Block_List} from "@/components/ToolBoxs/TB_String";
 import {Telnet_Block_List} from "@/components/ToolBoxs/TB_Telenet";
 import {XML_Block_List} from "@/components/ToolBoxs/TB_XML";
 
@@ -62,6 +64,13 @@ pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
     auto_import += `Library${robot_indent}Collections\n`;
   }
 
+  const hasDateTimeBlocks = workspace.getAllBlocks().some(block => 
+    DateTime_Blocks_List.includes(block.type)
+  );
+  if (hasDateTimeBlocks && !import_String.includes('Library    DateTime')) {
+    auto_import += `Library${robot_indent}DateTime\n`;
+  }
+
   const hasDialogsBlocks = workspace.getAllBlocks().some(block => 
     Dialogs_Block_List.includes(block.type)
   );
@@ -81,6 +90,13 @@ pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
   );
   if (hasScreenshotBlocks && !import_String.includes('Library    Screenshot')) {
     auto_import += `Library${robot_indent}Screenshot\n`;
+  }
+
+  const hasStringBlocks = workspace.getAllBlocks().some(block => 
+    String_Block_List.includes(block.type)
+  );
+  if (hasStringBlocks && !import_String.includes('Library    String')) {
+    auto_import += `Library${robot_indent}String\n`;
   }
 
   const hasTelnetBlocks = workspace.getAllBlocks().some(block => 

@@ -43,9 +43,10 @@ import "@/components/Blocks/RobotLibrary/Collections/Comparison";
 import "@/components/Blocks/RobotLibrary/Collections/Match";
 import "@/components/Blocks/RobotLibrary/Collections/Log";
 // RobotFrameWork Library: DateTime
-import "@/components/Blocks/RobotLibrary/DateTime/Date";
-import "@/components/Blocks/RobotLibrary/DateTime/Time";
-import "@/components/Blocks/RobotLibrary/DateTime/Combined";
+import "@/components/Blocks/RobotLibrary/DateTime/Get_DT";
+import "@/components/Blocks/RobotLibrary/DateTime/Add_DT";
+import "@/components/Blocks/RobotLibrary/DateTime/Convert_DT";
+import "@/components/Blocks/RobotLibrary/DateTime/Subtract_DT";
 // RobotFrameWork Library: Dialogs
 import "@/components/Blocks/RobotLibrary/Dialogs/Action";
 import "@/components/Blocks/RobotLibrary/Dialogs/Get";
@@ -56,6 +57,15 @@ import "@/components/Blocks/RobotLibrary/Process/Information";
 import "@/components/Blocks/RobotLibrary/Process/CommandLine";
 // RobotFrameWork Library: Screenshot
 import "@/components/Blocks/RobotLibrary/Screenshot/Screenshot";
+// RobotFrameWork Library: String
+import "@/components/Blocks/RobotLibrary/String/Convert";
+import "@/components/Blocks/RobotLibrary/String/Extract";
+import "@/components/Blocks/RobotLibrary/String/Modified";
+import "@/components/Blocks/RobotLibrary/String/Split";
+import "@/components/Blocks/RobotLibrary/String/Validation";
+import "@/components/Blocks/RobotLibrary/String/Coding";
+import "@/components/Blocks/RobotLibrary/String/Generate";
+
 // RobotFrameWork Library: Telnet
 import "@/components/Blocks/RobotLibrary/Telnet/Connection";
 import "@/components/Blocks/RobotLibrary/Telnet/OpRead";
@@ -135,6 +145,17 @@ import {
 import {
   TB_Screenshot,
 } from "@/components/ToolBoxs/TB_Screenshot"
+
+import {
+  TB_String_Convert,
+  TB_String_Extract,
+  TB_String_Modified,
+  TB_String_Split,
+  TB_String_Validation,
+  TB_String_Coding,
+  TB_String_Generate,
+} from "@/components/ToolBoxs/TB_String"
+
 
 import {
   TB_Telnet_Connection,
@@ -281,10 +302,13 @@ export default function App() {
         name: "RBL_String",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_String_Convert,
+          TB_String_Extract,
+          TB_String_Modified,
+          TB_String_Split,
+          TB_String_Validation,
+          TB_String_Coding,
+          TB_String_Generate,
         ],
       },
       {
