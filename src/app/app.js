@@ -50,6 +50,14 @@ import "@/components/Blocks/RobotLibrary/DateTime/Subtract_DT";
 // RobotFrameWork Library: Dialogs
 import "@/components/Blocks/RobotLibrary/Dialogs/Action";
 import "@/components/Blocks/RobotLibrary/Dialogs/Get";
+// RobotFrameWork Library: OperatingSystem
+import '@/components/Blocks/RobotLibrary/OperatingSystem/File';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/Direct';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/Path';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/Environment';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/ProcessExecut';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/ExistenceCheck';
+import '@/components/Blocks/RobotLibrary/OperatingSystem/WaitOperat';
 // RobotFrameWork Library: Process
 import "@/components/Blocks/RobotLibrary/Process/Management";
 import "@/components/Blocks/RobotLibrary/Process/Verification";
@@ -65,7 +73,6 @@ import "@/components/Blocks/RobotLibrary/String/Split";
 import "@/components/Blocks/RobotLibrary/String/Validation";
 import "@/components/Blocks/RobotLibrary/String/Coding";
 import "@/components/Blocks/RobotLibrary/String/Generate";
-
 // RobotFrameWork Library: Telnet
 import "@/components/Blocks/RobotLibrary/Telnet/Connection";
 import "@/components/Blocks/RobotLibrary/Telnet/OpRead";
@@ -136,6 +143,16 @@ import {
 } from "@/components/ToolBoxs/TB_Dialogs"
 
 import {
+  TB_OperatingSystem_File,
+  TB_OperatingSystem_Direct,
+  TB_OperatingSystem_Path,
+  TB_OperatingSystem_Environment,
+  TB_OperatingSystem_ProcessExecut,
+  TB_OperatingSystem_ExistenceCheck,
+  TB_OperatingSystem_WaitOperat,
+} from "@/components/ToolBoxs/TB_OperatingSystem"
+
+import {
   TB_Proess_Creation_Management,
   TB_Proess_Status_Verification,
   TB_Proess_Information,
@@ -155,7 +172,6 @@ import {
   TB_String_Coding,
   TB_String_Generate,
 } from "@/components/ToolBoxs/TB_String"
-
 
 import {
   TB_Telnet_Connection,
@@ -274,10 +290,13 @@ export default function App() {
         name: "RBL_OperatingSystem",
         colour: "#A65C81",
         contents: [
-          {
-            kind: "block",
-            type: "text",
-          },
+          TB_OperatingSystem_File,
+          TB_OperatingSystem_Direct,
+          TB_OperatingSystem_Path,
+          TB_OperatingSystem_Environment,
+          TB_OperatingSystem_ProcessExecut,
+          TB_OperatingSystem_ExistenceCheck,
+          TB_OperatingSystem_WaitOperat,
         ],
       },
       {

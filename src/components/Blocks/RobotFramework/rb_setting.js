@@ -5,6 +5,7 @@ import {BuiltIn_Block_List} from "@/components/ToolBoxs/TB_BuiltIn";
 import {Collections_Block_List} from "@/components/ToolBoxs/TB_Collections";
 import {DateTime_Blocks_List} from "@/components/ToolBoxs/TB_DateTime";
 import {Dialogs_Block_List} from "@/components/ToolBoxs/TB_Dialogs";
+import { OperatingSystem_Blocks_List } from "@/components/ToolBoxs/TB_OperatingSystem";
 import {Process_Block_List} from "@/components/ToolBoxs/TB_Processes";
 import {Screenshot_Block_List} from "@/components/ToolBoxs/TB_Screenshot";
 import {String_Block_List} from "@/components/ToolBoxs/TB_String";
@@ -76,6 +77,13 @@ pythonGenerator.forBlock['rb_fw_Settings'] = function(block) {
   );
   if (hasDialogsBlocks && !import_String.includes('Library    Dialogs')) {
     auto_import += `Library${robot_indent}Dialogs\n`;
+  }
+
+  const hasOperatingSystemBlocks = workspace.getAllBlocks().some(block => 
+    OperatingSystem_Blocks_List.includes(block.type)
+  );
+  if (hasOperatingSystemBlocks && !import_String.includes('Library    OperatingSystem')) {
+    auto_import += `Library${robot_indent}OperatingSystem\n`;
   }
 
   const hasProcessBlocks = workspace.getAllBlocks().some(block => 
