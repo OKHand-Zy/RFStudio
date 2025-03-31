@@ -47,7 +47,7 @@ yarn dev
 4. Open your browser and visit http://localhost:3000
 
 ## Future
-- [x] Robot Framework Standard libraries v7.2.2 (2025/03/14)
+- [x] Robot Framework Standard libraries v7.2.2 (2025/03/31)
   - [x] Basic framework
   - [x] BuiltIn
   - [x] Collections
